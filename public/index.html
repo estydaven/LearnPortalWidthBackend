@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обучающий портал для менеджеров Rocket Profit</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+
+<body>
+    <div class="preloader">
+        <div class="preloader__inner"></div>
+    </div>
+    <div class="wrapper wrapper_login hide">
+        <div class="container container_login">
+            <div class="login">
+                <div class="login__block login__block_left">
+                    <img src="images/svg/logo.svg" alt="" class="login__logo">
+                    <h1 class="login__title">Портал для обучения <span class="text-blue">аффилейт менеджеров</span></h1>
+                </div>
+                <div class="login__arrow">
+                    <img src="images/svg/right-arr.svg" alt="">
+                </div>
+                <div class="login__block">
+                    <form class="login-form" onsubmit="onSubmit(this);return false;">
+                        <p class="form__header">Войти</p>
+                        <div class="form__inner">
+                            <input class="form__field form__field_first" id="name" type="email" name="email"
+                                placeholder="E-mail">
+                            <div class="password">
+                                <input class="form__field" id="password-input" id="pass" type="password" name="password"
+                                    placeholder="Пароль">
+                                <a href="#" class="password__control"></a>
+                            </div>
+                            <div class="form__check">
+                                <input type="checkbox" class="form__checkbox" id="checkbox" name="checkbox" value="1">
+                                <label for="checkbox">Запомнить меня</label>
+                            </div>
+                            <div class="login-form__message hide"></div>
+                            <button class="form__button" type="submit">Войти</button>
+                            <!-- TODO: изменить тайп на сабмит -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <main class="wrapper wrapper_main hide">
+        <img src="images/top-left-waves.png" alt="" class="wrapper__bg wrapper__bg_top">
+        <div class="container">
+            <header class="header">
+                <div class="wrapper__inner">
+                    <img src="images/svg/logo.svg" class="header__logo" alt="">
+                    <div class="header__inner">
+                        <div class="search">
+                            <input type="search" class="search__field hide" placeholder="Введите запрос для поиска">
+                            <img src="images/svg/search.svg" class="search__icon" alt="">
+                        </div>
+                        <div class="user" data-tab="20">
+                            <img src="images/svg/user.svg" alt="" class="user__image">
+                            <div class="user__inner">
+                                <p class="user__name">Игорь Николаевич</p>
+                                <img src="images/svg/user-icon-on.svg" alt="" class="user__icon">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="wrapper__inner tabs">
+                <ul class="menu">
+                    <li class="menu__item" data-tab="1">
+                        <button class="menu__title">
+                            <svg class="menu__icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
+                                    stroke="#0EE9FF" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M18.38 15.27V7.57999C18.38 6.80999 17.76 6.25 17 6.31H16.96C15.62 6.42 13.59 7.11001 12.45 7.82001L12.34 7.89002C12.16 8.00002 11.85 8.00002 11.66 7.89002L11.5 7.79001C10.37 7.08001 8.34 6.40999 7 6.29999C6.24 6.23999 5.62 6.81001 5.62 7.57001V15.27C5.62 15.88 6.11998 16.46 6.72998 16.53L6.90997 16.56C8.28997 16.74 10.43 17.45 11.65 18.12L11.68 18.13C11.85 18.23 12.13 18.23 12.29 18.13C13.51 17.45 15.66 16.75 17.05 16.56L17.26 16.53C17.88 16.46 18.38 15.89 18.38 15.27Z"
+                                    stroke="#0EE9FF" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M12 8.10001V17.66" stroke="#0EE9FF" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            Теория
+                        </button>
+                    </li>
+                    <li class="menu__item">
+                        <button class="menu__title">
+                            <svg class="menu__icon" width="24" height="24" viewBox="0 0 18 22" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M4.79678 19.3083C4.6002 18.9516 4.40362 18.5624 4.2398 18.2057C3.91216 18.4003 3.61728 18.6597 3.38793 18.984C2.92924 19.5353 2.56884 20.2488 2.33949 20.9947V21.0271C2.2412 21.3838 2.04462 21.6433 1.84803 21.8054C1.65145 21.9351 1.45487 22 1.25828 22C1.0617 22 0.865116 21.9027 0.701296 21.773C0.504713 21.6108 0.340893 21.319 0.242601 20.9622C-0.150565 19.0164 -0.0522735 17.1679 0.439185 15.4816C0.930643 13.8277 1.7825 12.3359 2.962 11.136C3.0603 8.93073 3.58452 6.88764 4.46914 5.104C5.48482 3.02848 6.92643 1.30969 8.66292 0.109787C8.89227 -0.0523629 9.18714 -0.019933 9.38373 0.109787C11.1202 1.30969 12.5618 3.02848 13.5447 5.07157C14.3966 6.85521 14.9536 8.93073 15.0519 11.1035C16.2314 12.3034 17.0832 13.7952 17.5747 15.4491C18.0662 17.1355 18.1317 18.984 17.7713 20.8974C17.7058 21.2541 17.5419 21.546 17.3126 21.7081C17.1488 21.8378 16.9522 21.9351 16.7556 21.9351C16.559 21.9351 16.3624 21.8703 16.1659 21.7406C15.9693 21.5784 15.7727 21.319 15.6744 20.9622V20.9298C15.445 20.1839 15.0846 19.4705 14.6259 18.9192C14.3638 18.5949 14.069 18.3354 13.7741 18.1408C13.6103 18.53 13.4137 18.9192 13.1843 19.2759C13.086 19.4705 12.8567 19.6002 12.6274 19.6002H10.2028C10.0062 20.6704 9.74413 21.2865 9.48202 21.5784C9.25267 21.8378 8.8595 21.8379 8.59739 21.6108C8.56463 21.6108 8.56463 21.5784 8.56463 21.5784C8.30252 21.2865 8.04041 20.6379 7.84382 19.6002H5.4193C5.12442 19.665 4.89507 19.5029 4.79678 19.3083ZM3.7811 17.0382C3.65005 16.6166 3.51899 16.195 3.38793 15.7734C3.15859 14.8978 3.02753 13.9898 2.962 13.0493C2.37225 13.8925 1.91356 14.833 1.61868 15.8383C1.25828 17.1355 1.12723 18.5624 1.35657 20.0542C1.61869 19.3732 1.97909 18.7246 2.40502 18.2057C2.79818 17.6868 3.28964 17.2977 3.7811 17.0382ZM4.63296 15.4491C4.89507 16.5193 5.28824 17.4922 5.74693 18.4003H7.61448C7.48342 17.0706 7.38513 15.1897 7.38513 12.6926V12.498C7.38513 12.1089 7.61448 11.817 7.97488 11.6548L8.00764 11.6224C8.26975 11.4927 8.59739 11.4278 8.9578 11.3954C8.99056 11.3954 9.02332 11.3954 9.02332 11.3954C9.38373 11.4278 9.71137 11.4927 9.97348 11.6224H10.0062C10.3666 11.817 10.596 12.0764 10.596 12.4656V12.6602C10.596 15.1573 10.4977 17.0382 10.3339 18.4003H12.2014C12.6929 17.4922 13.0533 16.4869 13.3154 15.4491C13.5775 14.379 13.7413 13.2439 13.7413 12.0764V11.8494C13.7413 9.57933 13.2499 7.43895 12.3652 5.62288C11.5134 3.90409 10.3666 2.44474 8.9578 1.37455C7.54895 2.41231 6.36945 3.87166 5.55035 5.62288C4.66573 7.43895 4.17427 9.57933 4.17427 11.8494V12.0764C4.20703 13.2763 4.37085 14.379 4.63296 15.4491ZM14.9864 13.0169C14.9208 13.9574 14.757 14.8654 14.5604 15.741C14.4621 16.1626 14.3311 16.5842 14.1673 17.0058C14.6915 17.2977 15.1502 17.6868 15.5433 18.1408C15.9693 18.6597 16.3297 19.3083 16.5918 19.9893C16.7884 18.4976 16.6901 17.0706 16.3297 15.7734C16.0348 14.8006 15.5761 13.8601 14.9864 13.0169ZM8.99056 18.8219C9.08885 18.076 9.18714 17.2977 9.25267 16.3572C9.3182 15.514 9.35096 14.5411 9.35096 13.2763V12.6926C9.25267 12.6602 9.12162 12.6602 8.99056 12.6277C8.8595 12.6277 8.72845 12.6602 8.63016 12.6926V13.2763C8.63016 14.5411 8.66292 15.514 8.72845 16.3572C8.79398 17.2977 8.8595 18.076 8.99056 18.8219ZM8.99056 10.6171C9.80966 10.6171 10.5305 10.2928 11.0874 9.77391C11.6117 9.25503 11.9393 8.50914 11.9393 7.69839C11.9393 6.88765 11.6117 6.17419 11.0874 5.62288C10.5632 5.07157 9.80966 4.7797 8.99056 4.7797C8.17146 4.7797 7.45066 5.104 6.89367 5.62288C6.36945 6.14176 6.04181 6.88765 6.04181 7.69839C6.04181 8.50914 6.36945 9.2226 6.89367 9.77391C7.41789 10.2928 8.17146 10.6171 8.99056 10.6171ZM7.7783 8.8983C8.07317 9.19017 8.4991 9.38475 8.99056 9.38475C9.44925 9.38475 9.87518 9.19017 10.2028 8.8983C10.4977 8.60643 10.6943 8.18484 10.6943 7.69839C10.6943 7.24437 10.4977 6.82279 10.2028 6.49849C9.90795 6.20662 9.48202 6.01204 8.99056 6.01204C8.53187 6.01204 8.10594 6.20662 7.7783 6.49849C7.48342 6.79036 7.28684 7.21194 7.28684 7.69839C7.28684 8.18484 7.45066 8.60643 7.7783 8.8983Z"
+                                    fill="#10E5FC" />
+                            </svg>
+                            RocketProfit
+                        </button>
+                        <ul class="submenu submenu_main">
+                            <li class="submenu__item" data-tab="2.1">
+                                <button class="submenu__button">Важные определения</button>
+                            </li>
+                            <li class="submenu__item">
+                                <button class="submenu__title submenu__title_icon">Офферы</button>
+                                <ul class="submenu submenu_main">
+                                    <li class="submenu__item submenu__item_sub"
+                                        data-tab="2.2.1"><button>Форм факторы</button></li>
+                                    <li class="submenu__item submenu__item_sub"
+                                        data-tab="2.2.2"><button>Ниши и возрастные ограничения</button></li>
+                                </ul>
+                            </li>
+                            <li class="submenu__item" data-tab="2.3">
+                                <button class="submenu__button">Страны</button>
+                            </li>
+                            <li class="submenu__item" data-tab="2.4">
+                                <button class="submenu__button">Коммуникация с вебами</button>
+                            </li>
+                            <li class="submenu__item" data-tab="2.5">
+                                <button class="submenu__button">Способы вывода</button>
+                            </li>
+                            <li class="submenu__item" data-tab="2.6">
+                                <button class="submenu__button">Платёжные сервисы</button>
+                            </li>
+                            <li class="submenu__item" data-tab="2.7">
+                                <button class="submenu__button">Основы постбека</button>
+                            </li>
+                            <li class="submenu__item">
+                                <button class="submenu__title submenu__title_icon">Наши источники траффика</button>
+                                <ul class="submenu submenu_main">
+                                    <li class="submenu__item submenu__item_sub"
+                                        data-tab="2.8.1">
+                                        <button>Наши источники траффика</button>
+                                    </li>
+                                    <li class="submenu__item submenu__item_sub" 
+                                        data-tab="2.8.2">
+                                        <button>Наши источники траффика</button>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="submenu__item" data-tab="2.9">
+                                <button class="submenu__button">SPY сервисы FB</button>
+                            </li>
+                            <li class="submenu__item" data-tab="2.10">
+                                <button class="submenu__button">Таблица, отчёты</button>
+                            </li>
+                            <li class="submenu__item" data-tab="2.11">
+                                <button class="submenu__button">Алерты</button>
+                            </li>
+                            <li class="submenu__item" data-tab="2.12">
+                                <button class="submenu__button">Преимущества нашей ПП</button>
+                            </li>
+                            <li class="submenu__item" data-tab="2.13">
+                                <button class="submenu__button">Полезные сайты</button>
+                            </li>
+                            <li class="submenu__item" data-tab="2.14">
+                                <button class="submenu__button">Тест</button>
+                            </li>  
+                        </ul>
+                    </li>
+                    <li class="menu__item" data-tab="3">
+                        <button class="menu__title">
+                            <svg class="menu__icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
+                                    stroke="#0EE9FF" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M9.09998 12V10.52C9.09998 8.60999 10.45 7.83999 12.1 8.78999L13.38 9.52999L14.66 10.27C16.31 11.22 16.31 12.78 14.66 13.73L13.38 14.47L12.1 15.21C10.45 16.16 9.09998 15.38 9.09998 13.48V12Z"
+                                    stroke="#0EE9FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            Видео-курсы
+                        </button>
+                    </li>
+                    <li class="menu__item" data-tab="4">
+                        <button class="menu__title">
+                            <svg class="menu__icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 12.2H15" stroke="#10E5FC" stroke-width="1.5" stroke-miterlimit="10"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M8 16.2H12.38" stroke="#10E5FC" stroke-width="1.5" stroke-miterlimit="10"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M10 6H14C16 6 16 5 16 4C16 2 15 2 14 2H10C9 2 8 2 8 4C8 6 9 6 10 6Z"
+                                    stroke="#10E5FC" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M16 4.02002C19.33 4.20002 21 5.43002 21 10V16C21 20 20 22 15 22H9C4 22 3 20 3 16V10C3 5.44002 4.67 4.20002 8 4.02002"
+                                    stroke="#10E5FC" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            Задачи
+                        </button>
+                    </li>
+                </ul>
+                
+                <div class="content">
+                    <div class="content__wrapper">
+                        <ul class="tab-content">
+                            <li class="tab-content__item" data-tab="1">
+                                <div class="article">
+                                    <h2 class="article__title">Теория</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.1">
+                                <div class="article">
+                                    <h2 class="article__title">Важные определения</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.2.1">
+                                <div class="article">
+                                    <h2 class="article__title">Форм-факторы</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.2.2">
+                                <div class="article">
+                                    <h2 class="article__title">Ниши и возрастные ограничения</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.3">
+                                <div class="article">
+                                    <h2 class="article__title">Страны</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.4">
+                                <div class="article">
+                                    <h2 class="article__title">Коммуникация с вебами</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.5">
+                                <div class="article">
+                                    <h2 class="article__title">Способы вывода</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.6">
+                                <div class="article">
+                                    <h2 class="article__title">Платежные сервисы</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.7">
+                                <div class="article">
+                                    <h2 class="article__title">Основы постбека</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.8.1">
+                                <div class="article">
+                                    <h2 class="article__title">Наши источники траффика 1</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.8.2">
+                                <div class="article">
+                                    <h2 class="article__title">Наши источники траффика 2</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.9">
+                                <div class="article">
+                                    <h2 class="article__title">SPY сервисы FB</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.10">
+                                <div class="article">
+                                    <h2 class="article__title">Таблица, отчёты</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.11">
+                                <div class="article">
+                                    <h2 class="article__title">Алерты</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.12">
+                                <div class="article">
+                                    <h2 class="article__title">Преимущества нашей ПП</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.13">
+                                <div class="article">
+                                    <h2 class="article__title">Полезные сайты</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="2.14">
+                                <div class="article">
+                                    <h2 class="article__title">Тест по теме</h2>
+                                    <div class="quiz-preview">
+                                        <h3 class="quiz-preview__title">Ответьте правильно на 15 вопросов за 30 минут
+                                        </h3>
+                                        <p class="quiz-preview__text">Данный тест составлен по материалу из блока <span
+                                                class="quiz-preview__span">«RocketProfit»</span>. Если вы изучили весь
+                                            раздел, то можете приступать к тесту.</p>
+                                        <p class="quiz-preview__text">Если вы допустите 3 и более ошибок, то тест будет
+                                            считаться не пройденным.</p>
+                                        <button class="button-blue quiz-preview__button">Начать прохождение
+                                            теста</button>
+                                    </div>
+                                    <div class="article__wrap">
+                                        <div class="article__quiz">
+                                            <h3 class="article__subtitle article__subtitle_quiz">Название теста</h3>
+                                            <div class="quiz-block">
+                                                <h3 class="quiz__title">1. Заголовок вопроса?</h3>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb" id="rb1"
+                                                        value="1">
+                                                    <label for="rb1" class="answer__label">Вариант ответа 1</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb" id="rb2"
+                                                        value="2">
+                                                    <label for="rb2" class="answer__label">Вариант ответа 2</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb" id="rb3"
+                                                        value="2">
+                                                    <label for="rb3" class="answer__label">Вариант ответа 3</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb" id="rb4"
+                                                        value="2">
+                                                    <label for="rb4" class="answer__label">Вариант ответа 4</label>
+                                                </div>
+                                            </div>
+                                            <div class="quiz-block">
+                                                <h3 class="quiz__title">2. Заголовок вопроса?</h3>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb2" id="rb5"
+                                                        value="1">
+                                                    <label for="rb5" class="answer__label">Вариант ответа 1</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb2" id="rb6"
+                                                        value="2">
+                                                    <label for="rb6" class="answer__label">Вариант ответа 2</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb2" id="rb7"
+                                                        value="2">
+                                                    <label for="rb7" class="answer__label">Вариант ответа 3</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb2" id="rb8"
+                                                        value="2">
+                                                    <label for="rb8" class="answer__label">Вариант ответа 4</label>
+                                                </div>
+                                            </div>
+                                            <div class="quiz-block">
+                                                <h3 class="quiz__title">3. Заголовок вопроса?</h3>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb3" id="rb9"
+                                                        value="1">
+                                                    <label for="rb9" class="answer__label">Вариант ответа 1</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb3" id="rb10"
+                                                        value="2">
+                                                    <label for="rb10" class="answer__label">Вариант ответа 2</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb3" id="rb11"
+                                                        value="2">
+                                                    <label for="rb11" class="answer__label">Вариант ответа 3</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb3" id="rb12"
+                                                        value="2">
+                                                    <label for="rb12" class="answer__label">Вариант ответа 4</label>
+                                                </div>
+                                            </div>
+                                            <button class="quiz-submit button-blue" id="submit">Отправить
+                                                ответы</button>
+                                        </div>
+                                        <div class="article__timer">
+                                            <div class="timer">
+                                                <p class="timer__title">Таймер</p>
+                                                <p class="timer__subtitle">Осталось:</p>
+                                                <p class="timer__time">30:00</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="quiz-result quiz-result_correct hide">
+                                        <img src="images/result1.png" alt="" class="quiz-result__image">
+                                        <div class="quiz-result__info">
+                                            <p class="quiz-result__head">Тест пройден</p>
+                                            <p class="quiz-result__text">Вы ответили верно на <span
+                                                    class="quiz-text quiz-text_correct">12</span> вопросов из <span
+                                                    class="quiz-questions"></span></p>
+                                        </div>
+                                        <button class="quiz-button quiz-button_correct js-btn-next">Перейти к новому
+                                            разделу</button>
+                                    </div>
+                                    <div class="quiz-result quiz-result_incorrect hide">
+                                        <img src="images/result2.png" alt="" class="quiz-result__image">
+                                        <div class="quiz-result__info">
+                                            <p class="quiz-result__head">Тест не пройден</p>
+                                            <p class="quiz-result__text">Вы ответили верно на <span
+                                                    class="quiz-text quiz-text_fail">9</span> вопросов из <span
+                                                    class="quiz-questions"></span></p>
+                                        </div>
+                                        <button class="quiz-button quiz-button_incorrect">Пройти тест снова</button>
+                                    </div>
+                                    <div class="quiz-result quiz-result_fail hide">
+                                        <img src="images/result3.png" alt="" class="quiz-result__image">
+                                        <div class="quiz-result__info">
+                                            <p class="quiz-result__head">Вы не прошли тест 3 раза</p>
+                                            <p class="quiz-result__text">Обратитесь к вашему руководителю.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="3">
+                                <div class="article">
+                                    <h2 class="article__title article__title_no-border">Видео-курсы</h2>
+                                    <div class="videos">
+                                        <div class="video">
+                                            <div class="video__inner">
+                                                <img src="images/video1.jpg" alt="" class="video__image">
+                                                <div class="video__info">
+                                                    <h3 class="video__title">Mama-edu “Аккаунт менеджер”</h3>
+                                                    <a href="https://mama-edu.com/" class="link"
+                                                        target="_blank">mama-edu.com</a>
+                                                    <p class="video__text">Логин: <span
+                                                            class="link">d.udinceva@rocketprofit.com</span></p>
+                                                    <p class="video__text">Пароль: 090607callR</p>
+                                                </div>
+                                            </div>
+                                            <button class="video__button" data-buttonid="1">Отправить скрин о
+                                                просмотре</button>
+                                        </div>
+                                        <div class="video">
+                                            <div class="video__inner">
+                                                <img src="images/video2.jpg" alt="" class="video__image">
+                                                <div class="video__info">
+                                                    <h3 class="video__title">Affhub “Арбитраж для новичков”</h3>
+                                                    <p class="video__text"><a href="https://affhub.net/aboutstudy/"
+                                                            class="link" target="_blank">affhub.net/aboutstudy</a></p>
+                                                    <p class="video__text">Зарегаться самостоятельно</p>
+                                                </div>
+                                            </div>
+                                            <button class="video__button" data-buttonid="2">Отправить скрин о
+                                                просмотре</button>
+                                        </div>
+                                        <div class="video">
+                                            <div class="video__inner">
+                                                <img src="images/video3.jpg" alt="" class="video__image">
+                                                <div class="video__info">
+                                                    <h3 class="video__title">Cybermarketing “Курс по СРА”</h3>
+                                                    <p class="video__text"><a
+                                                            href="https://www.cybermarketing.ru/video-courses/promo/arbitrazh-trafika-cpa.html"
+                                                            class="link"
+                                                            target="_blank">cybermarketing.ru/video-courses/prom...</a>
+                                                    </p>
+                                                    <p class="video__text">Зарегаться самостоятельно</p>
+                                                </div>
+                                            </div>
+                                            <button class="video__button" data-buttonid="3">Отправить скрин о
+                                                просмотре</button>
+                                        </div>
+                                        <div class="video">
+                                            <div class="video__inner">
+                                                <img src="images/video4.jpg" alt="" class="video__image">
+                                                <div class="video__info">
+                                                    <h3 class="video__title">Lucky-center “Арбитраж трафика”</h3>
+                                                    <p class="video__text"><a
+                                                            href="https://lucky-center.com/395/lp/1575-kursy/9313-bazovyy-kurs-po-arbitrazhu-trafika"
+                                                            class="link"
+                                                            target="_blank">lucky-center.com/395/lp/1575-kurcy...</a>
+                                                    </p>
+                                                    <p class="video__text">Логин: <span
+                                                            class="link">2yyegorguu7@list.ru</span></p>
+                                                    <p class="video__text">Пароль: qypfoj-sYtpyn-7kajha</p>
+                                                </div>
+                                            </div>
+                                            <button class="video__button" data-buttonid="4">Отправить скрин о
+                                                просмотре</button>
+                                        </div>
+                                        <div class="video">
+                                            <div class="video__inner">
+                                                <img src="images/video4.jpg" alt="" class="video__image">
+                                                <div class="video__info">
+                                                    <h3 class="video__title">Lucky-center “Тех.основы в арбитраже”</h3>
+                                                    <p class="video__text"><a
+                                                            href="https://lucky-center.com/395/lp/1575-kursy/8393-kurs-po-tekhnicheskim-osnovam-v-arbitrazhe"
+                                                            class="link"
+                                                            target="_blank">lucky-center.com/395/lp/1575-kurcy...</a>
+                                                    </p>
+                                                    <p class="video__text">Логин: <span
+                                                            class="link">2yyegorguu7@list.ru</span></p>
+                                                    <p class="video__text">Пароль: qypfoj-sYtpyn-7kajha</p>
+                                                </div>
+                                            </div>
+                                            <button class="video__button" data-buttonid="5">Отправить скрин о
+                                                просмотре</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="4">
+                                <div class="article">
+                                    <h2 class="article__title article__title_no-border">Задачи</h2>
+                                    <div class="tasks">
+                                        <div class="tasks__headers">
+                                            <div class="task-header" data-task="1">
+                                                <img src="images/task1.png" alt="" class="task-header__image">
+                                                <div class="task-header__info task-header__info_one">
+                                                    <p class="task-header__title">Регистрация и изучение ЛК RocketProfit
+                                                    </p>
+                                                    <button class="task-header__button">Перейти к задаче</button>
+                                                </div>
+                                            </div>
+                                            <div class="task-header" data-task="2">
+                                                <img src="images/task2.png" alt="" class="task-header__image">
+                                                <div class="task-header__info task-header__info_two">
+                                                    <p class="task-header__title">Регистрация в пп конкурентов</p>
+                                                    <button class="task-header__button">Перейти к задаче</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tasks__content">
+                                            <div class="task-content" data-task="1">
+                                                <div class="task-head">
+                                                    <img src="images/task1.png" alt="" class="task-head__image">
+                                                    <p class="task-head__text">Регистрация и изучение ЛК RocketProfit
+                                                    </p>
+                                                </div>
+                                                <ul class="task-list">
+                                                    <li class="task-list__item">
+                                                        <div class="task-list__number">1</div>
+                                                        <p class="task-list__text">Зарегай себе отдельный акк, как
+                                                            вебмастер: пройди авторизацию через почту и телеграм</p>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <div class="task-list__number">2</div>
+                                                        <p class="task-list__text">Создай поток с лендингом и транзиткой
+                                                            на оффер (любой)</p>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <div class="task-list__number">3</div>
+                                                        <p class="task-list__text">Добавь следующие метки - sid1=test,
+                                                            sid2=pispis, sid3=rp</p>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <div class="task-list__number">4</div>
+                                                        <p class="task-list__text">Оставь тестовую заявку и покажи ее
+                                                            скрином в статистике</p>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <div class="task-list__number">5</div>
+                                                        <p class="task-list__text">Создай в этом потоке сплит-тест,
+                                                            покажи это скрином</p>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <div class="task-list__number">6</div>
+                                                        <p class="task-list__text">Скажи, какие регионы ты бы
+                                                            исключил(а) из таргета конкретно по той стране, на которую
+                                                            ты теоретически бы лил(а) - например, Испания</p>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <div class="task-list__number">7</div>
+                                                        <p class="task-list__text">Какие офферы у нас запущены по
+                                                            Индонезии?</p>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <div class="task-list__number">8</div>
+                                                        <p class="task-list__text">Дай потоковую и прямую ссылку на
+                                                            любой лендинг в системе</p>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <div class="task-list__number">9</div>
+                                                        <p class="task-list__text">Скинь архив с АПИ по офферу
+                                                            «Степлекс» Венгрия (любой ленд топовый)</p>
+                                                    </li>
+                                                </ul>
+                                                <button class="button-blue task-button" data-buttonid="6">Отправить
+                                                    скрин</button>
+                                            </div>
+                                            <div class="task-content" data-task="2">
+                                                <div class="task-head">
+                                                    <img src="images/task2.png" alt="" class="task-head__image">
+                                                    <p class="task-head__text">Регистрация в пп конкурентов</p>
+                                                </div>
+                                                <p class="task-content__subtitle">Зарегистрироваться в пп у конкурентов,
+                                                    как веб-мастер и сохранить все логины, пароли в отдельном файле
+                                                    excel</p>
+                                                <ul class="task-list">
+                                                    <li class="task-list__item">
+                                                        <a href="https://lucky.online/"
+                                                            class="task-list__link">LuckyOnline</a>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <a href="https://leadbit.com/" class="task-list__link">
+                                                            Leadbit</a>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <a href="https://terraleads.com/" class="task-list__link">
+                                                            TerraLeads</a>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <a href="https://everad.com/" class="task-list__link">
+                                                            Everad</a>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <a href="https://dr.cash/" class="task-list__link">Dr.Cash</a>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <a href="https://kma.biz/" class="task-list__link">Kma.biz</a>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <a href="https://leadrock.com/" class="task-list__link">
+                                                            Leadrock</a>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <a href="https://leadreaktor.com/" class="task-list__link">
+                                                            Leadreactor</a>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <a href="https://adcombo.com/"
+                                                            class="task-list__link">Adcombo</a>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <a href="https://webvork.com/en/" class="task-list__link">
+                                                            Webvork</a>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <a href="https://affstar.com/" class="task-list__link">
+                                                            Affstar</a>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <a href="https://cpaomni.com/" class="task-list__link">
+                                                            Omnicpa</a>
+                                                    </li>
+                                                    <li class="task-list__item">
+                                                        <a href="https://cpa.tl/" class="task-list__link">Cpa.tl</a>
+                                                    </li>
+                                                </ul>
+                                                <form class="task-content__form">
+                                                    <input type="text" class="task-content__input"
+                                                        placeholder="Вставь ссылку на файл">
+                                                    <button class="button-blue button-blue_form">Отправить</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="private-cabinet tab-content__item" data-tab="20">
+                                <h2 class="private-cabinet__title">Личный кабинет</h2>
+                                <div class="statistic">
+                                    <h3 class="statistic__title">Статистика</h3>
+                                    <p class="statistic__subtitle">Изучено тем <span class="statistic__themes">(<span
+                                                class="themes-count">4</span>)</span></p>
+                                    <div class="statistic__inner">
+                                        <div class="stat-block">
+                                            <div class="stat-block__head">
+                                                <p class="stat-block__title">Теория</p>
+                                                <p class="stat-block__percent stat-block__percent_purple">100%</p>
+                                            </div>
+                                            <div class="stat-block__line stat-block__line_hundred"></div>
+                                        </div>
+                                        <div class="stat-block">
+                                            <div class="stat-block__head">
+                                                <p class="stat-block__title">Rocket Profit</p>
+                                                <p class="stat-block__percent stat-block__percent_purple">100%</p>
+                                            </div>
+                                            <div class="stat-block__line stat-block__line_hundred"></div>
+                                        </div>
+                                        <div class="stat-block">
+                                            <div class="stat-block__head">
+                                                <p class="stat-block__title">Видео-курсы</p>
+                                                <p class="stat-block__percent stat-block__percent_blue">30%</p>
+                                            </div>
+                                            <div class="stat-block__line stat-block__line_thirty"></div>
+                                        </div>
+                                        <div class="stat-block">
+                                            <div class="stat-block__head">
+                                                <p class="stat-block__title">Задачи</p>
+                                                <p class="stat-block__percent stat-block__percent_grey">0%</p>
+                                            </div>
+                                            <div class="stat-block__line stat-block__line_zero"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="tab-buttons">
+                            <button class="tab-button tab-button_prev js-btn-prev">Назад</button>
+                            <button class="tab-button tab-button_next js-btn-next">Вперед</button>
+                        </div>
+                    </div>
+                    <div class="search-results hide">
+                        <div class="search-results__header">
+                            <h3 class="search-results__title">Результаты</h3>
+                            <p class="search-results__text">Найдено результатов <span
+                                    class="search-results__find">5</span></p>
+                        </div>
+                        <div class="search-block">
+                            <p class="search-block__head">RocketProfit</p>
+                            <p class="search-result__text">Давно выяснено, что при оценке дизайна и композиции читаемый
+                                текст мешает сосредоточиться. Lorem Ipsum используют потому оффер такой один</p>
+                        </div>
+                        <div class="search-block">
+                            <p class="search-block__head">RocketProfit</p>
+                            <p class="search-result__text">Давно выяснено, что при оценке дизайна и композиции читаемый
+                                текст мешает сосредоточиться. Lorem Ipsum используют потому оффер такой один</p>
+                        </div>
+                        <div class="search-block">
+                            <p class="search-block__head">RocketProfit</p>
+                            <p class="search-result__text">Давно выяснено, что при оценке дизайна и композиции читаемый
+                                текст мешает сосредоточиться. Lorem Ipsum используют потому оффер такой один</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img src="images/top-center-waves.png" alt="" class="wrapper__bg wrapper__bg_bottom">
+    </main>
+
+    <div class="popup popup_access">
+        <div class="popup__overlay"></div>
+        <div class="popup__inner popup__inner_access">
+            <img src="images/lock.png" class="popup__image" alt="">
+            <p class="popup__title">Вы ещё не прошли предыдущие темы, чтобы иметь доступ к этой теме</p>
+            <div class="popup__close popup__close_access">Вернуться</div>
+        </div>
+    </div>
+
+    <div class="popup popup_shot">
+        <div class="popup__overlay"></div>
+        <div class="popup__inner popup__inner_shot">
+            <div class="popup__wrapper drop-area" id="drop-area">
+                <form class="file-form">
+                    <div class="file-form__comment hide">
+                        <p class="file-form__title">Вставь комментарий и скриншоты о выполнении задачи №1</p>
+                        <textarea cols="30" rows="10" class="file-form__textarea"
+                            placeholder="Добавить комментарий"></textarea>
+                        <div class="file-form__buttons">
+                            <button class="button-blue button-blue_file-form add-screans" type="button">Добавить
+                                скрины</button>
+                            <button class="button-blue button-blue_file-form no-screans" type="button">Отправить без
+                                скринов</button>
+                        </div>
+                    </div>
+                    <div class="file-form__content">
+                        <img src="images/shot.png" class="popup__image popup__image_shot" alt="">
+                        <p class="popup__title popup__title_shot">Вставь скрин о просмотре видео и получении сертификата
+                        </p>
+                        <p class="popup__subtitle">Вставить можно при помощи Drag’n’Drop в это окно или с помощью кнопки
+                            ниже</p>
+                        <label class="drop-area__button" for="fileElem">Выбрать скриншот</label>
+                        <input type="file" id="fileElem" class="drop-area__file" multiple accept="image/*"
+                            onchange="handleFiles(this.files)">
+                    </div>
+                </form>
+                <div id="gallery" class="gallery-files"></div>
+                <div class="gallery-files__btn gallery-files__btn_video">
+                    <button class="gallery-files__button gallery-files__button-js">Отправить скрины</button>
+                </div>
+                <div class="gallery-files__btn gallery-files__btn_task hide">
+                    <button class="gallery-files__button gallery-files__button_task">Отправить скрины</button>
+                </div>
+            </div>
+            <div class="popup__close popup__close_shot">Вернуться</div>
+        </div>
+    </div>
+
+    <!-- <div class="popup popup_task">
+        <div class="popup__overlay"></div>
+        <div class="popup__inner popup__inner_shot">
+            <div class="popup__wrapper popup__wrapper_task drop-area" id="drop-area">
+                <form class="file-form">
+                    <div class="file-form__comment">
+                        <p class="file-form__title">Вставь комментарий и скриншоты о выполнении задачи №1</p>
+                        <textarea cols="30" rows="10" class="file-form__textarea" placeholder="Добавить комментарий"></textarea>
+                        <div class="file-form__buttons">
+                            <button class="button-blue button-blue_file-form add-screans" type="button">Добавить скрины</button>
+                            <button class="button-blue button-blue_file-form no-screans" type="button">Отправить без скринов</button>
+                        </div>
+                    </div>
+                    <div class="file-form__shot hide">
+                        <img src="images/shot.png" class="popup__image popup__image_shot" alt="">       
+                        <p class="popup__title popup__title_shot">Вставь комментарии и скрины о выполнении задачи</p>
+                        <p class="popup__subtitle">Вставить можно при помощи Drag’n’Drop в это окно или с помощью кнопки ниже</p>
+                        <label class="drop-area__button" for="fileElem">Выбрать скриншот</label>
+                        <input type="file" id="fileElem" class="drop-area__file" multiple accept="image/*" onchange="handleFiles(this.files)">
+                    </div>
+                </form>
+                <div id="gallery2" class="gallery-files"></div>
+                <div class="gallery-files__btn">
+                    <button class="gallery-files__button">Отправить скрины</button>
+                </div>                
+            </div>  
+            <div class="popup__close popup__close_task">Вернуться</div>             
+        </div>        
+    </div> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
