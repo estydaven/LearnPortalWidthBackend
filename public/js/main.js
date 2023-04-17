@@ -82,7 +82,8 @@ function logout() {
 
 $('ul.menu button').each(function() {
   $(this).click(function (e) {
-    const li = $(this).parent();
+    hidePrivatCabinet();
+    const li = $(this).parent();    
     
     if (!(li.hasClass("showed"))) {
       $('.popup_access').css('display', 'flex');
@@ -156,6 +157,7 @@ $(document).ready(() => {
   $('.js-btn-next').click(function () {
     const activeTab = localStorage.getItem('active-tab') || '1';    
     const nextTab = getNextTab(activeTab);
+    hidePrivatCabinet();
 
     if (nextTab) {
       setShowedForTab(nextTab);
@@ -171,8 +173,9 @@ $(document).ready(() => {
   $('.js-btn-prev').click(function () {
     const activeTab = localStorage.getItem('active-tab') || '1';    
     const prevTab = getPrevTab(activeTab);
+    hidePrivatCabinet();
 
-    if (prevTab) {
+    if (prevTab) {      
       $('ul.menu li.active').removeClass('active');
       $('ul.menu li.open').removeClass('open');
       $('ul.tab-content li.active').removeClass('active');
@@ -253,6 +256,20 @@ $('.search__icon').on('click', function () {
   $('.search').toggleClass('open');
   $('.search__field').toggleClass('hide');
 });
+
+// Personal Cabinet
+$('.user').on('click', function () {
+  $('.private-cabinet').removeClass('hide');
+  $('.cabinet-menu').removeClass('hide');
+  const activeTab = localStorage.getItem('active-tab') || '1';
+  const li = $(`ul.tab-content li[data-tab="${activeTab}"]`);
+  li.removeClass('active');
+});
+
+function hidePrivatCabinet() {
+  $('.private-cabinet').addClass('hide');
+  $('.cabinet-menu').addClass('hide');
+}
 
 // Popup shot and task
 // TODO: Поменять цвет кнопки "Отправить скрин о просмотре" при отправке скринов
