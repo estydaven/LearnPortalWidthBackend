@@ -66,6 +66,11 @@ function setUser(user) {
   for (let tab of tabs) {
     setShowedForTab(tab);
   }
+
+  const tasks = user.available_tasks;
+  for (let task of tasks) {
+    setShowedForTask(task);
+  }
 }
 
 function logout() {
@@ -83,13 +88,14 @@ function logout() {
 $('ul.menu button').each(function() {
   $(this).click(function (e) {
     hidePrivatCabinet();
+    hideTaskContent();
     const li = $(this).parent();    
     
     if (!(li.hasClass("showed"))) {
       $('.popup_access').css('display', 'flex');
     } else {
       e.stopPropagation();
-      const tab = li.attr('data-tab');
+      const tab = li.attr('data-tab');      
       
       li.siblings().removeClass('open');
       li.siblings().each(function() {
@@ -157,9 +163,16 @@ $(document).ready(() => {
   $('.js-btn-next').click(function () {
     const activeTab = localStorage.getItem('active-tab') || '1';    
     const nextTab = getNextTab(activeTab);
-    hidePrivatCabinet();
+    hidePrivatCabinet();    
 
     if (nextTab) {
+      // if (nextTab === '4') {
+      //   const task = $('.task-header');        
+      //   task.first().addClass('showed'); 
+      //   // const taskId = $('.task-header').attr('data-task');
+      //   // addAvailableTask(taskId);
+      // }
+      
       setShowedForTab(nextTab);
       addAvailablePage(nextTab);
 
@@ -174,6 +187,7 @@ $(document).ready(() => {
     const activeTab = localStorage.getItem('active-tab') || '1';    
     const prevTab = getPrevTab(activeTab);
     hidePrivatCabinet();
+    hideTaskContent();
 
     if (prevTab) {      
       $('ul.menu li.active').removeClass('active');
@@ -194,6 +208,11 @@ function setShowedForTab(tab) {
     }
 }
 
+function setShowedForTask(task) {
+  let li = $(`ul.tasks__headers li[data-task="${task}"]`);
+  li.addClass('showed');
+}
+
 function addAvailablePage(nextTab) {
   $.ajax({
     url: 'api/users',
@@ -201,6 +220,14 @@ function addAvailablePage(nextTab) {
     data: {nextTab}
   });
 }
+
+// function addAvailableTask(task) {
+//   $.ajax({
+//     url: 'api/users',
+//     type: 'PUT',
+//     data: {task}
+//   });
+// }
 
 function getNextTab(activeTab) {
   let li = $(`ul.menu li[data-tab="${activeTab}"]`);
@@ -271,6 +298,32 @@ function hidePrivatCabinet() {
   $('.cabinet-menu').addClass('hide');
 }
 
+// Tasks script
+
+$('.task-header').click(function () {
+  let id = $(this).attr('data-task'),
+    content = $('.task-content[data-task="' + id + '"]');
+  const task = $(this);
+  
+  if (task.hasClass("showed")) {
+    $('.task-header').addClass('hide');
+    $('.task-content.active').removeClass('active');
+    content.addClass('active');    
+  } else {
+    $('.popup_access').css('display', 'flex');
+    $('.popup_access .popup__title').html('Сделайте предыдущую задачу, чтобы получить доступ к следующей');
+  }
+});
+
+$('.task-return').click(function () {
+  hideTaskContent();
+});
+
+function hideTaskContent() {
+  $('.task-header').removeClass('hide');
+  $('.task-content.active').removeClass('active');
+}
+
 // Popup shot and task
 // TODO: Поменять цвет кнопки "Отправить скрин о просмотре" при отправке скринов
 
@@ -282,7 +335,7 @@ const closeButtonShot = document.querySelector('.popup__close_shot');
 const closeButtonTask = document.querySelector('.popup__close_task');
 const noScreensBtn = document.querySelector('.no-screans');
 const addScreensBtn = document.querySelector('.add-screans');
-const taskButton = document.querySelector('.task-button');
+const taskButtonScreen = document.querySelector('.task-screen');
 const fileFormTitle = document.querySelector('.file-form__title');
 const fileComment = document.querySelector('.file-form__comment');
 const fileContent = document.querySelector('.file-form__content');
@@ -363,7 +416,7 @@ videoButtons.forEach(btn => btn.addEventListener('click', () => {
 
 closeButtonShot.addEventListener('click', resetPopupShot);
 closeButtonAccess.addEventListener('click', closePopupAccess);
-taskButton.addEventListener('click', () => {
+taskButtonScreen.addEventListener('click', () => {
   showPopupShot();
   fileComment.classList.remove('hide');
   fileContent.classList.add('hide');
@@ -566,14 +619,3 @@ function restartQuiz() {
 quizButtonStart.addEventListener('click', startQuiz);
 quizButton.addEventListener('click', showResult);
 quizButtonIncorrect.addEventListener('click', restartQuiz);
-
-// Tasks script
-
-$('.task-header').click(function () {
-  let id = $(this).attr('data-task'),
-    content = $('.task-content[data-task="' + id + '"]');
-
-  $('.task-header').addClass('hide');
-  $('.task-content.active').removeClass('active');
-  content.addClass('active');
-});

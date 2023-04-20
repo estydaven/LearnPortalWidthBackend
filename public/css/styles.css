@@ -172,7 +172,7 @@ body {
   border-radius: 15px;
   height: 57px;
   font-size: 18px;
-  line-height: 22px;
+  line-height: 21px;
   font-family: "suisse_intlmedium";
   text-align: center;
   color: #ffffff;
@@ -535,7 +535,7 @@ input::-webkit-search-results-decoration { display: none; }
   max-height: 100%;
   padding: 0 19px 9px 19px;
 }
-.menu__item.active .menu__title{
+.menu li.active .menu__title{
   color: #0EE9FF;
   text-shadow: 0px 0px 33px #0EE9FF;
   position: relative;
@@ -550,6 +550,7 @@ input::-webkit-search-results-decoration { display: none; }
   filter: drop-shadow(0 4px 2px #1f3c6d) drop-shadow(0 0 15px rgba(0,255,240,.7));
 }
 .menu__title {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -1276,6 +1277,11 @@ input::-webkit-search-results-decoration { display: none; }
 }
 .task-list__link {
   color: #0DB4C7;
+}
+.task-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .task-content {
   display: none;

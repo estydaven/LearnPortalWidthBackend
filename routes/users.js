@@ -7,7 +7,8 @@ const users = [
         password_hash: '$2b$10$LlwUiAW/XkT1ALBg.komhOujXlXjEKDsrB0S7WnJx0NAZppfRzaO.',
         name: 'Igor',
         avatar: null,
-        available_pages: ['1']
+        available_pages: ['1'],
+        available_tasks: ['1'],
     }
 ];
 
@@ -18,7 +19,8 @@ router.post('/signup', (req, res, next) => {
         password_hash: bcrypt.hashSync(req.body.password, 10),
         name: req.body.name,
         avatar: null,
-        available_pages: ['1']
+        available_pages: ['1'],
+        available_tasks: ['1'],
     });
 
     res.status(201).json({message: 'Success!'});   
@@ -48,11 +50,19 @@ router.get('/session', (req, res, next) => {
 })
 
 router.put('/', (req, res, next) => {
-    const user = users.find(user => user.id === req.session.user.id);    
-    user.available_pages.push(req.body.nextTab);
+    const user = users.find(user => user.id === req.session.user.id);
+    user.available_pages.push(req.body.nextTab);    
     req.session.user = user;
-    res.status(200).json({message: 'Сохранено'});    
+    res.status(200).json({message: 'Сохранено'}); 
 })
+
+// router.put('/', (req, res, next) => {
+//     const user = users.find(user => user.id === req.session.user.id);
+//     console.log(user);
+//     user.available_tasks.push(req.body.task);    
+//     req.session.user = user;
+//     res.status(200).json({message: 'Сохранено'});    
+// })
 
 router.delete('/session', async (req, res, next) => {
     await req.session.destroy();
