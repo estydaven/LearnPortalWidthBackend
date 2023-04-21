@@ -166,12 +166,6 @@ $(document).ready(() => {
     hidePrivatCabinet();    
 
     if (nextTab) {
-      // if (nextTab === '4') {
-      //   const task = $('.task-header');        
-      //   task.first().addClass('showed'); 
-      //   // const taskId = $('.task-header').attr('data-task');
-      //   // addAvailableTask(taskId);
-      // }
       
       setShowedForTab(nextTab);
       addAvailablePage(nextTab);
@@ -208,11 +202,6 @@ function setShowedForTab(tab) {
     }
 }
 
-function setShowedForTask(task) {
-  let li = $(`ul.tasks__headers li[data-task="${task}"]`);
-  li.addClass('showed');
-}
-
 function addAvailablePage(nextTab) {
   $.ajax({
     url: 'api/users',
@@ -221,13 +210,13 @@ function addAvailablePage(nextTab) {
   });
 }
 
-// function addAvailableTask(task) {
-//   $.ajax({
-//     url: 'api/users',
-//     type: 'PUT',
-//     data: {task}
-//   });
-// }
+function addAvailableTask(task) {
+  $.ajax({
+    url: 'api/users/available-tasks',
+    type: 'PUT',
+    data: {task}
+  });
+}
 
 function getNextTab(activeTab) {
   let li = $(`ul.menu li[data-tab="${activeTab}"]`);
@@ -324,6 +313,17 @@ function hideTaskContent() {
   $('.task-content.active').removeClass('active');
 }
 
+function setShowedForTask(task) {
+  let li = $(`ul.tasks__headers li[data-task="${task}"]`);
+  li.addClass('showed');
+}
+
+$('.no-screenshots').click(function () {
+  const taskId = $('.task-header.showed').next().attr('data-task');
+  $('.task-header.showed').next().addClass('showed');
+  addAvailableTask(taskId);
+})
+
 // Popup shot and task
 // TODO: Поменять цвет кнопки "Отправить скрин о просмотре" при отправке скринов
 
@@ -333,8 +333,8 @@ const popupAccess = document.querySelector('.popup_access');
 const closeButtonAccess = document.querySelector('.popup__close_access');
 const closeButtonShot = document.querySelector('.popup__close_shot');
 const closeButtonTask = document.querySelector('.popup__close_task');
-const noScreensBtn = document.querySelector('.no-screans');
-const addScreensBtn = document.querySelector('.add-screans');
+const noScreensBtn = document.querySelector('.no-screenshots');
+const addScreensBtn = document.querySelector('.add-screenshots');
 const taskButtonScreen = document.querySelector('.task-screen');
 const fileFormTitle = document.querySelector('.file-form__title');
 const fileComment = document.querySelector('.file-form__comment');
