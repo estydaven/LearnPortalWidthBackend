@@ -60,7 +60,7 @@ router.put('/available-tasks', (req, res, next) => {
     const user = users.find(user => user.id === req.session.user.id);
     user.available_tasks.push(req.body.task);
     req.session.user = user;
-    res.status(200).json({message: 'Сохранено'});    
+    res.status(200).json({message: 'Сохранено'});
 })
 
 router.delete('/session', async (req, res, next) => {

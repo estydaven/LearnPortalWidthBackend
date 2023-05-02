@@ -318,119 +318,164 @@ function setShowedForTask(task) {
   li.addClass('showed');
 }
 
-$('.no-screenshots').click(function () {
+function setShowedForNextTask() {
   const taskId = $('.task-header.showed').next().attr('data-task');
   $('.task-header.showed').next().addClass('showed');
   addAvailableTask(taskId);
-})
+}
+
+function onSubmitTask(formTask) {
+  const formData = new FormData(formTask);
+  const taskLink = formData.get('link');
+  const taskComment = formData.get('comment');
+  const taskId = $(formTask).attr('data-formId');
+
+  $.ajax({
+    url: `/api/tasks/${taskId}/results`,
+    type: 'PUT',
+    data: {taskLink, taskComment},
+    success: function() {
+      formTask.reset();
+      showConfirmPopup();
+      resetPopupShot();
+      closepopupShot();
+      setShowedForTask();
+      setShowedForNextTask();
+    }
+  });
+}
+
+function showConfirmPopup() {
+  $('.popup_confirm').css('display', 'flex');
+}
+
+function closeConfirmPopup() {
+  $('.popup_confirm').css('display', 'none');
+}
+
+$('.popup__close_confirm').click(function() {
+  closeConfirmPopup();
+});
 
 // Popup shot and task
 // TODO: Поменять цвет кнопки "Отправить скрин о просмотре" при отправке скринов
 
-const videoButtons = document.querySelectorAll('.video__button');
-const popupShot = document.querySelector('.popup_shot');
-const popupAccess = document.querySelector('.popup_access');
-const closeButtonAccess = document.querySelector('.popup__close_access');
-const closeButtonShot = document.querySelector('.popup__close_shot');
-const closeButtonTask = document.querySelector('.popup__close_task');
-const noScreensBtn = document.querySelector('.no-screenshots');
-const addScreensBtn = document.querySelector('.add-screenshots');
-const taskButtonScreen = document.querySelector('.task-screen');
-const fileFormTitle = document.querySelector('.file-form__title');
-const fileComment = document.querySelector('.file-form__comment');
-const fileContent = document.querySelector('.file-form__content');
-const fileFormButtons= document.querySelector('.file-form__buttons');
-const fileFormTextarea = document.querySelector('.file-form__textarea');
-const popupWrapper = document.querySelector('.popup__wrapper');
-const popupTitle = document.querySelector('.popup__title_shot');
-const buttonVideo = document.querySelector('.gallery-files__btn_video');
-const buttonTask = document.querySelector('.gallery-files__btn_task');
-const gallery = document.getElementById('gallery');
-const galleryButton = document.querySelector('.gallery-files__button-js');
-const buttonTaskSend = document.querySelector('.gallery-files__button_task');
 const body = document.body;
 
-function showCommentPopup() {
-  fileComment.classList.remove('hide');
-  fileFormButtons.classList.add('hide');
-  const fileForm = document.querySelector('.file-form');
-  fileForm.style.display = 'block';
-  fileForm.style.width = '100%';
-  //const galleryBlocks = document.querySelectorAll('.gallery-files__block');
-  //galleryBlocks.forEach(block => block.classList.add('gallery-files__block_min'));
-  fileContent.classList.add('hide');
-  fileContent.classList.add('file-form__content_mrg');
-  fileFormTitle.innerHTML = 'Комментарий и скриншоты';
-  buttonTaskSend.innerHTML = 'Отправить';
-  buttonTaskSend.classList.add('button-send');
-
-  const bthTaskSend = document.querySelector('.button-send');
-  bthTaskSend.addEventListener('click', resetPopupShot);
-}
+$('.video__button').each(function() {
+  $(this).click(function () {
+    showPopupShot();
+    $('.file-form_video').css('display', 'flex');
+    $('.file-form_task').css('display', 'none');
+    const btnData = $(this).attr('data-buttonid');
+    $('.gallery-files__button').attr('data-sendData', btnData);
+  });
+});
 
 function showPopupShot() {
-  popupShot.style.display = 'flex';
-  body.style.overflow = 'hidden';
+  $('.popup_shot').css('display', 'flex');
+  $('body').css('overflow', 'hidden');  
 }
 
-function resetPopupShot() {  
-  popupShot.style.display = 'none';
-  body.style.overflow = 'auto';
-  const galleryBlocks = document.querySelectorAll('.gallery-files__block');
-  fileContent.classList.remove('hide');
-  galleryBlocks.forEach(block => block.remove());
-  dropArea.classList.remove('open');
-  galleryButton.style.display = 'none';
-  popupWrapper.classList.remove('popup-task');
-  buttonVideo.classList.remove('hide');
-  buttonTask.classList.add('hide');
-  fileFormButtons.classList.remove('hide');
-  fileFormTitle.innerHTML = 'Вставь комментарий и скриншоты о выполнении задачи №1';
-  buttonTaskSend.innerHTML = 'Отправить скрины';
-  fileFormTextarea.value = '';
-  fileContent.classList.remove('file-form__content_mrg');
+function resetPopupShot() {
+  $('.gallery-files__block').remove();
+  $('.drop-area').removeClass('open');
+  $('.gallery-files__button_video').css('display', 'none');
+  $('.popup__wrapper').removeClass('popup-task');
+  $('.popup__wrapper').removeClass('popup__wrapper_task');
+  $('.gallery-files__btn_task').removeClass('hide');
+  $('.gallery-files__btn_video').removeClass('hide');
+  $('.file-form__buttons').removeClass('hide');
+  $('.file-form__title').html('Вставь комментарий и скриншоты о выполнении задачи №1');
+  $('.file-form__textarea').val('');
+  $('.file-form__content_task').removeClass('file-form__content_mrg');
+  $('.file-form__content_task').addClass('hide');
+  $('.file-form__content_video').removeClass('hide');
+  $('.gallery-files__btn_send').addClass('hide'); 
+  $('.gallery-files__button_task').css('display', 'none');
+}
+
+function closepopupShot() {
+  $('.popup_shot').css('display', 'none');
+  $('body').css('overflow', 'auto');
 }
 
 function closePopupAccess() {
-  popupAccess.style.display = 'none';
-  body.style.overflow = 'auto';
+  $('.popup_access').css('display', 'none');
+  $('body').css('overflow', 'auto');
 }
 
 function showScreensTask() {
-  fileComment.classList.add('hide');
-  fileContent.classList.remove('hide');
-  popupWrapper.classList.remove('popup__wrapper_task');
-  popupTitle.innerHTML = 'Вставь комментарии и скрины о выполнении задачи';
-  const buttonSend = document.querySelector('.gallery-files__button');
-  buttonSend.setAttribute('data-sendData', 6);
+  $('.file-form__comment').addClass('hide');
+  $('.file-form__content_task').removeClass('hide');
+  $('.popup__wrapper').removeClass('popup__wrapper_task');
+  $('.gallery-files__button').attr('data-sendData', 6);
 }
 
-videoButtons.forEach(btn => btn.addEventListener('click', () => {
-  showPopupShot();
-  const btnData = btn.dataset.buttonid;
-  const buttonSend = document.querySelector('.gallery-files__button');
-  buttonSend.setAttribute('data-sendData', btnData);
-  fileComment.classList.add('hide');
-  popupWrapper.classList.remove('popup__wrapper_task');
-}));
+function showCommentTaskContent() {
+  $('.file-form__comment').removeClass('hide');
+  $('.file-form__content_task').addClass('hide');
+  $('.file-form__buttons').addClass('hide');
+  
+  let galleryBlocks = $('.gallery-files__block');
+  for (let i = 0; i < galleryBlocks.length; i++) {
+    if (galleryBlocks.length > 1) {
+      $('.file-form__content_task').addClass('hide');
+    } else {
+      $('.file-form__content_task').removeClass('hide');
+    }
+  }
+  $('.file-form__content_task').addClass('file-form__content_mrg');
+  $('.file-form__title').html('Комментарий и скриншоты');
+  $('.gallery-files__btn_task').addClass('hide');
+  $('.gallery-files__btn_send').removeClass('hide');
+}
 
-closeButtonShot.addEventListener('click', resetPopupShot);
-closeButtonAccess.addEventListener('click', closePopupAccess);
-taskButtonScreen.addEventListener('click', () => {
-  showPopupShot();
-  fileComment.classList.remove('hide');
-  fileContent.classList.add('hide');
-  popupWrapper.classList.add('popup__wrapper_task');
-  popupWrapper.classList.add('popup-task');
+function showTaskContent() {
+  $('.file-form_task').css('display', 'flex');
+  $('.file-form_video').css('display', 'none');
+  $('.file-form__content_video').addClass('hide');
+  $('.popup__wrapper').addClass('popup__wrapper_task');
+  $('.popup__wrapper').addClass('popup-task');
+  $('.file-form__comment').removeClass('hide');
+}
+
+$('.popup__close_shot').click(function() {
+  resetPopupShot();
+  closepopupShot();
 });
 
-noScreensBtn.addEventListener('click', resetPopupShot);
-addScreensBtn.addEventListener('click', showScreensTask);
-galleryButton.addEventListener('click', resetPopupShot);
-buttonTaskSend.addEventListener('click', showCommentPopup);
+$('.popup__close_access').click(function() {
+  closePopupAccess();
+});
+
+$('.gallery-files__button_video').click(function() {
+  resetPopupShot();
+  closepopupShot();
+});
+
+$('.task-screen').click(function() {
+  showPopupShot();
+  showTaskContent();
+});
+
+$('.add-screenshots').click(function() {
+  showScreensTask();
+});
+
+$('.gallery-files__button_task').click(function() {
+  showCommentTaskContent();
+});
 
 // ************************ Drag and drop ***************** //
 let dropArea = document.querySelector(".drop-area");
+const buttonVideo = document.querySelector('.gallery-files__btn_video');
+const buttonTask = document.querySelector('.gallery-files__btn_task');
+const galleryButton = document.querySelector('.gallery-files__button_video');
+const buttonTaskSend = document.querySelector('.gallery-files__button_task');
+const fileContent = document.querySelectorAll('.file-form__content');
+const fileContentTask = document.querySelector('.file-form__content_task');
+const buttonSend = document.querySelector('.gallery-files__btn_send');
 
 // Prevent default drag behaviors
 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -466,7 +511,6 @@ function unhighlight(e) {
 function handleDrop(e) {
   let dt = e.dataTransfer;
   let files = dt.files;
-
   handleFiles(files);
 }
 
@@ -481,9 +525,11 @@ function previewFile(file) {
   reader.readAsDataURL(file);
   reader.onloadend = function () {
     if (dropArea.classList.contains('popup-task')) {
-      buttonVideo.classList.add('hide');
-      buttonTask.classList.remove('hide');
-      buttonTaskSend.style.display = 'block';
+      if(!(buttonSend.classList.contains('hide'))) {
+        buttonTaskSend.style.display = 'none';
+      } else {
+        buttonTaskSend.style.display = 'block';
+      }      
     } else {
       galleryButton.style.display = 'block';
     }
@@ -497,23 +543,46 @@ function previewFile(file) {
     let img = document.createElement('img');
     img.className = 'gallery-files__image';
     img.src = reader.result;
-    gallery.appendChild(divImage).appendChild(img);
+
+    if (dropArea.classList.contains('popup-task')) {
+      const gallery = document.querySelector('.gallery-files_task');
+      gallery.appendChild(divImage).appendChild(img);
+    } else {
+      const gallery = document.querySelector('.gallery-files_video');
+      gallery.appendChild(divImage).appendChild(img);
+    }
+    
     divImage.appendChild(imageTrash);
 
     let galleryBlocks = document.querySelectorAll('.gallery-files__block');
+    
     for (let i = 0; i < galleryBlocks.length; i++) {
       if (galleryBlocks.length > 1) {
-        fileContent.classList.add('hide');
-      }
+        // fileContent.forEach(el => el.addEventListener('click', function () {
+        //   fileContent.classList.add('hide');    
+        // }));
+        $('.file-form__content_task').addClass('hide');
+        $('.file-form__content_video').addClass('hide');
+      }       
     }
     galleryBlocks.forEach(el => el.addEventListener('click', function () {
       this.remove();
-      fileContent.classList.remove('hide');      
+      $('.file-form__content_task').removeClass('hide');
+      $('.file-form__content_video').removeClass('hide');
+      //fileContent.classList.remove('hide');      
     }));
   }
 }
 
 function uploadFiles(files) {
+  // $.ajax({
+  //   url: `/api/tasks/${taskId}/results`,
+  //   type: 'PUT',
+  //   data: {files},
+  //   success: function() {
+  //     formTask.reset();
+  //   }
+  // });
   let url = '';
   let xhr = new XMLHttpRequest();
   let formData = new FormData();

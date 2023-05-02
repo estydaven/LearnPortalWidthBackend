@@ -1266,10 +1266,9 @@
                                                         <a href="https://cpa.tl/" class="task-list__link">Cpa.tl</a>
                                                     </li>
                                                 </ul>
-                                                <form class="task-content__form">
-                                                    <input type="text" class="task-content__input"
-                                                        placeholder="Вставь ссылку на файл">
-                                                    <button class="button-blue button-blue_form">Отправить</button>
+                                                <form class="task-content__form task-form" onsubmit="onSubmitTask(this);return false;" data-formId="2">
+                                                    <input type="text" class="task-content__input" name="link" placeholder="Вставь ссылку на файл">
+                                                    <button class="button-blue button-blue_form" type="submit">Отправить</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -1357,40 +1356,55 @@
         </div>
     </div>
 
+    <div class="popup popup_confirm">
+        <div class="popup__overlay"></div>
+        <div class="popup__inner popup__inner_access">
+            <p class="popup__title">Спасибо! <br> Ваши данные отправлены!</p>
+            <div class="popup__close popup__close_confirm">Вернуться</div>
+        </div>
+    </div>
+
     <div class="popup popup_shot">
         <div class="popup__overlay"></div>
         <div class="popup__inner popup__inner_shot">
             <div class="popup__wrapper drop-area" id="drop-area">
-                <form class="file-form">
-                    <div class="file-form__comment hide">
-                        <p class="file-form__title">Вставь комментарий и скриншоты о выполнении задачи №1</p>
-                        <textarea cols="30" rows="10" class="file-form__textarea"
-                            placeholder="Добавить комментарий"></textarea>
-                        <div class="file-form__buttons">
-                            <button class="button-blue button-blue_file-form add-screenshots" type="button">Добавить
-                                скрины</button>
-                            <button class="button-blue button-blue_file-form no-screenshots" type="button">Отправить без
-                                скринов</button>
-                        </div>
-                    </div>
-                    <div class="file-form__content">
+                <form class="file-form file-form_video">
+                    <div class="file-form__content file-form__content_video">
                         <img src="images/shot.png" class="popup__image popup__image_shot" alt="">
-                        <p class="popup__title popup__title_shot">Вставь скрин о просмотре видео и получении сертификата
-                        </p>
-                        <p class="popup__subtitle">Вставить можно при помощи Drag’n’Drop в это окно или с помощью кнопки
-                            ниже</p>
+                        <p class="popup__title popup__title_shot">Вставь скрин о просмотре видео и получении сертификата</p>
+                        <p class="popup__subtitle">Вставить можно при помощи Drag’n’Drop в это окно или с помощью кнопки ниже</p>
                         <label class="drop-area__button" for="fileElem">Выбрать скриншот</label>
-                        <input type="file" id="fileElem" class="drop-area__file" multiple accept="image/*"
-                            onchange="handleFiles(this.files)">
+                        <input type="file" id="fileElem" class="drop-area__file" multiple accept="image/*" onchange="handleFiles(this.files)">
+                    </div>
+                    <div class="gallery-files gallery-files_video"></div>
+                    <div class="gallery-files__btn gallery-files__btn_video">
+                        <button class="gallery-files__button gallery-files__button_video" type="button">Отправить скрины</button>
                     </div>
                 </form>
-                <div id="gallery" class="gallery-files"></div>
-                <div class="gallery-files__btn gallery-files__btn_video">
-                    <button class="gallery-files__button gallery-files__button-js">Отправить скрины</button>
-                </div>
-                <div class="gallery-files__btn gallery-files__btn_task hide">
-                    <button class="gallery-files__button gallery-files__button_task">Отправить скрины</button>
-                </div>
+                <form class="file-form file-form_task task-form" onsubmit="onSubmitTask(this);return false;" data-formId="1">
+                    <div class="file-form__comment">
+                        <p class="file-form__title">Вставь комментарий и скриншоты о выполнении задачи №1</p>
+                        <textarea cols="30" rows="10" class="file-form__textarea" placeholder="Добавить комментарий" name="comment" required=""></textarea>
+                        <div class="file-form__buttons">
+                            <button class="button-blue button-blue_file-form add-screenshots" type="button">Добавить скрины</button>
+                            <button class="button-blue button-blue_file-form no-screenshots" type="submit">Отправить без скринов</button>
+                        </div>
+                    </div>
+                    <div class="file-form__content file-form__content_task hide">
+                        <img src="images/shot.png" class="popup__image popup__image_shot" alt="">
+                        <p class="popup__title popup__title_shot">Вставь комментарии и скрины о выполнении задачи</p>
+                        <p class="popup__subtitle">Вставить можно при помощи Drag’n’Drop в это окно или с помощью кнопки ниже</p>
+                        <label class="drop-area__button" for="fileElem2">Выбрать скриншот</label>
+                        <input type="file" id="fileElem2" class="drop-area__file" multiple accept="image/*" onchange="handleFiles(this.files)">
+                    </div>
+                    <div class="gallery-files gallery-files_task"></div>
+                    <div class="gallery-files__btn gallery-files__btn_task">
+                        <button class="gallery-files__button gallery-files__button_task" type="button">Отправить скрины</button>
+                    </div>
+                    <div class="gallery-files__btn gallery-files__btn_send hide">
+                        <button class="button-send" type="submit">Отправить</button>
+                    </div>
+                </form>
             </div>
             <div class="popup__close popup__close_shot">Вернуться</div>
         </div>
