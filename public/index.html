@@ -943,12 +943,12 @@
                                                 </div>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__radio" name="rb" id="rb3"
-                                                        value="2">
+                                                        value="3">
                                                     <label for="rb3" class="answer__label">Вариант ответа 3</label>
                                                 </div>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__radio" name="rb" id="rb4"
-                                                        value="2">
+                                                        value="4">
                                                     <label for="rb4" class="answer__label">Вариант ответа 4</label>
                                                 </div>
                                             </div>
@@ -956,22 +956,22 @@
                                                 <h3 class="quiz__title">2. Заголовок вопроса?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__radio" name="rb2" id="rb5"
-                                                        value="1">
+                                                        value="5">
                                                     <label for="rb5" class="answer__label">Вариант ответа 1</label>
                                                 </div>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__radio" name="rb2" id="rb6"
-                                                        value="2">
+                                                        value="6">
                                                     <label for="rb6" class="answer__label">Вариант ответа 2</label>
                                                 </div>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__radio" name="rb2" id="rb7"
-                                                        value="2">
+                                                        value="7">
                                                     <label for="rb7" class="answer__label">Вариант ответа 3</label>
                                                 </div>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__radio" name="rb2" id="rb8"
-                                                        value="2">
+                                                        value="8">
                                                     <label for="rb8" class="answer__label">Вариант ответа 4</label>
                                                 </div>
                                             </div>
@@ -979,27 +979,72 @@
                                                 <h3 class="quiz__title">3. Заголовок вопроса?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__radio" name="rb3" id="rb9"
-                                                        value="1">
+                                                        value="9">
                                                     <label for="rb9" class="answer__label">Вариант ответа 1</label>
                                                 </div>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__radio" name="rb3" id="rb10"
-                                                        value="2">
+                                                        value="10">
                                                     <label for="rb10" class="answer__label">Вариант ответа 2</label>
                                                 </div>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__radio" name="rb3" id="rb11"
-                                                        value="2">
+                                                        value="11">
                                                     <label for="rb11" class="answer__label">Вариант ответа 3</label>
                                                 </div>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__radio" name="rb3" id="rb12"
-                                                        value="2">
+                                                        value="12">
                                                     <label for="rb12" class="answer__label">Вариант ответа 4</label>
                                                 </div>
                                             </div>
-                                            <button class="quiz-submit button-blue" id="submit">Отправить
-                                                ответы</button>
+                                            <div class="quiz-block">
+                                                <h3 class="quiz__title">4. Заголовок вопроса?</h3>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb4" id="rb13"
+                                                        value="13">
+                                                    <label for="rb13" class="answer__label">Вариант ответа 1</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb4" id="rb14"
+                                                        value="14">
+                                                    <label for="rb14" class="answer__label">Вариант ответа 2</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb4" id="rb15"
+                                                        value="15">
+                                                    <label for="rb15" class="answer__label">Вариант ответа 3</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb4" id="rb16"
+                                                        value="16">
+                                                    <label for="rb16" class="answer__label">Вариант ответа 4</label>
+                                                </div>
+                                            </div>
+                                            <div class="quiz-block">
+                                                <h3 class="quiz__title">5. Заголовок вопроса?</h3>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb5" id="rb17"
+                                                        value="17">
+                                                    <label for="rb17" class="answer__label">Вариант ответа 1</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb5" id="rb18"
+                                                        value="18">
+                                                    <label for="rb18" class="answer__label">Вариант ответа 2</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb5" id="rb19"
+                                                        value="19">
+                                                    <label for="rb19" class="answer__label">Вариант ответа 3</label>
+                                                </div>
+                                                <div class="answer">
+                                                    <input type="radio" class="answer__radio" name="rb5" id="rb20"
+                                                        value="20">
+                                                    <label for="rb20" class="answer__label">Вариант ответа 4</label>
+                                                </div>
+                                            </div>
+                                            <button class="button-blue quiz-submit" id="submit" onclick="sendAnswers()">Отправить ответы</button>
                                         </div>
                                         <div class="article__timer">
                                             <div class="timer">
@@ -1014,7 +1059,7 @@
                                         <div class="quiz-result__info">
                                             <p class="quiz-result__head">Тест пройден</p>
                                             <p class="quiz-result__text">Вы ответили верно на <span
-                                                    class="quiz-text quiz-text_correct">12</span> вопросов из <span
+                                                    class="quiz-text quiz-text_correct"></span> вопросов из <span
                                                     class="quiz-questions"></span></p>
                                         </div>
                                         <button class="quiz-button quiz-button_correct js-btn-next">Перейти к новому
@@ -1025,7 +1070,7 @@
                                         <div class="quiz-result__info">
                                             <p class="quiz-result__head">Тест не пройден</p>
                                             <p class="quiz-result__text">Вы ответили верно на <span
-                                                    class="quiz-text quiz-text_fail">9</span> вопросов из <span
+                                                    class="quiz-text quiz-text_fail"></span> вопросов из <span
                                                     class="quiz-questions"></span></p>
                                         </div>
                                         <button class="quiz-button quiz-button_incorrect">Пройти тест снова</button>
@@ -1361,6 +1406,14 @@
         <div class="popup__inner popup__inner_access">
             <p class="popup__title">Спасибо! <br> Ваши данные отправлены!</p>
             <div class="popup__close popup__close_confirm">Вернуться</div>
+        </div>
+    </div>
+
+    <div class="popup popup_test">
+        <div class="popup__overlay"></div>
+        <div class="popup__inner popup__inner_access">
+            <p class="popup__title popup__title_test"></p>
+            <div class="popup__close popup__close_test">Вернуться</div>
         </div>
     </div>
 

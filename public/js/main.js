@@ -617,7 +617,6 @@ function tick() {
 
 // TODO: Скорректировать сброс счетчика, и возможно, чекбоксов!!! Сделать сброс теста при успешном прохождении и переходе на следующую тему
 
-const answers = document.querySelectorAll('.answer__radio');
 const answerTitle = document.querySelectorAll('.quiz__title');
 const quizButton = document.querySelector('.quiz-submit');
 const quizResultCorrect = document.querySelector('.quiz-result_correct');
@@ -627,10 +626,13 @@ const timerTime = document.querySelector('.timer__time');
 const quizButtonIncorrect = document.querySelector('.quiz-button_incorrect');
 const quizButtonStart = document.querySelector('.quiz-preview__button');
 const articleWrapper = document.querySelector('.article__wrap');
-const quizLength = document.querySelectorAll('.quiz-questions');
 const quizTextCorrect = document.querySelector('.quiz-text_correct');
 const quizTextFail = document.querySelector('.quiz-text_fail');
 const qiuzPreviewWrapper = document.querySelector('.quiz-preview');
+const questionsQuantity = document.querySelectorAll('.quiz-questions');
+const questions = document.querySelectorAll('.quiz-block');
+const erorMessage = document.querySelector('.popup__title_test');
+const answers = document.querySelectorAll('.answer__radio');
 let score = 0;
 let trying = 0;
 
@@ -640,37 +642,8 @@ function startQuiz() {
   qiuzPreviewWrapper.classList.add('hide');
 }
 
-function showResult() {
-  for (let radio of answers) {
-    if (radio.checked && radio.value == '1') {
-      score++;      
-    }    
-  }
-
-  for (let quest of quizLength) {
-    quest.innerText = answerTitle.length;
-  }
-  
-  if (score >= 2) {
-    quizResultCorrect.classList.remove('hide');
-    quizButton.style.display = 'none';
-    quizTextCorrect.innerText = score;
-    time = 1800;
-    clearInterval(intr);
-    timerTime.innerText = '10:00';
-  }
-  if (score < 2) {
-    quizResultInorrect.classList.remove('hide');
-    quizButton.style.display = 'none';
-    quizTextFail.innerText = score;
-    time = 1800;
-    clearInterval(intr);
-    timerTime.innerText = '10:00';
-  }
-}
-
 function restartQuiz() {
-  score = 0;
+  answers.forEach(el => el.checked = false);
   start_timer();
   quizButton.style.display = 'block';
   quizResultInorrect.classList.add('hide');
@@ -683,8 +656,72 @@ function restartQuiz() {
     time = 1800;
     clearInterval(intr);
   }
+
+  $.ajax({
+    url: `/api/tests/null_answers`,
+    type: 'PUT',
+  });
 }
 
 quizButtonStart.addEventListener('click', startQuiz);
-quizButton.addEventListener('click', showResult);
-quizButtonIncorrect.addEventListener('click', restartQuiz);
+quizButtonIncorrect.addEventListener('click', function() {
+  restartQuiz();
+});
+
+function showTestErrorPopup() {
+  $('.popup_test').css('display', 'flex');
+}
+
+function closeTestErrorPopup() {
+  $('.popup_test').css('display', 'none');
+}
+
+$('.popup__close_test').click(function() {
+  closeTestErrorPopup();
+});
+
+function sendAnswers() {
+  const answerChecked = [];
+  
+  questionsQuantity.forEach(el => el.innerText = questions.length);
+
+  for (let index = 0; index < answers.length; index++) {    
+     if (answers[index].checked) {
+      answerChecked.push(answers[index].value);
+     }
+  }
+  
+  $.ajax({
+    url: `/api/tests`,
+    type: 'PUT',
+    dataType: 'json',
+    contentType: 'application/json',
+    data: JSON.stringify({ answers: answerChecked }),
+    success: function(response) {
+      const trueAnswers = response.trueAnswers.length;
+      quizResultCorrect.classList.remove('hide');
+      quizButton.style.display = 'none';
+      quizTextCorrect.innerText = trueAnswers;
+      time = 1800;
+      clearInterval(intr);
+      timerTime.innerText = '30:00';
+    },
+    error: function(response) {
+      if (response.responseJSON.falseAnswers) {
+        quizResultInorrect.classList.remove('hide');
+        quizButton.style.display = 'none';
+        time = 1800;
+        clearInterval(intr);
+        timerTime.innerText = '30:00';
+        const answer = questions.length - response.responseJSON.falseAnswers.length;
+        // console.log(questions.length);
+        console.log(response.responseJSON.falseAnswers);
+        // console.log(answer);
+        quizTextFail.innerText = answer;
+      } else {
+        showTestErrorPopup();
+        erorMessage.innerText = response.responseJSON.message;        
+      }
+    }
+  });
+}
