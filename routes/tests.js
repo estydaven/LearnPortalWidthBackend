@@ -29,6 +29,8 @@ router.put('/', (req, res, next) => {
     }
 
     if (userAnswers.length !== Object.keys(correctAnswers).length) {
+        falseAnswers = [];
+        trueAnswers = [];
         return res.status(400).json({message: 'Ответьте на все вопросы!'});
     }
     if (falseAnswers.length > 3) {
