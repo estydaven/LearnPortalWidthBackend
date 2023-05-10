@@ -916,15 +916,25 @@
                                 <div class="article">
                                     <h2 class="article__title">Тест по теме</h2>
                                     <div class="quiz-preview">
-                                        <h3 class="quiz-preview__title">Ответьте правильно на 15 вопросов за 30 минут
-                                        </h3>
-                                        <p class="quiz-preview__text">Данный тест составлен по материалу из блока <span
-                                                class="quiz-preview__span">«RocketProfit»</span>. Если вы изучили весь
-                                            раздел, то можете приступать к тесту.</p>
-                                        <p class="quiz-preview__text">Если вы допустите 3 и более ошибок, то тест будет
-                                            считаться не пройденным.</p>
-                                        <button class="button-blue quiz-preview__button">Начать прохождение
-                                            теста</button>
+                                        <div class="quiz-preview__start">
+                                            <h3 class="quiz-preview__title">Ответьте правильно на 15 вопросов за 30 минут</h3>
+                                            <p class="quiz-preview__text">Данный тест составлен по материалу из блока <span class="quiz-preview__span">«RocketProfit»</span>. Если вы изучили весь раздел, то можете приступать к тесту.</p>
+                                            <p class="quiz-preview__text">Если вы допустите 3 и более ошибок, то тест будет считаться не пройденным.</p>
+                                            <button class="button-blue quiz-preview__button">Начать прохождение теста</button>
+                                        </div>
+                                        <div class="quiz-preview__finished quiz-preview__finished_done hide">
+                                            <h3 class="quiz-preview__title quiz-preview__title_done">Поздравляем! Вы прошли тест!</h3>
+                                            <p class="quiz-preview__text quiz-preview__text_done">Теперь можете приступать к следующему разделу</p>
+                                        </div>
+                                        <div class="quiz-preview__finished quiz-preview__finished_undone hide">
+                                            <div class="quiz-result">
+                                                <img src="images/result3.png" alt="" class="quiz-result__image">
+                                                <div class="quiz-result__info">
+                                                    <p class="quiz-result__head">Вы не прошли тест 3 раза</p>
+                                                    <p class="quiz-result__text">Обратитесь к вашему руководителю.</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="article__wrap">
                                         <div class="article__quiz">
@@ -932,22 +942,22 @@
                                             <div class="quiz-block">
                                                 <h3 class="quiz__title">1. Заголовок вопроса?</h3>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb" id="rb1"
+                                                    <input type="checkbox" class="answer__radio" name="rb" id="rb1"
                                                         value="1">
                                                     <label for="rb1" class="answer__label">Вариант ответа 1</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb" id="rb2"
+                                                    <input type="checkbox" class="answer__radio" name="rb" id="rb2"
                                                         value="2">
                                                     <label for="rb2" class="answer__label">Вариант ответа 2</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb" id="rb3"
+                                                    <input type="checkbox" class="answer__radio" name="rb" id="rb3"
                                                         value="3">
                                                     <label for="rb3" class="answer__label">Вариант ответа 3</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb" id="rb4"
+                                                    <input type="checkbox" class="answer__radio" name="rb" id="rb4"
                                                         value="4">
                                                     <label for="rb4" class="answer__label">Вариант ответа 4</label>
                                                 </div>
@@ -1062,8 +1072,7 @@
                                                     class="quiz-text quiz-text_correct"></span> вопросов из <span
                                                     class="quiz-questions"></span></p>
                                         </div>
-                                        <button class="quiz-button quiz-button_correct js-btn-next">Перейти к новому
-                                            разделу</button>
+                                        <button class="quiz-button quiz-button_correct js-btn-next">Перейти к новому разделу</button>
                                     </div>
                                     <div class="quiz-result quiz-result_incorrect hide">
                                         <img src="images/result2.png" alt="" class="quiz-result__image">

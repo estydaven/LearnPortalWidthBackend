@@ -963,6 +963,10 @@ input::-webkit-search-results-decoration { display: none; }
   padding-left: 47px;
   margin-bottom: 20px;
 }
+.quiz-preview__title_done {
+  padding-left: 0;
+  text-align: center;
+}
 .quiz-preview__title::before {
   content: '';
   display: block;
@@ -975,11 +979,18 @@ input::-webkit-search-results-decoration { display: none; }
   background-repeat: no-repeat;
   background-size: contain;
 }
+.quiz-preview__title_done::before {
+  display: none;
+}
 .quiz-preview__text {
   font-size: 16px;
   line-height: 23px;
   font-family: "suisse_intlmedium";
   margin-bottom: 22px;
+}
+.quiz-preview__text_done {
+  margin-bottom: 0;
+  text-align: center;
 }
 .quiz-preview__button {
   margin-top: 0;

@@ -71,6 +71,18 @@ function setUser(user) {
   for (let task of tasks) {
     setShowedForTask(task);
   }
+
+  const answers_right = user.answers_right;
+  if (answers_right.length) {
+    $('.quiz-preview__start').addClass('hide');
+    $('.quiz-preview__finished_done').removeClass('hide');
+  }
+
+  const answers_false = user.answers_false;
+  if (answers_false.length) {
+    $('.quiz-preview__start').addClass('hide');
+    $('.quiz-preview__finished_undone').removeClass('hide');
+  }
 }
 
 function logout() {
@@ -649,18 +661,22 @@ function restartQuiz() {
   quizResultInorrect.classList.add('hide');
   quizResultCorrect.classList.add('hide');
   trying++;
-
+  
   if (trying == 3) {
     quizButton.style.display = 'none';
     quizResultFail.classList.remove('hide');
     time = 1800;
     clearInterval(intr);
-  }
 
-  $.ajax({
-    url: `/api/tests/null_answers`,
-    type: 'PUT',
-  });
+    const answer = document.querySelector('.quiz-text_correct').innerHTML;
+
+    $.ajax({
+      url: `/api/users/test_undone`,
+      type: 'PUT',
+      data: {answer},
+      success: function() {}
+    });
+  }
 }
 
 quizButtonStart.addEventListener('click', startQuiz);
@@ -680,17 +696,16 @@ $('.popup__close_test').click(function() {
   closeTestErrorPopup();
 });
 
+
 function sendAnswers() {
   const answerChecked = [];
-  
   questionsQuantity.forEach(el => el.innerText = questions.length);
-
   for (let index = 0; index < answers.length; index++) {    
-     if (answers[index].checked) {
-      answerChecked.push(answers[index].value);
-     }
+    if (answers[index].checked) {
+     answerChecked.push(answers[index].value);
+    }
   }
-  
+
   $.ajax({
     url: `/api/tests`,
     type: 'PUT',
@@ -725,3 +740,14 @@ function sendAnswers() {
     }
   });
 }
+
+$('.quiz-button_correct').click(function() {
+  const answer = document.querySelector('.quiz-text_correct').innerHTML;
+
+  $.ajax({
+    url: `/api/users/test_done`,
+    type: 'PUT',
+    data: {answer},
+    success: function() {}
+  });
+});

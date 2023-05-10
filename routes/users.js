@@ -9,6 +9,8 @@ const users = [
         avatar: null,
         available_pages: ['1'],
         available_tasks: ['1'],
+        answers_right: [],
+        answers_false: [],
     }
 ];
 
@@ -21,6 +23,8 @@ router.post('/signup', (req, res, next) => {
         avatar: null,
         available_pages: ['1'],
         available_tasks: ['1'],
+        answers_right: [],
+        answers_false: [],
     });
 
     res.status(201).json({message: 'Success!'});   
@@ -66,6 +70,20 @@ router.put('/available-tasks', (req, res, next) => {
 router.delete('/session', async (req, res, next) => {
     await req.session.destroy();
     res.status(200).json({message: 'Пользователь разлогинен'});
+})
+
+router.put('/test_done', (req, res, next) => {
+    const user = users.find(user => user.id === req.session.user.id);
+    user.answers_right.push(req.body.answer);    
+    req.session.user = user;
+    res.status(200).json({message: 'Сохранено'}); 
+})
+
+router.put('/test_undone', (req, res, next) => {
+    const user = users.find(user => user.id === req.session.user.id);
+    user.answers_false.push(req.body.answer);    
+    req.session.user = user;
+    res.status(200).json({message: 'Сохранено'}); 
 })
 
 module.exports = router;

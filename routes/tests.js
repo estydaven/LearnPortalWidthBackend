@@ -11,18 +11,13 @@ const correctAnswers = {
 let falseAnswers = [];
 let trueAnswers = [];
 
-router.put('/null_answers', (req, res, next) => {
+router.put('/', (req, res, next) => {
     falseAnswers = [];
     trueAnswers = [];
-    //return res.status(200).json({message: 'Ответы обнулены'});    
-});
-
-router.put('/', (req, res, next) => {
     let userAnswers = req.body.answers;
-    
     for (let i = 0; i < userAnswers.length; i++) {
         if (correctAnswers[i] == userAnswers[i]) {
-            trueAnswers.push(true);            
+            trueAnswers.push(true);
         } else {
             falseAnswers.push(false);
         }
