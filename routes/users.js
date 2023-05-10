@@ -27,7 +27,7 @@ router.post('/signup', (req, res, next) => {
         answers_false: [],
     });
 
-    res.status(201).json({message: 'Success!'});   
+    res.status(201).json({message: 'Success!'});
 }) 
 
 router.post('/login', async (req, res, next) => {
@@ -40,7 +40,7 @@ router.post('/login', async (req, res, next) => {
         if (await bcrypt.compare(req.body.password, user.password_hash)) {
             delete user.password;
             req.session.user = user;
-            res.status(200).json({user});           
+            res.status(200).json({user});
         } else {
             res.status(400).json({message: 'Введите правильный пароль!'}); 
         }
@@ -55,9 +55,9 @@ router.get('/session', (req, res, next) => {
 
 router.put('/', (req, res, next) => {
     const user = users.find(user => user.id === req.session.user.id);
-    user.available_pages.push(req.body.nextTab);    
+    user.available_pages.push(req.body.nextTab);
     req.session.user = user;
-    res.status(200).json({message: 'Сохранено'}); 
+    res.status(200).json({message: 'Сохранено'});
 })
 
 router.put('/available-tasks', (req, res, next) => {
@@ -74,16 +74,16 @@ router.delete('/session', async (req, res, next) => {
 
 router.put('/test_done', (req, res, next) => {
     const user = users.find(user => user.id === req.session.user.id);
-    user.answers_right.push(req.body.answer);    
+    user.answers_right.push(req.body.answer);
     req.session.user = user;
-    res.status(200).json({message: 'Сохранено'}); 
+    res.status(200).json({message: 'Сохранено'});
 })
 
 router.put('/test_undone', (req, res, next) => {
     const user = users.find(user => user.id === req.session.user.id);
-    user.answers_false.push(req.body.answer);    
+    user.answers_false.push(req.body.answer);
     req.session.user = user;
-    res.status(200).json({message: 'Сохранено'}); 
+    res.status(200).json({message: 'Сохранено'});
 })
 
 module.exports = router;

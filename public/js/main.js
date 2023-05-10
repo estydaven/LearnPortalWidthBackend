@@ -82,6 +82,7 @@ function setUser(user) {
   if (answers_false.length) {
     $('.quiz-preview__start').addClass('hide');
     $('.quiz-preview__finished_undone').removeClass('hide');
+    $('.js-btn-next').prop('disabled', true);
   }
 }
 
@@ -619,6 +620,7 @@ function tick() {
   let mins = Math.floor(time / 60);
   let secs = time - mins * 60;
   if (mins == 0 && secs == 0) {
+    $('.popup_time').css('display', 'flex');
     clearInterval(intr);
   }
   secs = secs >= 10 ? secs : "0" + secs;
@@ -627,15 +629,13 @@ function tick() {
 
 // Quiz
 
-// TODO: Скорректировать сброс счетчика, и возможно, чекбоксов!!! Сделать сброс теста при успешном прохождении и переходе на следующую тему
-
 const answerTitle = document.querySelectorAll('.quiz__title');
 const quizButton = document.querySelector('.quiz-submit');
 const quizResultCorrect = document.querySelector('.quiz-result_correct');
 const quizResultInorrect = document.querySelector('.quiz-result_incorrect');
 const quizResultFail = document.querySelector('.quiz-result_fail');
 const timerTime = document.querySelector('.timer__time');
-const quizButtonIncorrect = document.querySelector('.quiz-button_incorrect');
+const quizButtonIncorrect = document.querySelectorAll('.quiz-button_incorrect');
 const quizButtonStart = document.querySelector('.quiz-preview__button');
 const articleWrapper = document.querySelector('.article__wrap');
 const quizTextCorrect = document.querySelector('.quiz-text_correct');
@@ -655,7 +655,10 @@ function startQuiz() {
 }
 
 function restartQuiz() {
+  $('.popup_time').css('display', 'none');
   answers.forEach(el => el.checked = false);
+  time = 1800;
+  clearInterval(intr);
   start_timer();
   quizButton.style.display = 'block';
   quizResultInorrect.classList.add('hide');
@@ -674,15 +677,20 @@ function restartQuiz() {
       url: `/api/users/test_undone`,
       type: 'PUT',
       data: {answer},
-      success: function() {}
+      success: function() {
+        $('.js-btn-next').prop('disabled', true);
+      }
     });
   }
 }
 
 quizButtonStart.addEventListener('click', startQuiz);
-quizButtonIncorrect.addEventListener('click', function() {
-  restartQuiz();
-});
+quizButtonIncorrect.forEach(el => el.addEventListener('click', function () {
+  restartQuiz();     
+}));
+// quizButtonIncorrect.addEventListener('click', function () {
+//   restartQuiz();
+// });
 
 function showTestErrorPopup() {
   $('.popup_test').css('display', 'flex');
@@ -730,7 +738,7 @@ function sendAnswers() {
         timerTime.innerText = '30:00';
         const answer = questions.length - response.responseJSON.falseAnswers.length;
         // console.log(questions.length);
-        console.log(response.responseJSON.falseAnswers);
+        // console.log(response.responseJSON.falseAnswers);
         // console.log(answer);
         quizTextFail.innerText = answer;
       } else {
