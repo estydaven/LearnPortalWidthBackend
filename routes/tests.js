@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const correctAnswers = {
-    0: 1,
+    0: [1, 2],
     1: 5,
     2: 9,
     3: 13,
@@ -14,9 +14,18 @@ let trueAnswers = [];
 router.put('/', (req, res, next) => {
     falseAnswers = [];
     trueAnswers = [];
+    
     let userAnswers = req.body.answers;
     for (let i = 0; i < userAnswers.length; i++) {
-        if (correctAnswers[i] == userAnswers[i]) {
+        if (Array.isArray(correctAnswers[i]) && Array.isArray(userAnswers[i])) {
+            let isEqual = JSON.stringify(correctAnswers[i]) === JSON.stringify(userAnswers[i]);
+            
+            if (isEqual) {
+                trueAnswers.push(true);
+            } else {
+                falseAnswers.push(false); 
+            }
+        } else if (correctAnswers[i] == userAnswers[i]) {
             trueAnswers.push(true);
         } else {
             falseAnswers.push(false);

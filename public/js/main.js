@@ -706,13 +706,20 @@ $('.popup__close_test').click(function() {
 
 
 function sendAnswers() {
-  const answerChecked = [];
+  const answerChecked = []; 
+  const checkboxChecked = []; 
   questionsQuantity.forEach(el => el.innerText = questions.length);
-  for (let index = 0; index < answers.length; index++) {    
-    if (answers[index].checked) {
-     answerChecked.push(answers[index].value);
+
+  answers.forEach(elem => {
+    if (elem.classList.contains('answer__radio_checkbox') && elem.checked === true) {
+      checkboxChecked.push(+elem.value);
+    }    
+    if (!(elem.classList.contains('answer__radio_checkbox'))  && elem.checked === true) {      
+      answerChecked.push(+elem.value);
     }
-  }
+  });
+
+  answerChecked.unshift(checkboxChecked);
 
   $.ajax({
     url: `/api/tests`,
