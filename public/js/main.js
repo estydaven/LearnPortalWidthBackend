@@ -84,6 +84,21 @@ function setUser(user) {
     $('.quiz-preview__finished_undone').removeClass('hide');
     $('.js-btn-next').prop('disabled', true);
   }
+
+  const passed_videos = Array.from(new Set(user.passed_videos));
+
+  for (let i = 0; i < passed_videos.length; i++) {
+    const videoBtns = $('.video__button');
+    videoBtns.each(function() {
+      const btn = $(this);      
+      const id = $(this).attr('data-buttonid');
+
+      if (passed_videos.includes(id)) {
+        btn.css('background', 'linear-gradient(180deg, #08c471 0%, #7efac1 100%)');
+        btn.text('Скрин отправлен!');
+      }
+    });
+  }
 }
 
 function logout() {
@@ -134,7 +149,7 @@ function saveActiveTab(tabId) {
 }
 
 function loadActiveTab() {
-  const activeTab = localStorage.getItem('active-tab') || '1';
+  const activeTab = localStorage.getItem('active-tab') || '1.1';
   openTab(activeTab);
   
   const indices = activeTab.split('.');
@@ -171,10 +186,30 @@ $(document).ready(() => {
 });
 
 // Prev/Next Buttons
+const themesOneCount = [];
+const themesTwoCount = [];
+const themesOne = [];
+const themesTwo = [];
+const themesFour = [];
+
+$('ul.menu li[data-tab]').each(function() { 
+  const id = $(this).attr('data-tab');
+  if (id.includes('1.')) {
+    themesOne.push(id);
+  }
+  if (id.includes('2.')) {
+    themesTwo.push(id);
+  }
+});
+
+$('.task-header[data-task]').each(function() { 
+  const id = $(this).attr('data-task');
+  themesFour.push(id);
+});
 
 $(document).ready(() => {
   $('.js-btn-next').click(function () {
-    const activeTab = localStorage.getItem('active-tab') || '1';    
+    const activeTab = localStorage.getItem('active-tab') || '1.1';
     const nextTab = getNextTab(activeTab);
     hidePrivatCabinet();    
 
@@ -188,10 +223,50 @@ $(document).ready(() => {
       $('ul.tab-content li.active').removeClass('active');
       saveActiveTab(nextTab);
       loadActiveTab();
-    }    
+    }
+
+    if (activeTab.includes('1.')) {
+      themesOneCount.push(activeTab);
+    }
+    if (activeTab.includes('2.')) {
+      themesTwoCount.push(activeTab);
+    }
+
+    let themesCount = 0;
+    const percentFistTheme = 100 / themesOne.length * themesOneCount.length;
+    const percentSecondTheme = 100 / themesTwo.length * themesTwoCount.length;
+
+    $('.stat-block__percent_one').html(`${percentFistTheme.toFixed()}%`);
+    $('.stat-line_one').css('width', `${percentFistTheme.toFixed()}%`);
+    $('.stat-block__percent_two').html(`${percentSecondTheme.toFixed()}%`);
+    $('.stat-line_two').css('width', `${percentSecondTheme.toFixed()}%`);
+    
+    if (percentFistTheme == 100) {
+      themesCount++;      
+    } 
+    if (percentSecondTheme == 100) {
+      themesCount++;
+    }
+
+    if (percentFistTheme > 20 && percentFistTheme < 70) {
+      $('.stat-block__percent_one').css('color', '#0EC1FF');      
+    } else if (percentFistTheme > 70) {
+      $('.stat-block__percent_one').css('color', '#E04AA8');
+    } 
+    
+    if (percentSecondTheme > 20 && percentSecondTheme < 70) {
+      $('.stat-block__percent_two').css('color', '#0EC1FF');      
+    } else if (percentSecondTheme > 70) {
+      $('.stat-block__percent_two').css('color', '#E04AA8');
+    }
+
+    $('.themes-count').html(`${themesCount}`);
+    // if ($('.tab-content__item_test').hasClass('active')) {
+    //   $('.js-btn-next').prop('disabled', true);
+    // }
   });
   $('.js-btn-prev').click(function () {
-    const activeTab = localStorage.getItem('active-tab') || '1';    
+    const activeTab = localStorage.getItem('active-tab') || '1.1';    
     const prevTab = getPrevTab(activeTab);
     hidePrivatCabinet();
     hideTaskContent();
@@ -288,16 +363,22 @@ $('.search__icon').on('click', function () {
 
 // Personal Cabinet
 $('.user').on('click', function () {
+  const activeTab = localStorage.getItem('active-tab') || '1.1';
+  const li = $(`ul.tab-content li[data-tab="${activeTab}"]`);
   $('.private-cabinet').removeClass('hide');
   $('.cabinet-menu').removeClass('hide');
-  const activeTab = localStorage.getItem('active-tab') || '1';
-  const li = $(`ul.tab-content li[data-tab="${activeTab}"]`);
   li.removeClass('active');
 });
 
 function hidePrivatCabinet() {
+  const activeTab = localStorage.getItem('active-tab') || '1.1';
+  const li = $(`ul.tab-content li[data-tab="${activeTab}"]`);
   $('.private-cabinet').addClass('hide');
   $('.cabinet-menu').addClass('hide');
+
+  $('.private-cabinet').addClass('hide');
+  $('.cabinet-menu').addClass('hide');
+  li.addClass('active');
 }
 
 // Tasks script
@@ -342,6 +423,7 @@ function onSubmitTask(formTask) {
   const taskLink = formData.get('link');
   const taskComment = formData.get('comment');
   const taskId = $(formTask).attr('data-formId');
+  let themesCount = parseFloat($('.themes-count').text());
 
   $.ajax({
     url: `/api/tasks/${taskId}/results`,
@@ -354,6 +436,18 @@ function onSubmitTask(formTask) {
       closepopupShot();
       setShowedForTask();
       setShowedForNextTask();
+
+      if (taskId == 1) {
+        $('.stat-block__percent_four').html('50%');
+        $('.stat-block__percent_four').css('color', '#0EC1FF');
+        $('.stat-line_four').css('width', '50%');
+      } else if (taskId == 2) {
+        themesCount++;
+        $('.themes-count').text(themesCount);
+        $('.stat-block__percent_four').html('100%');
+        $('.stat-block__percent_four').css('color', '#E04AA8');
+        $('.stat-line_four').css('width', '100%');
+      }
     }
   });
 }
@@ -371,7 +465,6 @@ $('.popup__close_confirm').click(function() {
 });
 
 // Popup shot and task
-// TODO: Поменять цвет кнопки "Отправить скрин о просмотре" при отправке скринов
 
 const body = document.body;
 
@@ -380,8 +473,23 @@ $('.video__button').each(function() {
     showPopupShot();
     $('.file-form_video').css('display', 'flex');
     $('.file-form_task').css('display', 'none');
+    const btn = $(this);
     const btnData = $(this).attr('data-buttonid');
     $('.gallery-files__button').attr('data-sendData', btnData);
+
+    $('.gallery-files__button').click(function() {
+      const btnSendData = $(this).attr('data-sendData');
+      
+      $.ajax({
+        url: `/api/users/passed_videos`,
+        type: 'PUT',
+        data: {btnSendData},
+        success: function() {
+          btn.css('background', 'linear-gradient(180deg, #08c471 0%, #7efac1 100%)');
+          btn.text('Скрин отправлен!');
+        }
+      });    
+    });
   });
 });
 
@@ -462,9 +570,31 @@ $('.popup__close_access').click(function() {
   closePopupAccess();
 });
 
+const galleryBtns = [];
+const videoBtns = $('.video__button');
 $('.gallery-files__button_video').click(function() {
   resetPopupShot();
   closepopupShot();
+
+  const galleryBtn = $('.gallery-files__button_video').attr('data-senddata');  
+  galleryBtns.push(galleryBtn);
+
+  let themesCount = parseFloat($('.themes-count').text());
+  const percentVideo = 100 / videoBtns.length * galleryBtns.length;
+
+  $('.stat-block__percent_three').html(`${percentVideo.toFixed()}%`);
+  $('.stat-line_three').css('width', `${percentVideo.toFixed()}%`);
+  
+  if (percentVideo == 100) {
+    themesCount++; 
+    $('.themes-count').html(`${themesCount}`);     
+  } 
+
+  if (percentVideo > 20 && percentVideo < 70) {
+    $('.stat-block__percent_three').css('color', '#0EC1FF');      
+  } else if (percentVideo > 70) {
+    $('.stat-block__percent_three').css('color', '#E04AA8');
+  }  
 });
 
 $('.task-screen').click(function() {
@@ -644,7 +774,7 @@ const qiuzPreviewWrapper = document.querySelector('.quiz-preview');
 const questionsQuantity = document.querySelectorAll('.quiz-questions');
 const questions = document.querySelectorAll('.quiz-block');
 const erorMessage = document.querySelector('.popup__title_test');
-const answers = document.querySelectorAll('.answer__radio');
+const answers = document.querySelectorAll('.answer__input');
 let score = 0;
 let trying = 0;
 
@@ -704,22 +834,33 @@ $('.popup__close_test').click(function() {
   closeTestErrorPopup();
 });
 
-
-function sendAnswers() {
-  const answerChecked = []; 
-  const checkboxChecked = []; 
-  questionsQuantity.forEach(el => el.innerText = questions.length);
-
-  answers.forEach(elem => {
-    if (elem.classList.contains('answer__radio_checkbox') && elem.checked === true) {
-      checkboxChecked.push(+elem.value);
-    }    
-    if (!(elem.classList.contains('answer__radio_checkbox'))  && elem.checked === true) {      
-      answerChecked.push(+elem.value);
+const answerChecked = {};
+$('.answer__input').each(function() {
+  $(this).click(function () { 
+    const key = +$(this).parent().parent().attr('data-question');
+    const value = +$(this).val();   
+    if ($(this).prop('checked')) {
+      if (!answerChecked[key]) { // тут мы смотрим, нет ли значения ключа
+        answerChecked[key] = [value]; // если значения нет, то добавляем его в объект (пару ключ значение)
+      } else { // в случае если у юзера уже отмечен ответ, и он решил его поменять
+        if ($(this).hasClass('answer__input_radio')) { // если у ключа уже есть значение
+          answerChecked[key] = [value];
+        }        
+        if ($(this).hasClass('answer__input_checkbox') && answerChecked[key].includes(value)) { // если у ключа уже есть значение
+          answerChecked[key] = answerChecked[key].filter((n) => n !== value); // исключаем значение
+        } 
+        if ($(this).hasClass('answer__input_checkbox')) { // если у ключа значения нету
+          answerChecked[key].push(value); //добавляем значение
+        }
+      }
+    } else {
+      answerChecked[key] = answerChecked[key].filter((n) => n !== value);      
     }
   });
+});
 
-  answerChecked.unshift(checkboxChecked);
+function sendAnswers() {
+  questionsQuantity.forEach(el => el.innerText = questions.length);  
 
   $.ajax({
     url: `/api/tests`,
@@ -744,9 +885,6 @@ function sendAnswers() {
         clearInterval(intr);
         timerTime.innerText = '30:00';
         const answer = questions.length - response.responseJSON.falseAnswers.length;
-        // console.log(questions.length);
-        // console.log(response.responseJSON.falseAnswers);
-        // console.log(answer);
         quizTextFail.innerText = answer;
       } else {
         showTestErrorPopup();
@@ -756,9 +894,9 @@ function sendAnswers() {
   });
 }
 
-$('.quiz-button_correct').click(function() {
+$('.quiz-button_correct').click(function() {  
   const answer = document.querySelector('.quiz-text_correct').innerHTML;
-
+  
   $.ajax({
     url: `/api/users/test_done`,
     type: 'PUT',

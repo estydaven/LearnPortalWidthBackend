@@ -80,7 +80,7 @@
                         <button class="cabinet-menu__button" onclick="logout(this);return false;">Выйти из профиля</button>
                     </div>
                     <ul class="menu">
-                        <li class="menu__item" data-tab="1">
+                        <li class="menu__item" data-theme="1">
                             <button class="menu__title">
                                 <svg class="menu__icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -96,8 +96,16 @@
                                 </svg>
                                 Теория
                             </button>
+                            <ul class="submenu submenu_main">
+                                <li class="submenu__item" data-tab="1.1">
+                                    <button class="submenu__button">Теория</button>
+                                </li>
+                                <li class="submenu__item" data-tab="1.2">
+                                    <button class="submenu__button">Теория 2</button>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="menu__item">
+                        <li class="menu__item" data-theme="2">
                             <button class="menu__title">
                                 <svg class="menu__icon" width="24" height="24" viewBox="0 0 18 22" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -168,7 +176,7 @@
                                 </li>  
                             </ul>
                         </li>
-                        <li class="menu__item" data-tab="3">
+                        <li class="menu__item" data-tab="3" data-theme="3">
                             <button class="menu__title">
                                 <svg class="menu__icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -183,7 +191,7 @@
                                 Видео-курсы
                             </button>
                         </li>
-                        <li class="menu__item" data-tab="4">
+                        <li class="menu__item" data-tab="4" data-theme="4">
                             <button class="menu__title">
                                 <svg class="menu__icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -208,9 +216,53 @@
                 <div class="content">
                     <div class="content__wrapper">
                         <ul class="tab-content">
-                            <li class="tab-content__item" data-tab="1">
+                            <li class="tab-content__item" data-tab="1.1">
                                 <div class="article">
                                     <h2 class="article__title">Теория</h2>
+                                    <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
+                                        псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
+                                        фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                                        Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния,
+                                        взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его
+                                        поисками в классической латинской литературе. В результате он нашёл неоспоримый
+                                        первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de Finibus Bonorum
+                                        et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот
+                                        трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка
+                                        Lorem Ipsum, "Lorem ipsum dolor sit amet..", происходит от одной из строк в
+                                        разделе 1.10.32 Классический текст Lorem Ipsum, используемый с XVI века,
+                                        приведён ниже. Также даны разделы 1.10.32 и 1.10.33 "de Finibus Bonorum et
+                                        Malorum" Цицерона и их английский перевод, сделанный H. Rackham, 1914 год.</p>
+                                    <div class="article__images">
+                                        <img src="images/article1.jpg" alt="" class="article__image article__image_big">
+                                        <div class="article__inner">
+                                            <img src="images/article2.jpg" alt=""
+                                                class="article__image article__image_little">
+                                            <img src="images/article3.jpg" alt=""
+                                                class="article__image article__image_little">
+                                        </div>
+                                    </div>
+                                    <h3 class="article__subtitle">Подзаголовок</h3>
+                                    <p class="article__text">Давно выяснено, что при оценке дизайна и композиции
+                                        читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот
+                                        обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                                        распределение букв и пробелов в абзацах, которое не получается при простой
+                                        дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."</p>
+                                    <p class="article__text">Многие программы электронной вёрстки и редакторы HTML
+                                        используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым
+                                        словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются
+                                        своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много
+                                        версий. Некоторые версии появились по ошибке, некоторые - намеренно (например,
+                                        юмористические варианты).</p>
+                                    <p class="article__text">Есть много вариантов Lorem Ipsum, но большинство из них
+                                        имеет не всегда приемлемые модификации, например, юмористические вставки или
+                                        слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum
+                                        для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в
+                                        середине абзаца.</p>
+                                </div>
+                            </li>
+                            <li class="tab-content__item" data-tab="1.2">
+                                <div class="article">
+                                    <h2 class="article__title">Теория 2</h2>
                                     <p class="article__text">Многие думают, что Lorem Ipsum - взятый с потолка
                                         псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один
                                         фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
@@ -912,7 +964,7 @@
                                         середине абзаца.</p>
                                 </div>
                             </li>
-                            <li class="tab-content__item" data-tab="2.14">
+                            <li class="tab-content__item tab-content__item_test" data-tab="2.14">
                                 <div class="article">
                                     <h2 class="article__title">Тест по теме</h2>
                                     <div class="quiz-preview">
@@ -939,98 +991,98 @@
                                     <div class="article__wrap">
                                         <div class="article__quiz">
                                             <h3 class="article__subtitle article__subtitle_quiz">Название теста</h3>
-                                            <div class="quiz-block">
-                                                <h3 class="quiz__title">1. Заголовок вопроса?</h3>
+                                            <div class="quiz-block" data-question="0">
+                                                <h3 class="quiz__title">1. Заголовок вопроса? (Выберите несколько вариантов ответа)</h3>
                                                 <div class="answer">
-                                                    <input type="checkbox" class="answer__radio answer__radio_checkbox" name="rb" id="rb1" value="1">
+                                                    <input type="checkbox" class="answer__input answer__input_checkbox" name="rb" id="rb1" value="1">
                                                     <label for="rb1" class="answer__label">Вариант ответа 1</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="checkbox" class="answer__radio answer__radio_checkbox" name="rb" id="rb2" value="2">
+                                                    <input type="checkbox" class="answer__input answer__input_checkbox" name="rb" id="rb2" value="2">
                                                     <label for="rb2" class="answer__label">Вариант ответа 2</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="checkbox" class="answer__radio answer__radio_checkbox" name="rb" id="rb3" value="3">
+                                                    <input type="checkbox" class="answer__input answer__input_checkbox" name="rb" id="rb3" value="3">
                                                     <label for="rb3" class="answer__label">Вариант ответа 3</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="checkbox" class="answer__radio answer__radio_checkbox" name="rb" id="rb4" value="4">
+                                                    <input type="checkbox" class="answer__input answer__input_checkbox" name="rb" id="rb4" value="4">
                                                     <label for="rb4" class="answer__label">Вариант ответа 4</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block">
+                                            <div class="quiz-block" data-question="1">
                                                 <h3 class="quiz__title">2. Заголовок вопроса?</h3>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb2" id="rb5" value="5">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb2" id="rb5" value="5">
                                                     <label for="rb5" class="answer__label">Вариант ответа 1</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb2" id="rb6" value="6">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb2" id="rb6" value="6">
                                                     <label for="rb6" class="answer__label">Вариант ответа 2</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb2" id="rb7" value="7">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb2" id="rb7" value="7">
                                                     <label for="rb7" class="answer__label">Вариант ответа 3</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb2" id="rb8" value="8">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb2" id="rb8" value="8">
                                                     <label for="rb8" class="answer__label">Вариант ответа 4</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block">
+                                            <div class="quiz-block" data-question="2">
                                                 <h3 class="quiz__title">3. Заголовок вопроса?</h3>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb3" id="rb9" value="9">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb3" id="rb9" value="9">
                                                     <label for="rb9" class="answer__label">Вариант ответа 1</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb3" id="rb10" value="10">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb3" id="rb10" value="10">
                                                     <label for="rb10" class="answer__label">Вариант ответа 2</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb3" id="rb11" value="11">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb3" id="rb11" value="11">
                                                     <label for="rb11" class="answer__label">Вариант ответа 3</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb3" id="rb12" value="12">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb3" id="rb12" value="12">
                                                     <label for="rb12" class="answer__label">Вариант ответа 4</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block">
+                                            <div class="quiz-block" data-question="3">
                                                 <h3 class="quiz__title">4. Заголовок вопроса?</h3>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb4" id="rb13" value="13">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb4" id="rb13" value="13">
                                                     <label for="rb13" class="answer__label">Вариант ответа 1</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb4" id="rb14" value="14">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb4" id="rb14" value="14">
                                                     <label for="rb14" class="answer__label">Вариант ответа 2</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb4" id="rb15" value="15">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb4" id="rb15" value="15">
                                                     <label for="rb15" class="answer__label">Вариант ответа 3</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb4" id="rb16" value="16">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb4" id="rb16" value="16">
                                                     <label for="rb16" class="answer__label">Вариант ответа 4</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block">
+                                            <div class="quiz-block" data-question="4">
                                                 <h3 class="quiz__title">5. Заголовок вопроса?</h3>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb5" id="rb17" value="17">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb5" id="rb17" value="17">
                                                     <label for="rb17" class="answer__label">Вариант ответа 1</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb5" id="rb18" value="18">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb5" id="rb18" value="18">
                                                     <label for="rb18" class="answer__label">Вариант ответа 2</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb5" id="rb19" value="19">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb5" id="rb19" value="19">
                                                     <label for="rb19" class="answer__label">Вариант ответа 3</label>
                                                 </div>
                                                 <div class="answer">
-                                                    <input type="radio" class="answer__radio" name="rb5" id="rb20" value="20">
+                                                    <input type="radio" class="answer__input answer__input_radio" name="rb5" id="rb20" value="20">
                                                     <label for="rb20" class="answer__label">Вариант ответа 4</label>
                                                 </div>
                                             </div>
@@ -1314,35 +1366,35 @@
                                 <div class="statistic">
                                     <h3 class="statistic__title">Статистика</h3>
                                     <p class="statistic__subtitle">Изучено тем <span class="statistic__themes">(<span
-                                                class="themes-count">4</span>)</span></p>
+                                                class="themes-count">0</span>)</span></p>
                                     <div class="statistic__inner">
                                         <div class="stat-block">
                                             <div class="stat-block__head">
                                                 <p class="stat-block__title">Теория</p>
-                                                <p class="stat-block__percent stat-block__percent_purple">100%</p>
+                                                <p class="stat-block__percent stat-block__percent_one" data-percentId="1">0%</p>
                                             </div>
-                                            <div class="stat-block__line stat-block__line_hundred"></div>
+                                            <div class="stat-block__line"><div class="stat-line stat-line_one"></div></div>
                                         </div>
                                         <div class="stat-block">
                                             <div class="stat-block__head">
                                                 <p class="stat-block__title">Rocket Profit</p>
-                                                <p class="stat-block__percent stat-block__percent_purple">100%</p>
+                                                <p class="stat-block__percent stat-block__percent_two" data-percentId="2">0%</p>
                                             </div>
-                                            <div class="stat-block__line stat-block__line_hundred"></div>
+                                            <div class="stat-block__line"><div class="stat-line stat-line_two"></div></div>
                                         </div>
                                         <div class="stat-block">
                                             <div class="stat-block__head">
                                                 <p class="stat-block__title">Видео-курсы</p>
-                                                <p class="stat-block__percent stat-block__percent_blue">30%</p>
+                                                <p class="stat-block__percent stat-block__percent_three" data-percentId="3">0%</p>
                                             </div>
-                                            <div class="stat-block__line stat-block__line_thirty"></div>
+                                            <div class="stat-block__line"><div class="stat-line stat-line_three"></div></div>
                                         </div>
                                         <div class="stat-block">
                                             <div class="stat-block__head">
                                                 <p class="stat-block__title">Задачи</p>
-                                                <p class="stat-block__percent stat-block__percent_grey">0%</p>
+                                                <p class="stat-block__percent stat-block__percent_four" data-percentId="4">0%</p>
                                             </div>
-                                            <div class="stat-block__line stat-block__line_zero"></div>
+                                            <div class="stat-block__line"><div class="stat-line stat-line_four"></div></div>
                                         </div>
                                     </div>
                                 </div>

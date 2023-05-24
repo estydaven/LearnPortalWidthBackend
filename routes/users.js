@@ -7,10 +7,11 @@ const users = [
         password_hash: '$2b$10$LlwUiAW/XkT1ALBg.komhOujXlXjEKDsrB0S7WnJx0NAZppfRzaO.',
         name: 'Igor',
         avatar: null,
-        available_pages: ['1'],
+        available_pages: ['1.1'],
         available_tasks: ['1'],
         answers_right: [],
         answers_false: [],
+        passed_videos: [],
     }
 ];
 
@@ -21,10 +22,11 @@ router.post('/signup', (req, res, next) => {
         password_hash: bcrypt.hashSync(req.body.password, 10),
         name: req.body.name,
         avatar: null,
-        available_pages: ['1'],
+        available_pages: ['1.1'],
         available_tasks: ['1'],
         answers_right: [],
         answers_false: [],
+        passed_videos: [],
     });
 
     res.status(201).json({message: 'Success!'});
@@ -82,6 +84,13 @@ router.put('/test_done', (req, res, next) => {
 router.put('/test_undone', (req, res, next) => {
     const user = users.find(user => user.id === req.session.user.id);
     user.answers_false.push(req.body.answer);
+    req.session.user = user;
+    res.status(200).json({message: 'Сохранено'});
+})
+
+router.put('/passed_videos', (req, res, next) => {
+    const user = users.find(user => user.id === req.session.user.id);
+    user.passed_videos.push(req.body.btnSendData);
     req.session.user = user;
     res.status(200).json({message: 'Сохранено'});
 })
