@@ -12,6 +12,7 @@ const users = [
         answers_right: [],
         answers_false: [],
         passed_videos: [],
+        percents: [],
     }
 ];
 
@@ -27,6 +28,7 @@ router.post('/signup', (req, res, next) => {
         answers_right: [],
         answers_false: [],
         passed_videos: [],
+        percents: [],
     });
 
     res.status(201).json({message: 'Success!'});

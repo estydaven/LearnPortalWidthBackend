@@ -99,6 +99,22 @@ function setUser(user) {
       }
     });
   }
+
+  const videosPercent = (100 / videoBtns.length) * passed_videos.length;
+  console.log(videosPercent);
+  $('.stat-block__percent_three').html(`${videosPercent.toFixed()}%`);
+  $('.stat-line_three').css('width', `${videosPercent.toFixed()}%`);
+  if (videosPercent > 20 && videosPercent < 70) {
+    $('.stat-block__percent_three').css('color', '#0EC1FF');      
+  } 
+  if (videosPercent > 70) {
+    $('.stat-block__percent_three').css('color', '#E04AA8');
+  } 
+  if (videosPercent == 100) {
+    let themesCount = 0;
+    themesCount += 1;
+    $('.themes-count').html(`${themesCount}`); 
+  }
 }
 
 function logout() {
@@ -594,7 +610,8 @@ $('.gallery-files__button_video').click(function() {
     $('.stat-block__percent_three').css('color', '#0EC1FF');      
   } else if (percentVideo > 70) {
     $('.stat-block__percent_three').css('color', '#E04AA8');
-  }  
+  }
+
 });
 
 $('.task-screen').click(function() {
