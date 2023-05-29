@@ -63,14 +63,14 @@ function setUser(user) {
   $('.cabinet-menu__span').text(user.email);
   
   const tabs = user.available_pages;
-  for (let tab of tabs) {
-    setShowedForTab(tab);
+  for (let i = 0; i < tabs.length; i++) {
+    setShowedForTab(tabs[i]);
   }
 
   const tasks = user.available_tasks;
   for (let task of tasks) {
     setShowedForTask(task);
-  }
+  }  
 
   const answers_right = user.answers_right;
   if (answers_right.length) {
@@ -86,7 +86,7 @@ function setUser(user) {
   }
 
   const passed_videos = Array.from(new Set(user.passed_videos));
-
+  galleryBtns = passed_videos;
   for (let i = 0; i < passed_videos.length; i++) {
     const videoBtns = $('.video__button');
     videoBtns.each(function() {
@@ -96,13 +96,13 @@ function setUser(user) {
       if (passed_videos.includes(id)) {
         btn.css('background', 'linear-gradient(180deg, #08c471 0%, #7efac1 100%)');
         btn.text('Скрин отправлен!');
+        btn.prop('disabled', true);
       }
     });
   }
 
   const videosPercent = (100 / videoBtns.length) * passed_videos.length;
-  console.log(videosPercent);
-  $('.stat-block__percent_three').html(`${videosPercent.toFixed()}%`);
+  $('.percent_three').html(`${videosPercent.toFixed()}`);
   $('.stat-line_three').css('width', `${videosPercent.toFixed()}%`);
   if (videosPercent > 20 && videosPercent < 70) {
     $('.stat-block__percent_three').css('color', '#0EC1FF');      
@@ -115,6 +115,29 @@ function setUser(user) {
     themesCount += 1;
     $('.themes-count').html(`${themesCount}`); 
   }
+
+    // const percents = user.percents[user.percents.length - 1];
+    // console.log(percents);
+    // if (percents !== undefined) {
+    //   $('.percent_one').html(`${percents[0]}`);
+    //   $('.stat-line_one').css('width', `${percents[0]}%`);
+    //   $('.percent_two').html(`${percents[1]}`);
+    //   $('.stat-line_two').css('width', `${percents[1]}%`);
+    //   $('.percent_three').html(`${percents[2]}`);
+    //   $('.stat-line_three').css('width', `${percents[2]}%`);
+    //   $('.percent_four').html(`${percents[3]}`);
+    //   $('.stat-line_four').css('width', `${percents[3]}%`);
+
+    //   const percentText = $('.stat-block__percent');
+    //   percentText.each(function() {
+    //     if ($(this).html() > 20 && $(this).html() < 70) {
+    //       $(this).css('color', '#0EC1FF'); 
+    //     }
+    //     if ($(this).html() > 70) {
+    //       $(this).css('color', '#E04AA8');
+    //     } 
+    //   });
+    // }
 }
 
 function logout() {
@@ -179,7 +202,6 @@ function loadActiveTab() {
     ul.addClass('open');
   }
 }
-
 function openTab(tabId) {
   const nextTab = getNextTab(tabId);
   $('.js-btn-next').prop('disabled', !nextTab);
@@ -206,7 +228,6 @@ const themesOneCount = [];
 const themesTwoCount = [];
 const themesOne = [];
 const themesTwo = [];
-const themesFour = [];
 
 $('ul.menu li[data-tab]').each(function() { 
   const id = $(this).attr('data-tab');
@@ -218,19 +239,13 @@ $('ul.menu li[data-tab]').each(function() {
   }
 });
 
-$('.task-header[data-task]').each(function() { 
-  const id = $(this).attr('data-task');
-  themesFour.push(id);
-});
-
 $(document).ready(() => {
   $('.js-btn-next').click(function () {
     const activeTab = localStorage.getItem('active-tab') || '1.1';
     const nextTab = getNextTab(activeTab);
     hidePrivatCabinet();    
 
-    if (nextTab) {
-      
+    if (nextTab) {      
       setShowedForTab(nextTab);
       addAvailablePage(nextTab);
 
@@ -252,9 +267,19 @@ $(document).ready(() => {
     const percentFistTheme = 100 / themesOne.length * themesOneCount.length;
     const percentSecondTheme = 100 / themesTwo.length * themesTwoCount.length;
 
-    $('.stat-block__percent_one').html(`${percentFistTheme.toFixed()}%`);
-    $('.stat-line_one').css('width', `${percentFistTheme.toFixed()}%`);
-    $('.stat-block__percent_two').html(`${percentSecondTheme.toFixed()}%`);
+    if (+percentFistTheme <= 100) {
+      $('.percent_one').html(`${percentFistTheme.toFixed()}`);
+    } else {
+      $('.percent_one').html('100');
+    }
+
+    if (+percentSecondTheme <= 100) {
+      $('.percent_two').html(`${percentSecondTheme.toFixed()}`);
+    } else {
+      $('.percent_two').html('100');
+    }
+    
+    $('.stat-line_one').css('width', `${percentFistTheme.toFixed()}%`);    
     $('.stat-line_two').css('width', `${percentSecondTheme.toFixed()}%`);
     
     if (percentFistTheme == 100) {
@@ -277,6 +302,9 @@ $(document).ready(() => {
     }
 
     $('.themes-count').html(`${themesCount}`);
+
+    //setPercent();
+
     // if ($('.tab-content__item_test').hasClass('active')) {
     //   $('.js-btn-next').prop('disabled', true);
     // }
@@ -296,6 +324,26 @@ $(document).ready(() => {
     }
   });
 });
+
+// function setPercent() {
+//   let percents = [];
+//   //console.log(percents);
+//   $('.percent').each(function() {
+//     percents.push($(this).text());
+//   });
+  
+//   $.ajax({
+//     url: `/api/users/percents_cabinet`,
+//     type: 'PUT',
+//     dataType: 'json',
+//     contentType: 'application/json',
+//     data: JSON.stringify({ percents: percents }),
+//     success: function(response) {
+//       percents = response;
+//       //console.log(percents);
+//     }
+//   });
+// }
 
 function setShowedForTab(tab) {
     let li = $(`ul.menu li[data-tab="${tab}"]`);
@@ -454,13 +502,13 @@ function onSubmitTask(formTask) {
       setShowedForNextTask();
 
       if (taskId == 1) {
-        $('.stat-block__percent_four').html('50%');
+        $('.percent_four').html('50');
         $('.stat-block__percent_four').css('color', '#0EC1FF');
         $('.stat-line_four').css('width', '50%');
       } else if (taskId == 2) {
         themesCount++;
         $('.themes-count').text(themesCount);
-        $('.stat-block__percent_four').html('100%');
+        $('.percent_four').html('100');
         $('.stat-block__percent_four').css('color', '#E04AA8');
         $('.stat-line_four').css('width', '100%');
       }
@@ -503,6 +551,7 @@ $('.video__button').each(function() {
         success: function() {
           btn.css('background', 'linear-gradient(180deg, #08c471 0%, #7efac1 100%)');
           btn.text('Скрин отправлен!');
+          btn.prop('disabled', true);
         }
       });    
     });
@@ -586,32 +635,30 @@ $('.popup__close_access').click(function() {
   closePopupAccess();
 });
 
-const galleryBtns = [];
-const videoBtns = $('.video__button');
+let galleryBtns = [];
+const videoBtns = $('.video__button'); 
+
 $('.gallery-files__button_video').click(function() {
   resetPopupShot();
   closepopupShot();
-
-  const galleryBtn = $('.gallery-files__button_video').attr('data-senddata');  
-  galleryBtns.push(galleryBtn);
-
+  
+  galleryBtns.push($('.gallery-files__button_video').attr('data-senddata'));
   let themesCount = parseFloat($('.themes-count').text());
   const percentVideo = 100 / videoBtns.length * galleryBtns.length;
 
-  $('.stat-block__percent_three').html(`${percentVideo.toFixed()}%`);
+  $('.percent_three').html(`${percentVideo.toFixed()}`);
   $('.stat-line_three').css('width', `${percentVideo.toFixed()}%`);
-  
-  if (percentVideo == 100) {
-    themesCount++; 
-    $('.themes-count').html(`${themesCount}`);     
-  } 
 
   if (percentVideo > 20 && percentVideo < 70) {
     $('.stat-block__percent_three').css('color', '#0EC1FF');      
-  } else if (percentVideo > 70) {
+  } 
+  if (percentVideo > 70) {
     $('.stat-block__percent_three').css('color', '#E04AA8');
+  } 
+  if (percentVideo == 100) {
+    themesCount++; 
+    $('.themes-count').html(`${themesCount}`);     
   }
-
 });
 
 $('.task-screen').click(function() {

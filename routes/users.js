@@ -97,4 +97,13 @@ router.put('/passed_videos', (req, res, next) => {
     res.status(200).json({message: 'Сохранено'});
 })
 
+// router.put('/percents_cabinet', (req, res, next) => {
+//     const user = users.find(user => user.id === req.session.user.id);
+//     user.percents.push(req.body.percents);
+//     req.session.user = user;
+//     const percentsBackend = user.percents[user.percents.length - 1];
+//     console.log(percentsBackend);
+//     res.status(200).json({percentsBackend});
+// })
+
 module.exports = router;
