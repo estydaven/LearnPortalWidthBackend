@@ -9,10 +9,10 @@ const users = [
         avatar: null,
         available_pages: ['1.1'],
         available_tasks: ['1'],
+        passed_tasks: [],
         answers_right: [],
         answers_false: [],
         passed_videos: [],
-        percents: [],
     }
 ];
 
@@ -25,10 +25,10 @@ router.post('/signup', (req, res, next) => {
         avatar: null,
         available_pages: ['1.1'],
         available_tasks: ['1'],
+        passed_tasks: [],
         answers_right: [],
         answers_false: [],
         passed_videos: [],
-        percents: [],
     });
 
     res.status(201).json({message: 'Success!'});
@@ -93,6 +93,13 @@ router.put('/test_undone', (req, res, next) => {
 router.put('/passed_videos', (req, res, next) => {
     const user = users.find(user => user.id === req.session.user.id);
     user.passed_videos.push(req.body.btnSendData);
+    req.session.user = user;
+    res.status(200).json({message: 'Сохранено'});
+})
+
+router.put('/passed_tasks', (req, res, next) => {
+    const user = users.find(user => user.id === req.session.user.id);
+    user.passed_tasks.push(req.body.taskId);
     req.session.user = user;
     res.status(200).json({message: 'Сохранено'});
 })

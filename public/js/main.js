@@ -65,12 +65,8 @@ function setUser(user) {
   const tabs = user.available_pages;
   for (let i = 0; i < tabs.length; i++) {
     setShowedForTab(tabs[i]);
+    setThemesProgress(tabs[i]);
   }
-
-  const tasks = user.available_tasks;
-  for (let task of tasks) {
-    setShowedForTask(task);
-  }  
 
   const answers_right = user.answers_right;
   if (answers_right.length) {
@@ -94,27 +90,23 @@ function setUser(user) {
       const id = $(this).attr('data-buttonid');
 
       if (passed_videos.includes(id)) {
-        btn.css('background', 'linear-gradient(180deg, #08c471 0%, #7efac1 100%)');
+        btn.addClass('video__button_passed');
         btn.text('Скрин отправлен!');
         btn.prop('disabled', true);
       }
     });
   }
 
-  const videosPercent = (100 / videoBtns.length) * passed_videos.length;
-  $('.percent_three').html(`${videosPercent.toFixed()}`);
-  $('.stat-line_three').css('width', `${videosPercent.toFixed()}%`);
-  if (videosPercent > 20 && videosPercent < 70) {
-    $('.stat-block__percent_three').css('color', '#0EC1FF');      
-  } 
-  if (videosPercent > 70) {
-    $('.stat-block__percent_three').css('color', '#E04AA8');
-  } 
-  if (videosPercent == 100) {
-    let themesCount = 0;
-    themesCount += 1;
-    $('.themes-count').html(`${themesCount}`); 
+  const percentVideo = (100 / videoBtns.length) * passed_videos.length;
+  setVideosProgress(percentVideo);
+
+  const tasks = user.available_tasks;
+  for (let task of tasks) {
+    setShowedForTask(task);
   }
+  
+  const passed_tasks = user.passed_tasks.length;
+  setTasksProgress(passed_tasks);
 
     // const percents = user.percents[user.percents.length - 1];
     // console.log(percents);
@@ -239,6 +231,52 @@ $('ul.menu li[data-tab]').each(function() {
   }
 });
 
+function setThemesProgress(activeTab) {
+  if (activeTab.includes('1.')) {
+    themesOneCount.push(activeTab);
+  }
+  if (activeTab.includes('2.')) {
+    themesTwoCount.push(activeTab);
+  }
+
+  const percentFistTheme = 100 / themesOne.length * themesOneCount.length;
+  const percentSecondTheme = 100 / themesTwo.length * themesTwoCount.length;
+
+  if (+percentFistTheme <= 100) {
+    $('.percent_one').html(`${percentFistTheme.toFixed()}`);
+  } else {
+    $('.percent_one').html('100');
+  }
+
+  if (+percentSecondTheme <= 100) {
+    $('.percent_two').html(`${percentSecondTheme.toFixed()}`);
+  } else {
+    $('.percent_two').html('100');
+  }
+  
+  $('.stat-line_one').css('width', `${percentFistTheme.toFixed()}%`);    
+  $('.stat-line_two').css('width', `${percentSecondTheme.toFixed()}%`);
+
+  if (percentFistTheme > 20 && percentFistTheme < 70) {
+    $('.stat-block__percent_one').css('color', '#0EC1FF');      
+  } else if (percentFistTheme > 70) {
+    $('.stat-block__percent_one').css('color', '#E04AA8');
+  } 
+  
+  if (percentSecondTheme > 20 && percentSecondTheme < 70) {
+    $('.stat-block__percent_two').css('color', '#0EC1FF');      
+  } else if (percentSecondTheme > 70) {
+    $('.stat-block__percent_two').css('color', '#E04AA8');
+  }
+  
+  if (percentFistTheme == 100) {
+    $('.themes-count').html('1');
+  }
+  if (percentSecondTheme == 100) {
+    $('.themes-count').html('2');
+  }
+}
+
 $(document).ready(() => {
   $('.js-btn-next').click(function () {
     const activeTab = localStorage.getItem('active-tab') || '1.1';
@@ -255,54 +293,7 @@ $(document).ready(() => {
       saveActiveTab(nextTab);
       loadActiveTab();
     }
-
-    if (activeTab.includes('1.')) {
-      themesOneCount.push(activeTab);
-    }
-    if (activeTab.includes('2.')) {
-      themesTwoCount.push(activeTab);
-    }
-
-    let themesCount = 0;
-    const percentFistTheme = 100 / themesOne.length * themesOneCount.length;
-    const percentSecondTheme = 100 / themesTwo.length * themesTwoCount.length;
-
-    if (+percentFistTheme <= 100) {
-      $('.percent_one').html(`${percentFistTheme.toFixed()}`);
-    } else {
-      $('.percent_one').html('100');
-    }
-
-    if (+percentSecondTheme <= 100) {
-      $('.percent_two').html(`${percentSecondTheme.toFixed()}`);
-    } else {
-      $('.percent_two').html('100');
-    }
-    
-    $('.stat-line_one').css('width', `${percentFistTheme.toFixed()}%`);    
-    $('.stat-line_two').css('width', `${percentSecondTheme.toFixed()}%`);
-    
-    if (percentFistTheme == 100) {
-      themesCount++;      
-    } 
-    if (percentSecondTheme == 100) {
-      themesCount++;
-    }
-
-    if (percentFistTheme > 20 && percentFistTheme < 70) {
-      $('.stat-block__percent_one').css('color', '#0EC1FF');      
-    } else if (percentFistTheme > 70) {
-      $('.stat-block__percent_one').css('color', '#E04AA8');
-    } 
-    
-    if (percentSecondTheme > 20 && percentSecondTheme < 70) {
-      $('.stat-block__percent_two').css('color', '#0EC1FF');      
-    } else if (percentSecondTheme > 70) {
-      $('.stat-block__percent_two').css('color', '#E04AA8');
-    }
-
-    $('.themes-count').html(`${themesCount}`);
-
+    setThemesProgress(activeTab);
     //setPercent();
 
     // if ($('.tab-content__item_test').hasClass('active')) {
@@ -486,34 +477,41 @@ function onSubmitTask(formTask) {
   const formData = new FormData(formTask);
   const taskLink = formData.get('link');
   const taskComment = formData.get('comment');
-  const taskId = $(formTask).attr('data-formId');
-  let themesCount = parseFloat($('.themes-count').text());
+  const taskId = $(formTask).attr('data-formId'); 
 
   $.ajax({
     url: `/api/tasks/${taskId}/results`,
     type: 'PUT',
     data: {taskLink, taskComment},
-    success: function() {
+    success: function(response) {
       formTask.reset();
       showConfirmPopup();
       resetPopupShot();
       closepopupShot();
       setShowedForTask();
       setShowedForNextTask();
-
-      if (taskId == 1) {
-        $('.percent_four').html('50');
-        $('.stat-block__percent_four').css('color', '#0EC1FF');
-        $('.stat-line_four').css('width', '50%');
-      } else if (taskId == 2) {
-        themesCount++;
-        $('.themes-count').text(themesCount);
-        $('.percent_four').html('100');
-        $('.stat-block__percent_four').css('color', '#E04AA8');
-        $('.stat-line_four').css('width', '100%');
-      }
+      setTasksProgress(taskId);
     }
   });
+
+  $.ajax({
+    url: `/api/users/passed_tasks`,
+    type: 'PUT',
+    data: {taskId}
+  });
+}
+
+function setTasksProgress(taskId) {
+  if (taskId == 1) {
+    $('.percent_four').html('50');
+    $('.stat-block__percent_four').css('color', '#0EC1FF');
+    $('.stat-line_four').css('width', '50%');
+  } else if (taskId == 2) {
+    $('.themes-count').text('4');
+    $('.percent_four').html('100');
+    $('.stat-block__percent_four').css('color', '#E04AA8');
+    $('.stat-line_four').css('width', '100%');
+  }
 }
 
 function showConfirmPopup() {
@@ -549,7 +547,7 @@ $('.video__button').each(function() {
         type: 'PUT',
         data: {btnSendData},
         success: function() {
-          btn.css('background', 'linear-gradient(180deg, #08c471 0%, #7efac1 100%)');
+          btn.addClass('video__button_passed');
           btn.text('Скрин отправлен!');
           btn.prop('disabled', true);
         }
@@ -642,10 +640,12 @@ $('.gallery-files__button_video').click(function() {
   resetPopupShot();
   closepopupShot();
   
-  galleryBtns.push($('.gallery-files__button_video').attr('data-senddata'));
-  let themesCount = parseFloat($('.themes-count').text());
+  galleryBtns.push($('.gallery-files__button_video').attr('data-senddata'));  
   const percentVideo = 100 / videoBtns.length * galleryBtns.length;
+  setVideosProgress(percentVideo);
+});
 
+function setVideosProgress(percentVideo) {
   $('.percent_three').html(`${percentVideo.toFixed()}`);
   $('.stat-line_three').css('width', `${percentVideo.toFixed()}%`);
 
@@ -656,10 +656,9 @@ $('.gallery-files__button_video').click(function() {
     $('.stat-block__percent_three').css('color', '#E04AA8');
   } 
   if (percentVideo == 100) {
-    themesCount++; 
-    $('.themes-count').html(`${themesCount}`);     
+    $('.themes-count').html('3');     
   }
-});
+}
 
 $('.task-screen').click(function() {
   showPopupShot();

@@ -23,7 +23,6 @@ router.put('/:id/results', (req, res, next) => {
     }
 
     taskResults.push(task);
-    console.log(taskResults);
     res.status(200).json({message: 'Сохранено'}); 
 });
 // const taskResults = [
