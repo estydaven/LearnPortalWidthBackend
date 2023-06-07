@@ -10,6 +10,7 @@ const tasks = [
 ];
 
 const taskResults = [];
+const files = [];
 
 router.put('/:id/results', (req, res, next) => {
     const task = {
@@ -18,23 +19,13 @@ router.put('/:id/results', (req, res, next) => {
         result: {
             link: req.body.taskLink,
             comment: req.body.taskComment,
-            screens: req.body.taskSCreens,
+            screens: req.body.taskScreens,
         }
     }
 
     taskResults.push(task);
+    console.log(req.body.taskScreens);
     res.status(200).json({message: 'Сохранено'}); 
 });
-// const taskResults = [
-//     {
-//         user_id: 1, // сюда передаем айди юзера
-//         task_id: 1, // сюда передаем айди задачи, результат оторой отправляет юзер
-//         result: {
-//             link: 'Ссылка на загруженный в облако файл', 
-//             comment: 'Комментарий о выполнении первой задачи',
-//             screens: null
-//         } // сюда передается скрин и коммент (или только коммент), если это первая задача, и ссылка, если это вторая задача 
-//     }
-// ]
 
 module.exports = router;

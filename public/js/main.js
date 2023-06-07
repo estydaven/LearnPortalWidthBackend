@@ -107,29 +107,6 @@ function setUser(user) {
   
   const passed_tasks = user.passed_tasks.length;
   setTasksProgress(passed_tasks);
-
-    // const percents = user.percents[user.percents.length - 1];
-    // console.log(percents);
-    // if (percents !== undefined) {
-    //   $('.percent_one').html(`${percents[0]}`);
-    //   $('.stat-line_one').css('width', `${percents[0]}%`);
-    //   $('.percent_two').html(`${percents[1]}`);
-    //   $('.stat-line_two').css('width', `${percents[1]}%`);
-    //   $('.percent_three').html(`${percents[2]}`);
-    //   $('.stat-line_three').css('width', `${percents[2]}%`);
-    //   $('.percent_four').html(`${percents[3]}`);
-    //   $('.stat-line_four').css('width', `${percents[3]}%`);
-
-    //   const percentText = $('.stat-block__percent');
-    //   percentText.each(function() {
-    //     if ($(this).html() > 20 && $(this).html() < 70) {
-    //       $(this).css('color', '#0EC1FF'); 
-    //     }
-    //     if ($(this).html() > 70) {
-    //       $(this).css('color', '#E04AA8');
-    //     } 
-    //   });
-    // }
 }
 
 function logout() {
@@ -160,9 +137,10 @@ $('ul.menu button').each(function() {
       li.siblings().each(function() {
         $(this).find('li').removeClass('open');
       });
-  
+
+      //const openDataTab = li.attr('data-open');
       if (!tab) {
-        li.toggleClass('open');      
+        li.toggleClass('open');    
       } else {
         $('ul.menu li.active').removeClass('active');
         $('ul.tab-content li.active').removeClass('active');
@@ -294,7 +272,6 @@ $(document).ready(() => {
       loadActiveTab();
     }
     setThemesProgress(activeTab);
-    //setPercent();
 
     // if ($('.tab-content__item_test').hasClass('active')) {
     //   $('.js-btn-next').prop('disabled', true);
@@ -315,26 +292,6 @@ $(document).ready(() => {
     }
   });
 });
-
-// function setPercent() {
-//   let percents = [];
-//   //console.log(percents);
-//   $('.percent').each(function() {
-//     percents.push($(this).text());
-//   });
-  
-//   $.ajax({
-//     url: `/api/users/percents_cabinet`,
-//     type: 'PUT',
-//     dataType: 'json',
-//     contentType: 'application/json',
-//     data: JSON.stringify({ percents: percents }),
-//     success: function(response) {
-//       percents = response;
-//       //console.log(percents);
-//     }
-//   });
-// }
 
 function setShowedForTab(tab) {
     let li = $(`ul.menu li[data-tab="${tab}"]`);
@@ -366,7 +323,7 @@ function getNextTab(activeTab) {
 
   while (li.is('li')) {
     li = li.next();
-    
+
     if (li.length) {
       let tab = li.attr('data-tab');
 
@@ -386,6 +343,10 @@ function getPrevTab(activeTab) {
   
   while (li.is('li')) {
     li = li.prev();
+    // let openDataTab = li.attr('data-open');
+    // if (openDataTab) {
+    //   li = li.children('ul').first().children().last();
+    // }
     
     if (li.length) {
       let tab = li.attr('data-tab');
@@ -473,17 +434,67 @@ function setShowedForNextTask() {
   addAvailableTask(taskId);
 }
 
+const fileElem = document.querySelector("#fileElem2");
+fileElem.addEventListener('change', previewFiles);
+const readerResults = [];
+function previewFiles() {
+  const files = document.querySelector("#fileElem2").files;
+
+  function readAndPreview(file) {
+    if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
+      const reader = new FileReader();
+      
+      reader.addEventListener(
+        "load",
+        () => {
+          const image = new Image();
+          image.height = 100;
+          image.title = file.name;
+          image.src = reader.result;
+          readerResults.push(reader.result);
+        },
+        false
+      );
+
+      reader.readAsDataURL(file)
+    }
+  }
+
+  if (files) {
+    Array.prototype.forEach.call(files, readAndPreview);
+  }
+}
+
+
 function onSubmitTask(formTask) {
+  // const files = [];
+  // const fileReader = new FileReader();
+  //   fileReader.onload = () => {
+  //   const srcData = fileReader.result;
+  //   files.push(srcData);
+  // }
+  // const screens = formData.getAll('files');
+  // const screensArr = [];
+  // screens.forEach(screen => {
+  //   screensArr.push(screen);
+  // });
+  //fileReader.readAsDataURL(screensArr[0]);
+  //fileReader.readAsDataURL(screensArr[1]);
+  //console.log(files);
+  //console.log(screensArr);
   const formData = new FormData(formTask);
+  const taskScreens = readerResults;
   const taskLink = formData.get('link');
   const taskComment = formData.get('comment');
-  const taskId = $(formTask).attr('data-formId'); 
+  const taskId = $(formTask).attr('data-formId');
 
   $.ajax({
     url: `/api/tasks/${taskId}/results`,
     type: 'PUT',
-    data: {taskLink, taskComment},
-    success: function(response) {
+    dataType: 'json',
+    contentType: 'application/json',
+    data: JSON.stringify({ taskLink: taskLink, taskComment: taskComment, taskScreens: taskScreens}),
+    success: function() {
       formTask.reset();
       showConfirmPopup();
       resetPopupShot();
@@ -722,7 +733,7 @@ function handleDrop(e) {
 
 function handleFiles(files) {
   files = [...files];
-  uploadFiles(files);
+  //uploadFiles(files);
   files.forEach(previewFile);
 }
 
@@ -780,25 +791,6 @@ function previewFile(file) {
   }
 }
 
-function uploadFiles(files) {
-  // $.ajax({
-  //   url: `/api/tasks/${taskId}/results`,
-  //   type: 'PUT',
-  //   data: {files},
-  //   success: function() {
-  //     formTask.reset();
-  //   }
-  // });
-  let url = '';
-  let xhr = new XMLHttpRequest();
-  let formData = new FormData();
-  xhr.open('POST', url, true);
-  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  formData.append('file', files);
-  xhr.send(formData);
-}
-
 // Timer
 
 let time = 1800;
@@ -822,18 +814,17 @@ function tick() {
 
 // Quiz
 
-const answerTitle = document.querySelectorAll('.quiz__title');
-const quizButton = document.querySelector('.quiz-submit');
-const quizResultCorrect = document.querySelector('.quiz-result_correct');
-const quizResultInorrect = document.querySelector('.quiz-result_incorrect');
+const quizButton = document.querySelectorAll('.quiz-submit');
+const quizResultCorrect = document.querySelectorAll('.quiz-result_correct');
+const quizResultInorrect = document.querySelectorAll('.quiz-result_incorrect');
 const quizResultFail = document.querySelector('.quiz-result_fail');
 const timerTime = document.querySelector('.timer__time');
 const quizButtonIncorrect = document.querySelectorAll('.quiz-button_incorrect');
-const quizButtonStart = document.querySelector('.quiz-preview__button');
-const articleWrapper = document.querySelector('.article__wrap');
+const quizButtonStart = document.querySelectorAll('.quiz-preview__button');
+const articleWrapper = document.querySelectorAll('.article__wrap');
 const quizTextCorrect = document.querySelector('.quiz-text_correct');
 const quizTextFail = document.querySelector('.quiz-text_fail');
-const qiuzPreviewWrapper = document.querySelector('.quiz-preview');
+const qiuzPreviewWrapper = document.querySelectorAll('.quiz-preview');
 const questionsQuantity = document.querySelectorAll('.quiz-questions');
 const questions = document.querySelectorAll('.quiz-block');
 const erorMessage = document.querySelector('.popup__title_test');
@@ -843,8 +834,8 @@ let trying = 0;
 
 function startQuiz() {
   start_timer();
-  articleWrapper.style.display = 'flex';
-  qiuzPreviewWrapper.classList.add('hide');
+  articleWrapper.forEach(el => el.style.display = 'flex');
+  qiuzPreviewWrapper.forEach(el => el.classList.add('hide'));
 }
 
 function restartQuiz() {
@@ -853,13 +844,14 @@ function restartQuiz() {
   time = 1800;
   clearInterval(intr);
   start_timer();
-  quizButton.style.display = 'block';
-  quizResultInorrect.classList.add('hide');
-  quizResultCorrect.classList.add('hide');
+  quizButton.forEach(el => el.classList.remove('hide'));
+  quizResultInorrect.forEach(el => el.classList.add('hide'));
+  quizResultCorrect.forEach(el => el.classList.add('hide'));
   trying++;
+  console.log(trying);
   
   if (trying == 3) {
-    quizButton.style.display = 'none';
+    quizButton.forEach(el => el.classList.add('hide'));
     quizResultFail.classList.remove('hide');
     time = 1800;
     clearInterval(intr);
@@ -877,13 +869,12 @@ function restartQuiz() {
   }
 }
 
-quizButtonStart.addEventListener('click', startQuiz);
+quizButtonStart.forEach(el => el.addEventListener('click', function () {
+  startQuiz();     
+}));
 quizButtonIncorrect.forEach(el => el.addEventListener('click', function () {
   restartQuiz();     
 }));
-// quizButtonIncorrect.addEventListener('click', function () {
-//   restartQuiz();
-// });
 
 function showTestErrorPopup() {
   $('.popup_test').css('display', 'flex');
@@ -897,32 +888,36 @@ $('.popup__close_test').click(function() {
   closeTestErrorPopup();
 });
 
-const answerChecked = {};
+const answerCheckedFirst = {};
+const answerCheckedSecond = {};
 $('.answer__input').each(function() {
   $(this).click(function () { 
+    const test = $(this).parent().parent().parent().attr('data-test');
     const key = +$(this).parent().parent().attr('data-question');
     const value = +$(this).val();   
-    if ($(this).prop('checked')) {
-      if (!answerChecked[key]) { // тут мы смотрим, нет ли значения ключа
-        answerChecked[key] = [value]; // если значения нет, то добавляем его в объект (пару ключ значение)
+    if ($(this).prop('checked') && test == 2) {
+      if (!answerCheckedSecond[key]) { // тут мы смотрим, нет ли значения ключа
+        answerCheckedSecond[key] = [value]; // если значения нет, то добавляем его в объект (пару ключ значение)
       } else { // в случае если у юзера уже отмечен ответ, и он решил его поменять
         if ($(this).hasClass('answer__input_radio')) { // если у ключа уже есть значение
-          answerChecked[key] = [value];
+          answerCheckedSecond[key] = [value];
         }        
-        if ($(this).hasClass('answer__input_checkbox') && answerChecked[key].includes(value)) { // если у ключа уже есть значение
-          answerChecked[key] = answerChecked[key].filter((n) => n !== value); // исключаем значение
+        if ($(this).hasClass('answer__input_checkbox') && answerCheckedSecond[key].includes(value)) { // если у ключа уже есть значение
+          answerCheckedSecond[key] = answerCheckedSecond[key].filter((n) => n !== value); // исключаем значение
         } 
         if ($(this).hasClass('answer__input_checkbox')) { // если у ключа значения нету
-          answerChecked[key].push(value); //добавляем значение
+          answerCheckedSecond[key].push(value); //добавляем значение
         }
       }
     } else {
-      answerChecked[key] = answerChecked[key].filter((n) => n !== value);      
+      answerCheckedSecond[key] = answerCheckedSecond[key].filter((n) => n !== value);      
     }
+
+    console.log(answerCheckedSecond);
   });
 });
 
-function sendAnswers() {
+function sendAnswersRocket() {
   questionsQuantity.forEach(el => el.innerText = questions.length);  
 
   $.ajax({
@@ -930,11 +925,11 @@ function sendAnswers() {
     type: 'PUT',
     dataType: 'json',
     contentType: 'application/json',
-    data: JSON.stringify({ answers: answerChecked }),
+    data: JSON.stringify({ answers: answerCheckedSecond}),
     success: function(response) {
       const trueAnswers = response.trueAnswers.length;
-      quizResultCorrect.classList.remove('hide');
-      quizButton.style.display = 'none';
+      quizResultCorrect.forEach(el => el.classList.remove('hide'));
+      quizButton.forEach(el => el.classList.add('hide'));
       quizTextCorrect.innerText = trueAnswers;
       time = 1800;
       clearInterval(intr);
@@ -942,8 +937,8 @@ function sendAnswers() {
     },
     error: function(response) {
       if (response.responseJSON.falseAnswers) {
-        quizResultInorrect.classList.remove('hide');
-        quizButton.style.display = 'none';
+        quizResultInorrect.forEach(el => el.classList.remove('hide'));
+        quizButton.forEach(el => el.classList.add('hide'));
         time = 1800;
         clearInterval(intr);
         timerTime.innerText = '30:00';
