@@ -558,11 +558,7 @@ $('.video__button').each(function() {
         type: 'PUT',
         dataType: 'json',
         contentType: 'application/json',
-        data: JSON.stringify({ videoScreens: videoScreens}),
-        success: function() {
-          showConfirmPopup();
-          console.log('send');
-        }
+        data: JSON.stringify({ videoScreens: videoScreens})
       });
       
       $.ajax({
