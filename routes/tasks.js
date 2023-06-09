@@ -10,7 +10,6 @@ const tasks = [
 ];
 
 const taskResults = [];
-const files = [];
 
 router.put('/:id/results', (req, res, next) => {
     const task = {
@@ -24,7 +23,7 @@ router.put('/:id/results', (req, res, next) => {
     }
 
     taskResults.push(task);
-    console.log(req.body.taskScreens);
+    //console.log(taskResults);
     res.status(200).json({message: 'Сохранено'}); 
 });
 

@@ -434,13 +434,19 @@ function setShowedForNextTask() {
   addAvailableTask(taskId);
 }
 
-const fileElem = document.querySelector("#fileElem2");
-fileElem.addEventListener('change', previewFiles);
-const readerResults = [];
+const fileElemTask = document.querySelector("#fileElem2");
+const fileElemVideos = document.querySelector("#fileElem");
+fileElemTask.addEventListener('change', previewFiles);
+fileElemVideos.addEventListener('change', previewFiles);
+const convertTasksImagesResults = [];
+const convertVodeosImagesResults = [];
 function previewFiles() {
-  const files = document.querySelector("#fileElem2").files;
+  const filesTask = document.querySelector("#fileElem2").files;
+  const filesVideos = document.querySelector("#fileElem").files;
+  const fileId = this.dataset.screen;
 
   function readAndPreview(file) {
+
     if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
       const reader = new FileReader();
       
@@ -451,7 +457,12 @@ function previewFiles() {
           image.height = 100;
           image.title = file.name;
           image.src = reader.result;
-          readerResults.push(reader.result);
+          if (fileId == 2) {
+            convertTasksImagesResults.push(reader.result);
+          }
+          if (fileId == 1) {
+            convertVodeosImagesResults.push(reader.result);
+          }
         },
         false
       );
@@ -460,30 +471,18 @@ function previewFiles() {
     }
   }
 
-  if (files) {
-    Array.prototype.forEach.call(files, readAndPreview);
+  if (filesTask) {
+    Array.prototype.forEach.call(filesTask, readAndPreview);
+  }
+  if (filesVideos) {
+    Array.prototype.forEach.call(filesVideos, readAndPreview);
   }
 }
 
 
 function onSubmitTask(formTask) {
-  // const files = [];
-  // const fileReader = new FileReader();
-  //   fileReader.onload = () => {
-  //   const srcData = fileReader.result;
-  //   files.push(srcData);
-  // }
-  // const screens = formData.getAll('files');
-  // const screensArr = [];
-  // screens.forEach(screen => {
-  //   screensArr.push(screen);
-  // });
-  //fileReader.readAsDataURL(screensArr[0]);
-  //fileReader.readAsDataURL(screensArr[1]);
-  //console.log(files);
-  //console.log(screensArr);
   const formData = new FormData(formTask);
-  const taskScreens = readerResults;
+  const taskScreens = convertTasksImagesResults;
   const taskLink = formData.get('link');
   const taskComment = formData.get('comment');
   const taskId = $(formTask).attr('data-formId');
@@ -552,6 +551,19 @@ $('.video__button').each(function() {
 
     $('.gallery-files__button').click(function() {
       const btnSendData = $(this).attr('data-sendData');
+      const videoScreens = convertVodeosImagesResults;
+
+      $.ajax({
+        url: `/api/screens/${btnSendData}/video_screens`,
+        type: 'PUT',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({ videoScreens: videoScreens}),
+        success: function() {
+          showConfirmPopup();
+          console.log('send');
+        }
+      });
       
       $.ajax({
         url: `/api/users/passed_videos`,
