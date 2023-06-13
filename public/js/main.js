@@ -273,9 +273,10 @@ $(document).ready(() => {
     }
     setThemesProgress(activeTab);
 
-    // if ($('.tab-content__item_test').hasClass('active')) {
-    //   $('.js-btn-next').prop('disabled', true);
-    // }
+    $('.tab-content__item_test.active').each(function() {
+      $('.tab-buttons').css('display', 'none');
+      $('.tab-content').css('height', '100%');
+    });
   });
   $('.js-btn-prev').click(function () {
     const activeTab = localStorage.getItem('active-tab') || '1.1';    
@@ -283,7 +284,7 @@ $(document).ready(() => {
     hidePrivatCabinet();
     hideTaskContent();
 
-    if (prevTab) {      
+    if (prevTab) {
       $('ul.menu li.active').removeClass('active');
       $('ul.menu li.open').removeClass('open');
       $('ul.tab-content li.active').removeClass('active');
@@ -878,10 +879,10 @@ function restartQuiz() {
 }
 
 quizButtonStart.forEach(el => el.addEventListener('click', function () {
-  startQuiz();     
+  startQuiz();
 }));
 quizButtonIncorrect.forEach(el => el.addEventListener('click', function () {
-  restartQuiz();     
+  restartQuiz();
 }));
 
 function showTestErrorPopup() {
@@ -903,25 +904,45 @@ $('.answer__input').each(function() {
     const test = $(this).parent().parent().parent().attr('data-test');
     const key = +$(this).parent().parent().attr('data-question');
     const value = +$(this).val();   
-    if ($(this).prop('checked') && test == 2) {
-      if (!answerCheckedSecond[key]) { // тут мы смотрим, нет ли значения ключа
-        answerCheckedSecond[key] = [value]; // если значения нет, то добавляем его в объект (пару ключ значение)
-      } else { // в случае если у юзера уже отмечен ответ, и он решил его поменять
-        if ($(this).hasClass('answer__input_radio')) { // если у ключа уже есть значение
-          answerCheckedSecond[key] = [value];
-        }        
-        if ($(this).hasClass('answer__input_checkbox') && answerCheckedSecond[key].includes(value)) { // если у ключа уже есть значение
-          answerCheckedSecond[key] = answerCheckedSecond[key].filter((n) => n !== value); // исключаем значение
-        } 
-        if ($(this).hasClass('answer__input_checkbox')) { // если у ключа значения нету
-          answerCheckedSecond[key].push(value); //добавляем значение
+    if ($(this).prop('checked')) {
+      if (test == 1) {
+        if (!answerCheckedFirst[key]) { // тут мы смотрим, нет ли значения ключа
+          answerCheckedFirst[key] = [value]; // если значения нет, то добавляем его в объект (пару ключ значение)
+        } else { // в случае если у юзера уже отмечен ответ, и он решил его поменять
+          if ($(this).hasClass('answer__input_radio')) { // если у ключа уже есть значение
+            answerCheckedFirst[key] = [value];
+          }        
+          if ($(this).hasClass('answer__input_checkbox') && answerCheckedFirst[key].includes(value)) { // если у ключа уже есть значение
+            answerCheckedFirst[key] = answerCheckedFirst[key].filter((n) => n !== value); // исключаем значение
+          } 
+          if ($(this).hasClass('answer__input_checkbox')) { // если у ключа значения нету
+            answerCheckedFirst[key].push(value); //добавляем значение
+          }
+        }
+      } if (test == 2) {
+        if (!answerCheckedSecond[key]) { // тут мы смотрим, нет ли значения ключа
+          answerCheckedSecond[key] = [value]; // если значения нет, то добавляем его в объект (пару ключ значение)
+        } else { // в случае если у юзера уже отмечен ответ, и он решил его поменять
+          if ($(this).hasClass('answer__input_radio')) { // если у ключа уже есть значение
+            answerCheckedSecond[key] = [value];
+          }        
+          if ($(this).hasClass('answer__input_checkbox') && answerCheckedSecond[key].includes(value)) { // если у ключа уже есть значение
+            answerCheckedSecond[key] = answerCheckedSecond[key].filter((n) => n !== value); // исключаем значение
+          } 
+          if ($(this).hasClass('answer__input_checkbox')) { // если у ключа значения нету
+            answerCheckedSecond[key].push(value); //добавляем значение
+          }
         }
       }
-    } else {
-      answerCheckedSecond[key] = answerCheckedSecond[key].filter((n) => n !== value);      
     }
-
-    console.log(answerCheckedSecond);
+    if (!($(this).prop('checked'))) {
+      if (test == 1) {
+        answerCheckedFirst[key] = answerCheckedFirst[key].filter((n) => n !== value);
+      }
+      if (test == 2) {
+        answerCheckedSecond[key] = answerCheckedSecond[key].filter((n) => n !== value);
+      }
+    }
   });
 });
 
@@ -954,7 +975,7 @@ function sendAnswersRocket() {
         quizTextFail.innerText = answer;
       } else {
         showTestErrorPopup();
-        erorMessage.innerText = response.responseJSON.message;        
+        erorMessage.innerText = response.responseJSON.message;
       }
     }
   });

@@ -636,6 +636,9 @@ input::-webkit-search-results-decoration { display: none; }
 }
 
 /* Main content styles */
+.content__wrapper {
+  height: 100%;
+}
 .tab-content {
   height: calc(100% - 87px);
 }
