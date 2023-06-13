@@ -290,6 +290,11 @@ $(document).ready(() => {
       $('ul.tab-content li.active').removeClass('active');
       saveActiveTab(prevTab);
       loadActiveTab();
+
+      $('.tab-content__item.active').each(function() {
+        $('.tab-buttons').css('display', 'flex');
+      $('.tab-content').css('height', 'calc(100% - 87px)');
+      });
     }
   });
 });
