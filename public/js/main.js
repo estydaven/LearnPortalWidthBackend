@@ -68,16 +68,29 @@ function setUser(user) {
     setThemesProgress(tabs[i]);
   }
 
-  const answers_right = user.answers_right;
-  if (answers_right.length) {
-    $('.quiz-preview__start').addClass('hide');
-    $('.quiz-preview__finished_done').removeClass('hide');
+  const answers_theory_right = user.answers_theory_right;
+  if (answers_theory_right.length) {
+    $('.quiz-preview__start-theory').addClass('hide');
+    $('.quiz-preview__finished_done-theory').removeClass('hide');
   }
 
-  const answers_false = user.answers_false;
-  if (answers_false.length) {
-    $('.quiz-preview__start').addClass('hide');
-    $('.quiz-preview__finished_undone').removeClass('hide');
+  const answers_rocket_right = user.answers_rocket_right;
+  if (answers_rocket_right.length) {
+    $('.quiz-preview__start-rocket').addClass('hide');
+    $('.quiz-preview__finished_done-rocket').removeClass('hide');
+  }
+
+  const answers_theory_false = user.answers_theory_false;
+  if (answers_theory_false.length) {
+    $('.quiz-preview__start-theory').addClass('hide');
+    $('.quiz-preview__finished_undone-theory').removeClass('hide');
+    $('.js-btn-next').prop('disabled', true);
+  }
+
+  const answers_rocket_false = user.answers_rocket_false;
+  if (answers_rocket_false.length) {
+    $('.quiz-preview__start-rocket').addClass('hide');
+    $('.quiz-preview__finished_undone-rocket').removeClass('hide');
     $('.js-btn-next').prop('disabled', true);
   }
 
@@ -830,23 +843,30 @@ function tick() {
 }
 
 // Quiz
-
-const quizButton = document.querySelectorAll('.quiz-submit');
-const quizResultCorrect = document.querySelectorAll('.quiz-result_correct');
-const quizResultInorrect = document.querySelectorAll('.quiz-result_incorrect');
-const quizResultFail = document.querySelector('.quiz-result_fail');
+const quizButtonTheory = document.querySelector('.quiz-submit-theory');
+const quizButtonRocket = document.querySelector('.quiz-submit-rocket');
+const quizResultCorrectTheory = document.querySelector('.quiz-result_correct-theory');
+const quizResultCorrectRocket = document.querySelector('.quiz-result_correct-rocket');
+const quizResultInorrectTheory = document.querySelector('.quiz-result_incorrect-theory');
+const quizResultInorrectRocket = document.querySelector('.quiz-result_incorrect-rocket');
+const quizResultFailTheory = document.querySelector('.quiz-result_fail-theory');
+const quizResultFailRocket = document.querySelector('.quiz-result_fail-rocket');
 const timerTime = document.querySelector('.timer__time');
-const quizButtonIncorrect = document.querySelectorAll('.quiz-button_incorrect');
+const quizButtonIncorrectTheory = document.querySelector('.quiz-button_incorrect-theory');
+const quizButtonIncorrectRocket = document.querySelector('.quiz-button_incorrect-rocket');
 const quizButtonStart = document.querySelectorAll('.quiz-preview__button');
 const articleWrapper = document.querySelectorAll('.article__wrap');
-const quizTextCorrect = document.querySelector('.quiz-text_correct');
-const quizTextFail = document.querySelector('.quiz-text_fail');
+const quizTextCorrectTheory = document.querySelector('.quiz-text_correct-theory');
+const quizTextCorrectRocket = document.querySelector('.quiz-text_correct-rocket');
+const quizTextFailTheory = document.querySelector('.quiz-text_fail-theory');
+const quizTextFailRocket = document.querySelector('.quiz-text_fail-rocket');
 const qiuzPreviewWrapper = document.querySelectorAll('.quiz-preview');
-const questionsQuantity = document.querySelectorAll('.quiz-questions');
-const questions = document.querySelectorAll('.quiz-block');
+const questionsTheoryQuantity = document.querySelectorAll('.quiz-questions-theory');
+const questionsRocketQuantity = document.querySelectorAll('.quiz-questions-rocket');
+const questionsTheory = document.querySelectorAll('.quiz-block-theory');
+const questionsRocket = document.querySelectorAll('.quiz-block-rocket');
 const erorMessage = document.querySelector('.popup__title_test');
 const answers = document.querySelectorAll('.answer__input');
-let score = 0;
 let trying = 0;
 
 function startQuiz() {
@@ -855,43 +875,81 @@ function startQuiz() {
   qiuzPreviewWrapper.forEach(el => el.classList.add('hide'));
 }
 
-function restartQuiz() {
+function restartTheoryQuiz() {  
   $('.popup_time').css('display', 'none');
   answers.forEach(el => el.checked = false);
   time = 1800;
   clearInterval(intr);
   start_timer();
-  quizButton.forEach(el => el.classList.remove('hide'));
-  quizResultInorrect.forEach(el => el.classList.add('hide'));
-  quizResultCorrect.forEach(el => el.classList.add('hide'));
+  quizButtonTheory.classList.remove('hide');
+  quizResultInorrectTheory.classList.add('hide');
+  quizResultCorrectTheory.classList.add('hide');
   trying++;
-  console.log(trying);
   
-  if (trying == 3) {
-    quizButton.forEach(el => el.classList.add('hide'));
-    quizResultFail.classList.remove('hide');
+  if (trying === 3) {
+    trying = 0;
+    quizButtonTheory.classList.add('hide');
+    quizResultFailTheory.classList.remove('hide');
     time = 1800;
     clearInterval(intr);
 
-    const answer = document.querySelector('.quiz-text_correct').innerHTML;
-
-    $.ajax({
-      url: `/api/users/test_undone`,
-      type: 'PUT',
-      data: {answer},
-      success: function() {
-        $('.js-btn-next').prop('disabled', true);
-      }
-    });
+    setTheoryAnswersFail();
   }
+}
+
+function restartRocketQuiz() {
+  $('.popup_time').css('display', 'none');
+  answers.forEach(el => el.checked = false);
+  time = 1800;
+  clearInterval(intr);
+  start_timer();
+  quizButtonRocket.classList.remove('hide');
+  quizResultInorrectRocket.classList.add('hide');
+  quizResultCorrectRocket.classList.add('hide');
+  trying++;
+  
+  if (trying === 3) {
+    quizButtonRocket.classList.add('hide');
+    quizResultFailRocket.classList.remove('hide');
+    time = 1800;
+    clearInterval(intr);
+    trying = 0;
+
+    setRocketAnswersFail();
+  }
+}
+
+function setTheoryAnswersFail() {
+  const answer = document.querySelector('.quiz-text_correct-theory').innerHTML;
+  
+  $.ajax({
+    url: `/api/users/test_theory_undone`,
+    type: 'PUT',
+    data: {answer},
+    success: function() {
+      $('.js-btn-next').prop('disabled', true);
+    }
+  });
+}
+
+function setRocketAnswersFail() {
+  const answer = document.querySelector('.quiz-text_correct-rocket').innerHTML;
+
+  $.ajax({
+    url: `/api/users/test_rocket_undone`,
+    type: 'PUT',
+    data: {answer},
+    success: function() {
+      $('.js-btn-next').prop('disabled', true);
+    }
+  });
 }
 
 quizButtonStart.forEach(el => el.addEventListener('click', function () {
   startQuiz();
 }));
-quizButtonIncorrect.forEach(el => el.addEventListener('click', function () {
-  restartQuiz();
-}));
+quizButtonIncorrectTheory.addEventListener('click', restartTheoryQuiz);
+quizButtonIncorrectRocket.addEventListener('click', restartRocketQuiz);
 
 function showTestErrorPopup() {
   $('.popup_test').css('display', 'flex');
@@ -954,33 +1012,33 @@ $('.answer__input').each(function() {
   });
 });
 
-function sendAnswersRocket() {
-  questionsQuantity.forEach(el => el.innerText = questions.length);  
+function sendAnswersTheory() {
+  questionsTheoryQuantity.forEach(el => el.innerText = questionsTheory.length);  
 
   $.ajax({
-    url: `/api/tests`,
+    url: `/api/tests/tests_theory`,
     type: 'PUT',
     dataType: 'json',
     contentType: 'application/json',
-    data: JSON.stringify({ answers: answerCheckedSecond}),
+    data: JSON.stringify({ answersFirst: answerCheckedFirst}),
     success: function(response) {
-      const trueAnswers = response.trueAnswers.length;
-      quizResultCorrect.forEach(el => el.classList.remove('hide'));
-      quizButton.forEach(el => el.classList.add('hide'));
-      quizTextCorrect.innerText = trueAnswers;
+      const trueAnswers = response.trueAnswersTheory.length;
+      quizResultCorrectTheory.classList.remove('hide');
+      quizButtonTheory.classList.add('hide');
+      quizTextCorrectTheory.innerText = trueAnswers;
       time = 1800;
       clearInterval(intr);
       timerTime.innerText = '30:00';
     },
     error: function(response) {
-      if (response.responseJSON.falseAnswers) {
-        quizResultInorrect.forEach(el => el.classList.remove('hide'));
-        quizButton.forEach(el => el.classList.add('hide'));
+      if (response.responseJSON.falseAnswersTheory) {
+        quizResultInorrectTheory.classList.remove('hide');
+        quizButtonTheory.classList.add('hide');
         time = 1800;
         clearInterval(intr);
         timerTime.innerText = '30:00';
-        const answer = questions.length - response.responseJSON.falseAnswers.length;
-        quizTextFail.innerText = answer;
+        const answer = questionsTheory.length - response.responseJSON.falseAnswersTheory.length;
+        quizTextFailTheory.innerText = answer;
       } else {
         showTestErrorPopup();
         erorMessage.innerText = response.responseJSON.message;
@@ -989,13 +1047,59 @@ function sendAnswersRocket() {
   });
 }
 
-$('.quiz-button_correct').click(function() {  
-  const answer = document.querySelector('.quiz-text_correct').innerHTML;
+function sendAnswersRocket() {
+  questionsRocketQuantity.forEach(el => el.innerText = questionsRocket.length);
   
   $.ajax({
-    url: `/api/users/test_done`,
+    url: `/api/tests/tests_rocket`,
     type: 'PUT',
-    data: {answer},
-    success: function() {}
+    dataType: 'json',
+    contentType: 'application/json',
+    data: JSON.stringify({ answersSecond: answerCheckedSecond}),
+    success: function(response) {
+      const trueAnswers = response.trueAnswersRocket.length;
+      quizResultCorrectRocket.classList.remove('hide');
+      quizButtonRocket.classList.add('hide');
+      quizTextCorrectRocket.innerText = trueAnswers;
+      time = 1800;
+      clearInterval(intr);
+      timerTime.innerText = '30:00';
+    },
+    error: function(response) {
+      if (response.responseJSON.falseAnswersRocket) {
+        quizResultInorrectRocket.classList.remove('hide');
+        quizButtonRocket.classList.add('hide');
+        time = 1800;
+        clearInterval(intr);
+        timerTime.innerText = '30:00';
+        const answer = questionsRocket.length - response.responseJSON.falseAnswersRocket.length;
+        quizTextFailRocket.innerText = answer;
+      } else {
+        showTestErrorPopup();
+        erorMessage.innerText = response.responseJSON.message;
+      }
+    }
+  });
+}
+
+$('.quiz-button_correct-theory').click(function() {  
+  const answer = document.querySelector('.quiz-text_correct-theory').innerHTML;
+  trying = 0;
+  
+  $.ajax({
+    url: `/api/users/test_theory_done`,
+    type: 'PUT',
+    data: {answer}
+  });
+});
+
+$('.quiz-button_correct-rocket').click(function() {  
+  const answer = document.querySelector('.quiz-text_correct-rocket').innerHTML;
+  trying = 0;
+
+  $.ajax({
+    url: `/api/users/test_rocket_done`,
+    type: 'PUT',
+    data: {answer}
   });
 });
