@@ -849,7 +849,36 @@ input::-webkit-search-results-decoration { display: none; }
   text-align: center;
   color: #ffffff;
 }
-.cabimet-menu__ava {
+.cabinet-menu__file {
+  display: none;
+}
+.cabinet-menu__avatar  {
+  display: block;
+  width: 120px;
+  height: 120px;
+  position: relative;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(11px);
+  border-radius: 50%;
+  background-image: url(../images/svg/user.svg);
+  background-size: 44px 44px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  margin: 0 auto 20px;
+  cursor: pointer;
+}
+.cabinet-menu__avatar::before {
+  content: "";
+  position: absolute;
+  inset: 0px;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(165deg, rgb(18, 217, 242), transparent 50%);
+  -webkit-mask: linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px) content-box content-box, linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px);
+  -webkit-mask-composite: xor;
+}
+/* .cabinet-menu__ava {
   width: 120px;
   height: 120px;
   position: relative;
@@ -862,7 +891,7 @@ input::-webkit-search-results-decoration { display: none; }
   background-repeat: no-repeat;
   margin: 0 auto 20px;
 }
-.cabimet-menu__ava::before {
+.cabinet-menu__ava::before {
   content: "";
   position: absolute;
   inset: 0px;
@@ -872,7 +901,7 @@ input::-webkit-search-results-decoration { display: none; }
   background: linear-gradient(165deg, rgb(18, 217, 242), transparent 50%);
   -webkit-mask: linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px) content-box content-box, linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px);
   -webkit-mask-composite: xor;
-}
+} */
 .cabinet-menu__name {
   line-height: 26px;
   font-family: "suisse_intlbold";

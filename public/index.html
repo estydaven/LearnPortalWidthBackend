@@ -72,7 +72,16 @@
             <div class="wrapper__inner tabs">
                 <div class="menu-wrapper">
                     <div class="cabinet-menu hide">
-                        <div class="cabimet-menu__ava"></div>
+                        <form class="cabinet-menu__form">
+                            <div id="upload-button" class="fpd-btn-raised fpd-secondary-bg-color fpd-secondary-text-color">
+                                <div class="cabinet-menu__avatar"></div>
+                              </div>
+                              <input type="file" id="my-custom-design-upload" class="btn btn-success" style="display:none;" />
+                              <!-- <img class="imgg" src="" height="200" /> -->
+                            <!-- <div class="cabinet-menu__ava"></div> -->
+                            <label class="cabinet-menu__label" for="fileElem3"></label>
+                            <input type="file" id="fileElem3" class="cabinet-menu__file" name="file" onchange="setAvatar(this.files);">
+                        </form>
                         <h3 class="cabinet-menu__name">Буренок Игорь Николаевич</h3>
                         <a href="mailto:i.nikolaevich@rocketprofit.com" class="cabinet-menu__email">
                             <img src="images/svg/mail.svg" alt="" class="cabinet-menu__icon"><span class="cabinet-menu__span">i.nikolaevich@rocketprofit.com</span>
@@ -3123,7 +3132,7 @@
                         <p class="popup__title popup__title_shot">Вставь скрин о просмотре видео и получении сертификата</p>
                         <p class="popup__subtitle">Вставить можно при помощи Drag’n’Drop в это окно или с помощью кнопки ниже</p>
                         <label class="drop-area__button" for="fileElem">Выбрать скриншот</label>
-                        <input type="file" id="fileElem" class="drop-area__file" name="files" multiple accept="image/*" onchange="handleFiles(this.files)" data-screen="1">
+                        <input type="file" id="fileElem" class="drop-area__file" name="files" multiple accept="image/*" onchange="handleFiles(this.file)" data-screen="1">
                     </div>
                     <div class="gallery-files gallery-files_video"></div>
                     <div class="gallery-files__btn gallery-files__btn_video">

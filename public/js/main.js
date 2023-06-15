@@ -61,6 +61,11 @@ function setUser(user) {
   $('.user__name').text(user.name);
   $('.cabinet-menu__name').text(user.name);
   $('.cabinet-menu__span').text(user.email);
+
+  if (user.avatar.length) {
+    $('.cabinet-menu__avatar').css('backgroundImage', `url('${user.avatar}')`);
+    $('.cabinet-menu__avatar').css('backgroundSize', 'cover');
+  }
   
   const tabs = user.available_pages;
   for (let i = 0; i < tabs.length; i++) {
@@ -99,7 +104,7 @@ function setUser(user) {
   for (let i = 0; i < passed_videos.length; i++) {
     const videoBtns = $('.video__button');
     videoBtns.each(function() {
-      const btn = $(this);      
+      const btn = $(this);
       const id = $(this).attr('data-buttonid');
 
       if (passed_videos.includes(id)) {
@@ -129,6 +134,42 @@ function logout() {
     success: function() {
       showLoginWrapper();
     },
+  });
+}
+
+const avatar = $('.cabinet-menu__avatar');
+
+$('#upload-button').click(function(){
+  $('#my-custom-design-upload').trigger('click');
+  return false;
+});
+
+function setAvatar(e) {
+  if(window.FileReader) {
+    const file  = e.target.files[0];
+    const reader = new FileReader();
+    if (file && file.type.match('image.*')) {
+      reader.readAsDataURL(file);
+    } else {
+      avatar.css('display', 'none');
+      avatar.css('backgroundImage', '');
+    }
+    reader.onloadend = function () {
+      const urlAvatar = reader.result;
+      avatar.css('backgroundImage', `url('${urlAvatar}')`);
+      avatar.css('backgroundSize', 'cover');
+      
+      setUserAvatar(urlAvatar);
+    }
+  }  
+}
+document.getElementById('my-custom-design-upload').addEventListener('change', setAvatar, false);
+
+function setUserAvatar(urlAvatar) {
+  $.ajax({
+    url: 'api/users/avatar',
+    type: 'PUT',
+    data: {urlAvatar}
   });
 }
 
