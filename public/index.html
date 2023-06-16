@@ -72,16 +72,10 @@
             <div class="wrapper__inner tabs">
                 <div class="menu-wrapper">
                     <div class="cabinet-menu hide">
-                        <form class="cabinet-menu__form">
-                            <div id="upload-button" class="fpd-btn-raised fpd-secondary-bg-color fpd-secondary-text-color">
-                                <div class="cabinet-menu__avatar"></div>
-                              </div>
-                              <input type="file" id="my-custom-design-upload" class="btn btn-success" style="display:none;" />
-                              <!-- <img class="imgg" src="" height="200" /> -->
-                            <!-- <div class="cabinet-menu__ava"></div> -->
-                            <label class="cabinet-menu__label" for="fileElem3"></label>
-                            <input type="file" id="fileElem3" class="cabinet-menu__file" name="file" onchange="setAvatar(this.files);">
-                        </form>
+                        <div id="upload-button">
+                            <div class="cabinet-menu__avatar"></div>
+                        </div>
+                        <input type="file" id="my-custom-design-upload" class="cabinet-menu__file">
                         <h3 class="cabinet-menu__name">Буренок Игорь Николаевич</h3>
                         <a href="mailto:i.nikolaevich@rocketprofit.com" class="cabinet-menu__email">
                             <img src="images/svg/mail.svg" alt="" class="cabinet-menu__icon"><span class="cabinet-menu__span">i.nikolaevich@rocketprofit.com</span>
@@ -120,7 +114,7 @@
                                             data-tab="1.2.3"><button>CPA-сеть</button></li>
                                     </ul>
                                 </li>
-                                <!-- <li class="submenu__item" data-tab="1.3">
+                                <li class="submenu__item" data-tab="1.3">
                                     <button class="submenu__button">Источники трафика</button>
                                 </li>
                                 <li class="submenu__item" data-tab="1.4">
@@ -175,7 +169,7 @@
                                 </li>
                                 <li class="submenu__item" data-tab="1.18">
                                     <button class="submenu__button">A/B тестирование</button>
-                                </li> -->
+                                </li>
                                 <li class="submenu__item" data-tab="1.19">
                                     <button class="submenu__button submenu__button_test">Тест по теме "Теория"</button>
                                 </li>
@@ -192,15 +186,15 @@
                                 RocketProfit
                             </button>
                             <ul class="submenu submenu_main">
-                                <!-- <li class="submenu__item">
+                                <li class="submenu__item">
                                     <button class="submenu__title submenu__title_icon">Группа компаний</button>
                                     <ul class="submenu submenu_main">
                                         <li class="submenu__item submenu__item_sub"
                                             data-tab="2.1.1"><button>Группа компаний</button></li>
                                         <li class="submenu__item submenu__item_sub"
-                                            data-tab="2.1.3"><button>Everad</button></li>
+                                            data-tab="2.1.2"><button>Everad</button></li>
                                         <li class="submenu__item submenu__item_sub"
-                                            data-tab="2.1.4"><button>Affhub</button></li>
+                                            data-tab="2.1.3"><button>Affhub</button></li>
                                         <li class="submenu__item submenu__item_sub"
                                             data-tab="2.1.4"><button>RocketProfit</button></li>
                                     </ul>
@@ -297,7 +291,7 @@
                                 </li> 
                                 <li class="submenu__item" data-tab="2.31">
                                     <button class="submenu__button">Полезный сайты (рейтинги,медиа, офферсхабы)</button>
-                                </li>  -->
+                                </li> 
                                 <li class="submenu__item" data-tab="2.32">
                                     <button class="submenu__button submenu__button_test">Тест по теме "RocketProfit"</button>
                                 </li>    
@@ -393,7 +387,7 @@
                                     <p>За конкретные действия платят определенную сумму: например, если пользователь установит игру и дойдет до 5-го уровня, веб-мастер получит 10₽. </p>
                                 </div>
                             </li>
-                            <!-- <li class="tab-content__item" data-tab="1.3">
+                            <li class="tab-content__item" data-tab="1.3">
                                 <div class="article">
                                     <h2 class="article__title">Источники трафика</h2>
                                     <p><b>Источник трафика</b> – это платформа, на которой вебмастер запускает рекламу и с которой получает аудиторию для офферов. Привлекать юзеров можно разными способами: платная реклама, спам, органика, ТикТок, инста, SEO.</p>
@@ -1211,7 +1205,7 @@
                                         <li>●	В заключении можно сказать, что корректное A/B тестирование позволяет эффективно сливать и находить наиболее подходящую связку. Вы достигнете успеха, если будете тестировать все.</li>
                                     </ul>
                                 </div>
-                            </li> -->
+                            </li>
                             <li class="tab-content__item tab-content__item_test" data-tab="1.19">
                                 <div class="article article_quiz">
                                     <h2 class="article__title">Тест по теме "Теория"</h2>
@@ -1334,7 +1328,7 @@
                                                     <label for="rb20" class="answer__label">real of instagram</label>
                                                 </div>
                                             </div>
-                                            <!-- <div class="quiz-block-theory" data-question="5">
+                                            <div class="quiz-block-theory" data-question="5">
                                                 <h3 class="quiz__title">6. Дейтинг - это :</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb5" id="rb21" value="21">
@@ -1775,7 +1769,7 @@
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb30" id="rb112" value="112">
                                                     <label for="rb112" class="answer__label">Нельзя посчитать, потому что модель оплаты - за показы, а не клики </label>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                             <button class="button-blue quiz-submit quiz-submit-theory" id="submit" onclick="sendAnswersTheory()">Отправить ответы</button>
                                         </div>
                                         <div class="article__timer">
@@ -1817,7 +1811,7 @@
                             </li>
                             <li class="tab-content__item" data-tab="2.1.1">
                                 <div class="article">
-                                    <h2 class="article__title">Everad</h2>
+                                    <h2 class="article__title">Группа компаний</h2>
                                     <p>Компании RocketProfit, Everad и Affhub входят в одну группу компаний, в один холдинг. Команда EVERAD и Affhub находится в Киеве, а команда RocketProfit в Москве. </p>
                                     <p>RocketProfit и Everad являются прямыми конкурентами, но они не конкурируют между собой. Компании имеют общие колл-центры, продакшн, производство офферов и т.д.. Есть вебмастеры, которые льют трафик сразу и в Everad и в RocketProfit. </p>
                                 </div>
@@ -1828,7 +1822,7 @@
                                     <p><a href="https://everad.com/" target="_blank">everad.com</a> - это прямой нутра рекламодатель. На рынке с 2012 года. Более 45 стран - это европейские, азиатские, арабские ГЕО и Латам. </p>
                                 </div>
                             </li>
-                            <!-- <li class="tab-content__item" data-tab="2.1.3">
+                            <li class="tab-content__item" data-tab="2.1.3">
                                 <div class="article">
                                     <h2 class="article__title">Affhub</h2> 
                                     <p><a href="https://affhub.media/" target="_blank">affhub.net</a> - информационный сайт, где вы узнаете много полезного об арбитраже трафика: новости, инсайты арбитража трафика, обучение для новичков, организация митапов и крутые розыгрыши. Это большое CPA-комьюнити, которое объединяет в себе арбитражников (как топовые команды, так и новичков), представителей партнерок, рекламных сетей и различных сервисов. Основные цели проекта — развиртуалиться с партнерами, с которыми знакомы только онлайн, и создать крутую площадку для объединения умов индустрии и создания новых контактов и идей.</p>                                   
@@ -2525,7 +2519,7 @@
                                         <li><a href="https://addset.ru/" target="_blank">●	addset.ru</a></li>
                                     </ul>
                                 </div>
-                            </li> -->
+                            </li>
                             <li class="tab-content__item tab-content__item_test" data-tab="2.32">
                                 <div class="article article_quiz">
                                     <h2 class="article__title">Тест по теме "RocketProfit"</h2>
@@ -2632,7 +2626,7 @@
                                                     <label for="rb128" class="answer__label">Такой ниши не существует</label>
                                                 </div>
                                             </div>
-                                            <!-- <div class="quiz-block-rocket" data-question="5">
+                                            <div class="quiz-block-rocket" data-question="5">
                                                 <h3 class="quiz__title">6. Rocketprofit и Everad могут или  должны конкурировать</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb6" id="rb129" value="129">
@@ -2740,7 +2734,7 @@
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb12" id="rb150" value="150">
                                                     <label for="rb150" class="answer__label">Номер телефона и имя</label>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                             <button class="button-blue quiz-submit quiz-submit-rocket" id="submit" onclick="sendAnswersRocket()">Отправить ответы</button>
                                         </div>
                                         <div class="article__timer">
@@ -3132,7 +3126,7 @@
                         <p class="popup__title popup__title_shot">Вставь скрин о просмотре видео и получении сертификата</p>
                         <p class="popup__subtitle">Вставить можно при помощи Drag’n’Drop в это окно или с помощью кнопки ниже</p>
                         <label class="drop-area__button" for="fileElem">Выбрать скриншот</label>
-                        <input type="file" id="fileElem" class="drop-area__file" name="files" multiple accept="image/*" onchange="handleFiles(this.file)" data-screen="1">
+                        <input type="file" id="fileElem" class="drop-area__file" name="files" multiple accept="image/*" onchange="handleFiles(this.files)" data-screen="1">
                     </div>
                     <div class="gallery-files gallery-files_video"></div>
                     <div class="gallery-files__btn gallery-files__btn_video">
