@@ -10,11 +10,11 @@ const users = [
         available_pages: ['1.1'],
         available_tasks: ['1'],
         passed_tasks: [],
+        passed_videos: [],
         answers_theory_right: [],
         answers_rocket_right: [],
         answers_theory_false: [],
         answers_rocket_false: [],
-        passed_videos: [],
     }
 ];
 
@@ -28,11 +28,11 @@ router.post('/signup', (req, res, next) => {
         available_pages: ['1.1'],
         available_tasks: ['1'],
         passed_tasks: [],
+        passed_videos: [],
         answers_theory_right: [],
         answers_rocket_right: [],
         answers_theory_false: [],
         answers_rocket_false: [],
-        passed_videos: [],
     });
 
     res.status(201).json({message: 'Success!'});
