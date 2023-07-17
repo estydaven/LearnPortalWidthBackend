@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
+const knex = require('../db');
 const users = [
     {
         id: 1,
@@ -43,14 +44,14 @@ router.post('/login', async (req, res, next) => {
     let user = users.find(user => user.email === req.body.email);
     
     if (!user) {
-        res.status(400).json({message: 'Введите правильный email!'});        
+        res.status(400).json({message: 'Введите правильный email!'});
     } else {
         if (await bcrypt.compare(req.body.password, user.password_hash)) {
             delete user.password;
             req.session.user = user;
             res.status(200).json({user});
         } else {
-            res.status(400).json({message: 'Введите правильный пароль!'}); 
+            res.status(400).json({message: 'Введите правильный пароль!'});
         }
     }
 });
