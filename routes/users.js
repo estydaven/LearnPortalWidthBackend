@@ -10,7 +10,6 @@ const users = [
         avatar: '',
         available_pages: ['1.1'],
         available_tasks: ['1'],
-        //completed_tasks: [],
         completed_videos: [],
         answers_theory_right: [],
         answers_rocket_right: [],
@@ -28,7 +27,6 @@ router.post('/signup', (req, res, next) => {
         avatar: '',
         available_pages: ['1.1'],
         available_tasks: ['1'],
-        //completed_tasks: [],
         completed_videos: [],
         answers_theory_right: [],
         answers_rocket_right: [],
@@ -121,12 +119,5 @@ router.put('/completed_videos', (req, res, next) => {
     req.session.user = user;
     res.status(200).json({message: 'Сохранено'});
 })
-
-// router.put('/completed_tasks', (req, res, next) => {
-//     const user = users.find(user => user.id === req.session.user.id);
-//     user.completed_tasks.push(req.body.taskId);
-//     req.session.user = user;
-//     res.status(200).json({message: 'Сохранено'});
-// })
 
 module.exports = router;

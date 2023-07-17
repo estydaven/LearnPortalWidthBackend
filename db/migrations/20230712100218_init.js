@@ -48,10 +48,6 @@ exports.up = function (knex) {
             table.integer('user_id').references('users.id').notNullable();
             table.primary(['task_id', 'user_id']);
         })
-        // .createTable('completed_tasks', function (table) {
-        //     table.integer('user_id').references('users.id').notNullable();
-        //     table.integer('task_id').references('tasks.id').notNullable();
-        // })
         .createTable('completed_courses', function (table) {
             table.integer('course_id').references('courses.id').notNullable();
             table.integer('user_id').references('users.id').notNullable();
@@ -64,7 +60,6 @@ exports.down = function (knex) {
     return knex.schema
         .dropTable('available_pages')
         .dropTable('available_tasks')
-        //.dropTable('completed_tasks')
         .dropTable('completed_courses')
         .dropTable('user_task_results')
         .dropTable('user_test_answers')

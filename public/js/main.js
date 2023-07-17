@@ -572,12 +572,6 @@ function onSubmitTask(formTask) {
       setTasksProgress(taskId);
     }
   });
-
-//   $.ajax({
-//     url: `/api/users/completed_tasks`,
-//     type: 'PUT',
-//     data: { taskId }
-//   });
 }
 
 // Save Tasks Progress
