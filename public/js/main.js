@@ -127,7 +127,7 @@ function setUser(user) {
     setShowedForTask(task);
   }
 
-  const completed_tasks = user.completed_tasks.length;
+  const completed_tasks = user.available_tasks.length - 1;
   setTasksProgress(completed_tasks);
 }
 
@@ -573,11 +573,11 @@ function onSubmitTask(formTask) {
     }
   });
 
-  $.ajax({
-    url: `/api/users/completed_tasks`,
-    type: 'PUT',
-    data: { taskId }
-  });
+//   $.ajax({
+//     url: `/api/users/completed_tasks`,
+//     type: 'PUT',
+//     data: { taskId }
+//   });
 }
 
 // Save Tasks Progress
