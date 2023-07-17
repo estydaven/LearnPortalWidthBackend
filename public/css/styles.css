@@ -832,11 +832,11 @@ input::-webkit-search-results-decoration { display: none; }
 .video__button:hover {
   background: linear-gradient(180deg, #7EEDFA 0%, #08B1C4 100%);
 }
-.video__button_passed {
+.video__button_completed {
   background: linear-gradient(rgb(8, 196, 113) 0%, rgb(126, 250, 193) 100%);
   cursor: not-allowed;
 }
-.video__button_passed:hover {
+.video__button_completed:hover {
   background: linear-gradient(rgb(8, 196, 113) 0%, rgb(126, 250, 193) 100%);
 }
 

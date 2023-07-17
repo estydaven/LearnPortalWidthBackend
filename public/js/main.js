@@ -103,23 +103,23 @@ function setUser(user) {
     $('.js-btn-next').prop('disabled', true);
   }
 
-  const passed_videos = Array.from(new Set(user.passed_videos));
-  galleryBtns = passed_videos;
-  for (let i = 0; i < passed_videos.length; i++) {
+  const completed_videos = Array.from(new Set(user.completed_videos));
+  galleryBtns = completed_videos;
+  for (let i = 0; i < completed_videos.length; i++) {
     const videoBtns = $('.video__button');
     videoBtns.each(function () {
       const btn = $(this);
       const id = $(this).attr('data-buttonid');
 
-      if (passed_videos.includes(id)) {
-        btn.addClass('video__button_passed');
+      if (completed_videos.includes(id)) {
+        btn.addClass('video__button_completed');
         btn.text('Скрин отправлен!');
         btn.prop('disabled', true);
       }
     });
   }
 
-  const percentVideo = (100 / videoBtns.length) * passed_videos.length;
+  const percentVideo = (100 / videoBtns.length) * completed_videos.length;
   setVideosProgress(percentVideo);
 
   const tasks = user.available_tasks;
@@ -127,8 +127,8 @@ function setUser(user) {
     setShowedForTask(task);
   }
 
-  const passed_tasks = user.passed_tasks.length;
-  setTasksProgress(passed_tasks);
+  const completed_tasks = user.completed_tasks.length;
+  setTasksProgress(completed_tasks);
 }
 
 // Logout user
@@ -574,7 +574,7 @@ function onSubmitTask(formTask) {
   });
 
   $.ajax({
-    url: `/api/users/passed_tasks`,
+    url: `/api/users/completed_tasks`,
     type: 'PUT',
     data: { taskId }
   });
@@ -632,11 +632,11 @@ $('.video__button').each(function () {
       });
 
       $.ajax({
-        url: `/api/users/passed_videos`,
+        url: `/api/users/completed_videos`,
         type: 'PUT',
         data: { btnSendData },
         success: function () {
-          btn.addClass('video__button_passed');
+          btn.addClass('video__button_completed');
           btn.text('Скрин отправлен!');
           btn.prop('disabled', true);
         }
