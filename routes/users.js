@@ -18,22 +18,38 @@ const users = [
     }
 ];
 
-router.post('/signup', (req, res, next) => {
-    users.push({
-        id: users.length + 1,
-        email: req.body.email,
-        password_hash: bcrypt.hashSync(req.body.password, 10),
-        name: req.body.name,
-        avatar: '',
-        available_pages: ['1.1'],
-        available_tasks: ['1'],
-        completed_videos: [],
-        answers_theory_right: [],
-        answers_rocket_right: [],
-        answers_theory_false: [],
-        answers_rocket_false: [],
+router.post('/signup', async (req, res, next) => {
+    // users.push({
+    //     id: users.length + 1,
+    //     email: req.body.email,
+    //     password_hash: bcrypt.hashSync(req.body.password, 10),
+    //     name: req.body.name,
+    //     avatar: '',
+    //     available_pages: ['1.1'],
+    //     available_tasks: ['1'],
+    //     completed_videos: [],
+    //     answers_theory_right: [],
+    //     answers_rocket_right: [],
+    //     answers_theory_false: [],
+    //     answers_rocket_false: [],
+    // });
+    
+    const users = await knex('users').insert({
+        name: req.body.name, 
+        email: req.body.email, 
+        password_hash: bcrypt.hashSync(req.body.password, 10)
+    }, 'id');
+    
+    await knex('available_pages').insert({
+        page_id: '1.1',
+        user_id: users[0].id
     });
 
+    await knex('available_tasks').insert({
+        task_id: '1',
+        user_id: users[0].id
+    });
+    
     res.status(201).json({message: 'Success!'});
 }) 
 
