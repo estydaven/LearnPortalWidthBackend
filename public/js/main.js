@@ -103,15 +103,15 @@ function setUser(user) {
     $('.js-btn-next').prop('disabled', true);
   }
 
-  const completed_videos = Array.from(new Set(user.completed_videos));
-  galleryBtns = completed_videos;
-  for (let i = 0; i < completed_videos.length; i++) {
+  const completed_courses = Array.from(new Set(user.completed_courses));
+  galleryBtns = completed_courses;
+  for (let i = 0; i < completed_courses.length; i++) {
     const videoBtns = $('.video__button');
     videoBtns.each(function () {
       const btn = $(this);
       const id = $(this).attr('data-buttonid');
 
-      if (completed_videos.includes(id)) {
+      if (completed_courses.includes(id)) {
         btn.addClass('video__button_completed');
         btn.text('Скрин отправлен!');
         btn.prop('disabled', true);
@@ -119,7 +119,7 @@ function setUser(user) {
     });
   }
 
-  const percentVideo = (100 / videoBtns.length) * completed_videos.length;
+  const percentVideo = (100 / videoBtns.length) * completed_courses.length;
   setVideosProgress(percentVideo);
 
   const tasks = user.available_tasks;
@@ -626,7 +626,7 @@ $('.video__button').each(function () {
       });
 
       $.ajax({
-        url: `/api/users/completed_videos`,
+        url: `/api/users/completed_courses`,
         type: 'PUT',
         data: { btnSendData },
         success: function () {

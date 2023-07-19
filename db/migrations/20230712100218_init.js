@@ -20,14 +20,16 @@ exports.up = function (knex) {
             table.increments('id');
         })
         .createTable('questions', function (table) {
-            table.increments('id');
+            table.integer('id').notNullable();
             table.integer('test_id').references('tests.id').notNullable();
+            table.primary(['id', 'test_id']);
             table.specificType('answers', 'integer[]').notNullable();
         })
         .createTable('user_test_answers', function (table) {
-            table.integer('question_id').references('questions.id').notNullable();
+            table.integer('question_id').notNullable();
             table.integer('user_id').references('users.id').notNullable();
-            table.primary(['question_id', 'user_id']);
+            table.integer('test_id').references('tests.id').notNullable();
+            table.primary(['question_id', 'user_id', 'test_id']);
             table.boolean('is_correct').notNullable();
             table.specificType('answers', 'integer[]').notNullable();
         })

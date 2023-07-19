@@ -1,38 +1,24 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const knex = require('../db');
-const users = [
-    {
-        id: 1,
-        email: 'ex@gmail.com',
-        password_hash: '$2b$10$LlwUiAW/XkT1ALBg.komhOujXlXjEKDsrB0S7WnJx0NAZppfRzaO.',
-        name: 'Igor',
-        avatar: '',
-        available_pages: ['1.1'],
-        available_tasks: ['1'],
-        completed_videos: [],
-        answers_theory_right: [],
-        answers_rocket_right: [],
-        answers_theory_false: [],
-        answers_rocket_false: [],
-    }
-];
+// const users = [
+//     {
+//         id: 1,
+//         email: 'ex@gmail.com',
+//         password_hash: '$2b$10$LlwUiAW/XkT1ALBg.komhOujXlXjEKDsrB0S7WnJx0NAZppfRzaO.',
+//         name: 'Igor',
+//         avatar: '',
+//         available_pages: ['1.1'],
+//         available_tasks: ['1'],
+//         completed_courses: [],
+//         answers_theory_right: [],
+//         answers_rocket_right: [],
+//         answers_theory_false: [],
+//         answers_rocket_false: [],
+//     }
+// ];
 
 router.post('/signup', async (req, res, next) => {
-    // users.push({
-    //     id: users.length + 1,
-    //     email: req.body.email,
-    //     password_hash: bcrypt.hashSync(req.body.password, 10),
-    //     name: req.body.name,
-    //     avatar: '',
-    //     available_pages: ['1.1'],
-    //     available_tasks: ['1'],
-    //     completed_videos: [],
-    //     answers_theory_right: [],
-    //     answers_rocket_right: [],
-    //     answers_theory_false: [],
-    //     answers_rocket_false: [],
-    // });
     
     const users = await knex('users').insert({
         name: req.body.name, 
@@ -55,13 +41,13 @@ router.post('/signup', async (req, res, next) => {
 
 router.post('/login', async (req, res, next) => {
 
-    let user = users.find(user => user.email === req.body.email);
-    
+    const user = await knex('users').first().where('email', req.body.email);
+
     if (!user) {
         res.status(400).json({message: 'Введите правильный email!'});
     } else {
         if (await bcrypt.compare(req.body.password, user.password_hash)) {
-            delete user.password;
+            delete user.password_hash;
             req.session.user = user;
             res.status(200).json({user});
         } else {
@@ -70,7 +56,7 @@ router.post('/login', async (req, res, next) => {
     }
 });
 
-router.put('/avatar', (req, res, next) => {
+router.put('/avatar', async (req, res, next) => {
     const user = users.find(user => user.id === req.session.user.id);
     user.avatar = req.body.urlAvatar;
     req.session.user = user;
@@ -129,9 +115,9 @@ router.put('/test_rocket_undone', (req, res, next) => {
     res.status(200).json({message: 'Сохранено'});
 })
 
-router.put('/completed_videos', (req, res, next) => {
+router.put('/completed_courses', (req, res, next) => {
     const user = users.find(user => user.id === req.session.user.id);
-    user.completed_videos.push(req.body.btnSendData);
+    user.completed_courses.push(req.body.btnSendData);
     req.session.user = user;
     res.status(200).json({message: 'Сохранено'});
 })
