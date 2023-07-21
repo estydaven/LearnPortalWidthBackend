@@ -59,14 +59,13 @@ $(function () {
     })
 });
 
-
 // Save User
 function setUser(user) {
   $('.user__name').text(user.name);
   $('.cabinet-menu__name').text(user.name);
   $('.cabinet-menu__span').text(user.email);
 
-  if (user.avatar.length) {
+  if (user.avatar) {
     $('.cabinet-menu__avatar').css('backgroundImage', `url('${user.avatar}')`);
     $('.cabinet-menu__avatar').css('backgroundSize', 'cover');
   }
@@ -75,32 +74,6 @@ function setUser(user) {
   for (let i = 0; i < tabs.length; i++) {
     setShowedForTab(tabs[i]);
     setThemesProgress(tabs[i]);
-  }
-
-  const answers_theory_right = user.answers_theory_right;
-  if (answers_theory_right.length) {
-    $('.quiz-preview__start-theory').addClass('hide');
-    $('.quiz-preview__finished_done-theory').removeClass('hide');
-  }
-
-  const answers_rocket_right = user.answers_rocket_right;
-  if (answers_rocket_right.length) {
-    $('.quiz-preview__start-rocket').addClass('hide');
-    $('.quiz-preview__finished_done-rocket').removeClass('hide');
-  }
-
-  const answers_theory_false = user.answers_theory_false;
-  if (answers_theory_false.length) {
-    $('.quiz-preview__start-theory').addClass('hide');
-    $('.quiz-preview__finished_undone-theory').removeClass('hide');
-    $('.js-btn-next').prop('disabled', true);
-  }
-
-  const answers_rocket_false = user.answers_rocket_false;
-  if (answers_rocket_false.length) {
-    $('.quiz-preview__start-rocket').addClass('hide');
-    $('.quiz-preview__finished_undone-rocket').removeClass('hide');
-    $('.js-btn-next').prop('disabled', true);
   }
 
   const completed_courses = Array.from(new Set(user.completed_courses));
@@ -129,6 +102,32 @@ function setUser(user) {
 
   const completed_tasks = user.available_tasks.length - 1;
   setTasksProgress(completed_tasks);
+
+  const answers_theory_right = user.answers_theory_right;
+  if (answers_theory_right.length) {
+    $('.quiz-preview__start-theory').addClass('hide');
+    $('.quiz-preview__finished_done-theory').removeClass('hide');
+  }
+
+  const answers_rocket_right = user.answers_rocket_right;
+  if (answers_rocket_right.length) {
+    $('.quiz-preview__start-rocket').addClass('hide');
+    $('.quiz-preview__finished_done-rocket').removeClass('hide');
+  }
+
+  const answers_theory_false = user.answers_theory_false;
+  if (answers_theory_false.length) {
+    $('.quiz-preview__start-theory').addClass('hide');
+    $('.quiz-preview__finished_undone-theory').removeClass('hide');
+    $('.js-btn-next').prop('disabled', true);
+  }
+
+  const answers_rocket_false = user.answers_rocket_false;
+  if (answers_rocket_false.length) {
+    $('.quiz-preview__start-rocket').addClass('hide');
+    $('.quiz-preview__finished_undone-rocket').removeClass('hide');
+    $('.js-btn-next').prop('disabled', true);
+  }
 }
 
 // Logout user
@@ -376,7 +375,7 @@ function addAvailablePage(nextTab) {
   $.ajax({
     url: 'api/users',
     type: 'PUT',
-    data: { nextTab }
+    data: { nextTab },
   });
 }
 
