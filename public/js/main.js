@@ -99,7 +99,7 @@ function setUser(user) {
     setShowedForTask(task);
   }
 
-  const completed_tasks = user.available_tasks.length - 1;
+  const completed_tasks = Array.from(new Set(user.completed_tasks)).length;
   setTasksProgress(completed_tasks);
 
   const answers_theory_right = user.answers_theory_right;
@@ -380,7 +380,7 @@ function addAvailablePage(nextTab) {
 
 function addAvailableTask(task) {
   $.ajax({
-    url: 'api/users/available-tasks',
+    url: 'api/users/available_tasks',
     type: 'PUT',
     data: { task }
   });
@@ -559,7 +559,7 @@ function onSubmitTask(formTask) {
     type: 'PUT',
     dataType: 'json',
     contentType: 'application/json',
-    data: JSON.stringify({ taskLink: taskLink, taskComment: taskComment, taskScreens: taskScreens }),
+    data: JSON.stringify({ taskId: taskId, taskLink: taskLink, taskComment: taskComment, taskScreens: taskScreens }),
     success: function () {
       formTask.reset();
       showConfirmPopup();

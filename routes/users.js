@@ -50,6 +50,7 @@ router.post('/login', async (req, res, next) => {
             user.available_pages = await knex('available_pages').pluck('page_id').where('user_id', user.id);
             user.available_tasks = await knex('available_tasks').pluck('task_id').where('user_id', user.id);
             user.completed_courses = await knex('completed_courses').pluck('course_id').where('user_id', user.id);
+            user.completed_tasks = await knex('user_task_results').pluck('completed_task').where('user_id', user.id);
             req.session.user = user;
             res.status(200).json({user});
         } else {
@@ -83,7 +84,7 @@ router.put('/', async (req, res, next) => {
     res.status(200).json({message: 'Сохранено'});
 })
 
-router.put('/available-tasks', async (req, res, next) => {
+router.put('/available_tasks', async (req, res, next) => {
     await knex('available_tasks').insert({
         task_id: req.body.task, 
         user_id: req.session.user.id
