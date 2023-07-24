@@ -49,6 +49,7 @@ router.post('/login', async (req, res, next) => {
             delete user.password_hash;
             user.available_pages = await knex('available_pages').pluck('page_id').where('user_id', user.id);
             user.available_tasks = await knex('available_tasks').pluck('task_id').where('user_id', user.id);
+            user.completed_courses = await knex('completed_courses').pluck('course_id').where('user_id', user.id);
             req.session.user = user;
             res.status(200).json({user});
         } else {
@@ -93,6 +94,18 @@ router.put('/available-tasks', async (req, res, next) => {
     res.status(200).json({message: 'Сохранено'});
 })
 
+router.put('/completed_courses', async (req, res, next) => {
+    await knex('completed_courses').insert({
+        course_id: req.body.btnSendData, 
+        user_id: req.session.user.id,
+        screens: req.body.videoScreens
+    })
+    .onConflict(['course_id', 'user_id'])
+    .merge('screens');
+    
+    res.status(200).json({message: 'Сохранено'});
+})
+
 router.delete('/session', async (req, res, next) => {
     await req.session.destroy();
     res.status(200).json({message: 'Пользователь разлогинен'});
@@ -122,13 +135,6 @@ router.put('/test_theory_undone', async (req, res, next) => {
 router.put('/test_rocket_undone', async (req, res, next) => {
     const user = await knex('users').first().where('id', req.session.user.id);
     user.answers_rocket_false.push(req.body.answer);
-    req.session.user = user;
-    res.status(200).json({message: 'Сохранено'});
-})
-
-router.put('/completed_courses', async (req, res, next) => {
-    const user = await knex('users').first().where('id', req.session.user.id);
-    user.completed_courses.push(req.body.btnSendData);
     req.session.user = user;
     res.status(200).json({message: 'Сохранено'});
 })

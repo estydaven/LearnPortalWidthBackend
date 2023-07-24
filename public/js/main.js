@@ -76,15 +76,14 @@ function setUser(user) {
     setThemesProgress(tabs[i]);
   }
 
-  const completed_courses = Array.from(new Set(user.completed_courses));
-  galleryBtns = completed_courses;
+  const completed_courses = user.completed_courses;
+  //galleryBtns = completed_courses;
   for (let i = 0; i < completed_courses.length; i++) {
     const videoBtns = $('.video__button');
     videoBtns.each(function () {
       const btn = $(this);
       const id = $(this).attr('data-buttonid');
-
-      if (completed_courses.includes(id)) {
+      if (completed_courses[i] == id) {
         btn.addClass('video__button_completed');
         btn.text('Скрин отправлен!');
         btn.prop('disabled', true);
@@ -616,18 +615,21 @@ $('.video__button').each(function () {
       const btnSendData = $(this).attr('data-sendData');
       const videoScreens = convertVideosImagesResults;
 
-      $.ajax({
-        url: `/api/screens/${btnSendData}/video_screens`,
-        type: 'PUT',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify({ videoScreens: videoScreens })
-      });
+    //   $.ajax({
+    //     url: `/api/screens/${btnSendData}/video_screens`,
+    //     type: 'PUT',
+    //     dataType: 'json',
+    //     contentType: 'application/json',
+    //     data: JSON.stringify({ videoScreens: videoScreens })
+    //   });
 
       $.ajax({
         url: `/api/users/completed_courses`,
         type: 'PUT',
-        data: { btnSendData },
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({ videoScreens: videoScreens, btnSendData: btnSendData }),
+        //data: { btnSendData },
         success: function () {
           btn.addClass('video__button_completed');
           btn.text('Скрин отправлен!');

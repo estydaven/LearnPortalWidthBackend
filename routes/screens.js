@@ -11,7 +11,6 @@ router.put('/:id/video_screens', (req, res, next) => {
     }
 
     screensResults.push(video);
-    //console.log(screensResults);
     res.status(200).json({message: 'Сохранено'}); 
 });
 
