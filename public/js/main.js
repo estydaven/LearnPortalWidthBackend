@@ -102,31 +102,31 @@ function setUser(user) {
   const completed_tasks = Array.from(new Set(user.completed_tasks)).length;
   setTasksProgress(completed_tasks);
 
-  const answers_theory_right = user.answers_theory_right;
-  if (answers_theory_right.length) {
-    $('.quiz-preview__start-theory').addClass('hide');
-    $('.quiz-preview__finished_done-theory').removeClass('hide');
-  }
+//   const answers_theory_right = user.answers_theory_right;
+//   if (answers_theory_right.length) {
+//     $('.quiz-preview__start-theory').addClass('hide');
+//     $('.quiz-preview__finished_done-theory').removeClass('hide');
+//   }
 
-  const answers_rocket_right = user.answers_rocket_right;
-  if (answers_rocket_right.length) {
-    $('.quiz-preview__start-rocket').addClass('hide');
-    $('.quiz-preview__finished_done-rocket').removeClass('hide');
-  }
+//   const answers_rocket_right = user.answers_rocket_right;
+//   if (answers_rocket_right.length) {
+//     $('.quiz-preview__start-rocket').addClass('hide');
+//     $('.quiz-preview__finished_done-rocket').removeClass('hide');
+//   }
 
-  const answers_theory_false = user.answers_theory_false;
-  if (answers_theory_false.length) {
-    $('.quiz-preview__start-theory').addClass('hide');
-    $('.quiz-preview__finished_undone-theory').removeClass('hide');
-    $('.js-btn-next').prop('disabled', true);
-  }
+//   const answers_theory_false = user.answers_theory_false;
+//   if (answers_theory_false.length) {
+//     $('.quiz-preview__start-theory').addClass('hide');
+//     $('.quiz-preview__finished_undone-theory').removeClass('hide');
+//     $('.js-btn-next').prop('disabled', true);
+//   }
 
-  const answers_rocket_false = user.answers_rocket_false;
-  if (answers_rocket_false.length) {
-    $('.quiz-preview__start-rocket').addClass('hide');
-    $('.quiz-preview__finished_undone-rocket').removeClass('hide');
-    $('.js-btn-next').prop('disabled', true);
-  }
+//   const answers_rocket_false = user.answers_rocket_false;
+//   if (answers_rocket_false.length) {
+//     $('.quiz-preview__start-rocket').addClass('hide');
+//     $('.quiz-preview__finished_undone-rocket').removeClass('hide');
+//     $('.js-btn-next').prop('disabled', true);
+//   }
 }
 
 // Logout user
@@ -923,7 +923,7 @@ function setTimer() {
 }
 
 function restartTheoryQuiz() {
-  popupTimer.classList.add(hide);
+  popupTimer.classList.add('hide');
   answers.forEach(el => el.checked = false);
   setTimer();
   start_timer();
@@ -1029,17 +1029,17 @@ $('.answer__input').each(function () {
           }
         }
       } if (test == 2) {
-        if (!answerCheckedSecond[key]) { // тут мы смотрим, нет ли значения ключа
-          answerCheckedSecond[key] = [value]; // если значения нет, то добавляем его в объект (пару ключ значение)
-        } else { // в случае если у юзера уже отмечен ответ, и он решил его поменять
-          if ($(this).hasClass('answer__input_radio')) { // если у ключа уже есть значение
+        if (!answerCheckedSecond[key]) {
+          answerCheckedSecond[key] = [value];
+        } else {
+          if ($(this).hasClass('answer__input_radio')) {
             answerCheckedSecond[key] = [value];
           }
-          if ($(this).hasClass('answer__input_checkbox') && answerCheckedSecond[key].includes(value)) { // если у ключа уже есть значение
-            answerCheckedSecond[key] = answerCheckedSecond[key].filter((n) => n !== value); // исключаем значение
+          if ($(this).hasClass('answer__input_checkbox') && answerCheckedSecond[key].includes(value)) {
+            answerCheckedSecond[key] = answerCheckedSecond[key].filter((n) => n !== value);
           }
-          if ($(this).hasClass('answer__input_checkbox')) { // если у ключа значения нету
-            answerCheckedSecond[key].push(value); //добавляем значение
+          if ($(this).hasClass('answer__input_checkbox')) {
+            answerCheckedSecond[key].push(value);
           }
         }
       }
@@ -1056,15 +1056,16 @@ $('.answer__input').each(function () {
 });
 
 // Send Quiz Results
-function sendAnswersTheory() {
+function sendAnswersTheory(idTest) {
   questionsTheoryQuantity.forEach(el => el.innerText = questionsTheory.length);
+  const testId = $(idTest).parent().attr('data-test');
 
   $.ajax({
-    url: `/api/tests/tests_theory`,
-    type: 'PUT',
+    url: `/api/tests/${testId}/result`,
+    type: 'POST',
     dataType: 'json',
     contentType: 'application/json',
-    data: JSON.stringify({ answersFirst: answerCheckedFirst }),
+    data: JSON.stringify({ answers: answerCheckedFirst }),
     success: function (response) {
       const trueAnswers = response.trueAnswersTheory.length;
       quizResultCorrectTheory.classList.remove('hide');
@@ -1091,15 +1092,16 @@ function sendAnswersTheory() {
   });
 }
 
-function sendAnswersRocket() {
+function sendAnswersRocket(idTest) {
   questionsRocketQuantity.forEach(el => el.innerText = questionsRocket.length);
+  const testId = $(idTest).parent().attr('data-test');
 
   $.ajax({
-    url: `/api/tests/tests_rocket`,
-    type: 'PUT',
+    url: `/api/tests/${testId}/result`,
+    type: 'POST',
     dataType: 'json',
     contentType: 'application/json',
-    data: JSON.stringify({ answersSecond: answerCheckedSecond }),
+    data: JSON.stringify({ answers: answerCheckedSecond }),
     success: function (response) {
       const trueAnswers = response.trueAnswersRocket.length;
       quizResultCorrectRocket.classList.remove('hide');

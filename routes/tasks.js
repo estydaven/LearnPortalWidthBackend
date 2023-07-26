@@ -7,7 +7,6 @@ router.put('/:id/results', async (req, res, next) => {
     await knex('user_task_results').insert({
         task_id: req.body.taskId,
         user_id: req.session.user.id,
-        completed_task: req.body.taskId,
         link: req.body.taskLink,
         comment: req.body.taskComment,
         screens: req.body.taskScreens

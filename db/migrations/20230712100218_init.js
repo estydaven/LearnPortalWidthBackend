@@ -21,38 +21,38 @@ exports.up = function (knex) {
         })
         .createTable('questions', function (table) {
             table.integer('id').notNullable();
-            table.integer('test_id').references('tests.id').notNullable();
+            table.integer('test_id').references('tests.id').notNullable().onDelete('cascade');
             table.primary(['id', 'test_id']);
             table.specificType('answers', 'integer[]').notNullable();
         })
         .createTable('user_test_answers', function (table) {
             table.integer('question_id').notNullable();
-            table.integer('user_id').references('users.id').notNullable();
-            table.integer('test_id').references('tests.id').notNullable();
+            table.integer('user_id').references('users.id').notNullable().onDelete('cascade');
+            table.integer('test_id').references('tests.id').notNullable().onDelete('cascade');
             table.primary(['question_id', 'user_id', 'test_id']);
             table.boolean('is_correct').notNullable();
             table.specificType('answers', 'integer[]').notNullable();
         })
         .createTable('user_task_results', function (table) {
-            table.integer('task_id').references('tasks.id').notNullable();
-            table.integer('user_id').references('users.id').notNullable();
+            table.integer('task_id').references('tasks.id').notNullable().onDelete('cascade');
+            table.integer('user_id').references('users.id').notNullable().onDelete('cascade');
             table.text('link');
             table.text('comment');
             table.specificType('screens', 'text[]');
         })
         .createTable('available_pages', function (table) {
-            table.string('page_id', 10).references('pages.id').notNullable();
-            table.integer('user_id').references('users.id').notNullable();
+            table.string('page_id', 10).references('pages.id').notNullable().onDelete('cascade');
+            table.integer('user_id').references('users.id').notNullable().onDelete('cascade');
             table.primary(['page_id', 'user_id']);
         })
         .createTable('available_tasks', function (table) {
-            table.integer('task_id').references('tasks.id').notNullable();
-            table.integer('user_id').references('users.id').notNullable();
+            table.integer('task_id').references('tasks.id').notNullable().onDelete('cascade');
+            table.integer('user_id').references('users.id').notNullable().onDelete('cascade');
             table.primary(['task_id', 'user_id']);
         })
         .createTable('completed_courses', function (table) {
-            table.integer('course_id').references('courses.id').notNullable();
-            table.integer('user_id').references('users.id').notNullable();
+            table.integer('course_id').references('courses.id').notNullable().onDelete('cascade');
+            table.integer('user_id').references('users.id').notNullable().onDelete('cascade');
             table.primary(['course_id', 'user_id']);
             table.specificType('screens', 'text[]').notNullable();
         })
