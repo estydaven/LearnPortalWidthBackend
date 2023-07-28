@@ -49,39 +49,11 @@ const knex = require('../db');
 //     11: [150],
 // }
 
-let falseAnswersTheory = [];
-let trueAnswersTheory = [];
-let falseAnswersRocket = [];
-let trueAnswersRocket = [];
-
 router.post('/:id/result', async (req, res, next) => {
     const questions = await knex('questions').select('id', 'answers').where('test_id', req.params.id);
-    /*
-    [
-        {
-            id: 1,
-            answers: [2]
-        },
-        {
-            id: 2,
-            answers: [5]
-        },
-    ]
-
-    */
-
-    falseAnswersTheory = [];
-    trueAnswersTheory = [];
     
     const userAnswers = req.body.answers;
     const keys = Object.keys(userAnswers);
-        /*
-    {
-        '1': [1],
-        '2': [2, 3],
-    }
-    
-    */
     
     for (let i = 0; i < keys.length; i++) {
         if (Array.isArray(questions[i].answers) && Array.isArray(userAnswers[i])) {
@@ -99,7 +71,7 @@ router.post('/:id/result', async (req, res, next) => {
                     answers: userAnswers[i],
                 })
                 .onConflict(['question_id', 'user_id', 'test_id'])
-                .merge();
+                .merge('answers');
             } else {
                 await knex('user_test_answers').insert({
                     question_id: key,
@@ -109,33 +81,29 @@ router.post('/:id/result', async (req, res, next) => {
                     answers: userAnswers[i],
                 })
                 .onConflict(['question_id', 'user_id', 'test_id'])
-                .merge();
-                falseAnswersTheory.push(false); 
+                .merge('answers');
             }
         }
     }
     
     if (Object.keys(userAnswers).length !== Object.keys(questions).length) {
-        falseAnswersTheory = [];
-        trueAnswersTheory = [];
         return res.status(400).json({message: 'Ответьте на все вопросы!'});
     }
-    
-    if (falseAnswersTheory.length > 3) {
-        return res.status(400).json({falseAnswersTheory});
+
+    const falseAnswers = await knex('user_test_answers').pluck('is_correct').where('test_id', req.params.id).where('is_correct', false).where('user_id', req.session.user.id);
+    const trueAnswers = await knex('user_test_answers').pluck('is_correct').where('test_id', req.params.id).where('is_correct', true).where('user_id', req.session.user.id);
+
+    if (falseAnswers.length > 3) {
+        return res.status(400).json({falseAnswers});
     } else {
-        return res.status(200).json({trueAnswersTheory});
+        return res.status(200).json({trueAnswers});
     }
 });
 
 router.post('/:id/result', async (req, res, next) => {
     const questions = await knex('questions').select('id', 'answers').where('test_id', req.params.id);
-
-    falseAnswersRocket = [];
-    trueAnswersRocket= [];
     
     const userAnswers = req.body.answers;
-    console.log(userAnswers);
     const keys = Object.keys(userAnswers);
 
     for (let i = 0; i < keys.length; i++) {
@@ -167,21 +135,21 @@ router.post('/:id/result', async (req, res, next) => {
                 })
                 .onConflict(['question_id', 'user_id', 'test_id'])
                 .merge();
-                falseAnswersRocket.push(false); 
             }
         }
     }
 
     if (Object.keys(userAnswers).length !== Object.keys(questions).length) {
-        falseAnswersRocket = [];
-        trueAnswersRocket= [];
         return res.status(400).json({message: 'Ответьте на все вопросы!'});
     }
+
+    const falseAnswers = await knex('user_test_answers').pluck('is_correct').where('test_id', req.params.id).where('is_correct', false).where('user_id', req.session.user.id);
+    const trueAnswers = await knex('user_test_answers').pluck('is_correct').where('test_id', req.params.id).where('is_correct', true).where('user_id', req.session.user.id);
     
-    if (falseAnswersRocket.length > 3) {
-        return res.status(400).json({falseAnswersRocket});
+    if (falseAnswers.length > 3) {
+        return res.status(400).json({falseAnswers});
     } else {
-        return res.status(200).json({trueAnswersRocket});
+        return res.status(200).json({trueAnswers});
     }
 });
 

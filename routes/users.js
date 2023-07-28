@@ -51,6 +51,8 @@ router.post('/login', async (req, res, next) => {
             user.available_tasks = await knex('available_tasks').pluck('task_id').where('user_id', user.id);
             user.completed_courses = await knex('completed_courses').pluck('course_id').where('user_id', user.id);
             user.completed_tasks = await knex('user_task_results').pluck('task_id').where('user_id', user.id);
+            user.answers_theory_false = await knex('user_test_answers').pluck('is_correct').where('test_id', 1).where('is_correct', false).where('user_id', user.id);
+            user.answers_rocket_false = await knex('user_test_answers').pluck('is_correct').where('test_id', 2).where('is_correct', false).where('user_id', user.id);
             req.session.user = user;
             res.status(200).json({user});
         } else {
@@ -112,32 +114,32 @@ router.delete('/session', async (req, res, next) => {
     res.status(200).json({message: 'Пользователь разлогинен'});
 })
 
-router.put('/test_theory_done', async (req, res, next) => {
-    const user = await knex('users').first().where('id', req.session.user.id);
-    user.answers_theory_right.push(req.body.answer);
-    req.session.user = user;
-    res.status(200).json({message: 'Сохранено'});
-})
+// router.put('/test_theory_done', async (req, res, next) => {
+//     const user = await knex('users').first().where('id', req.session.user.id);
+//     user.answers_theory_right.push(req.body.answer);
+//     req.session.user = user;
+//     res.status(200).json({message: 'Сохранено'});
+// })
 
-router.put('/test_rocket_done', async (req, res, next) => {
-    const user = await knex('users').first().where('id', req.session.user.id);
-    user.answers_rocket_right.push(req.body.answer);
-    req.session.user = user;
-    res.status(200).json({message: 'Сохранено'});
-})
+// router.put('/test_rocket_done', async (req, res, next) => {
+//     const user = await knex('users').first().where('id', req.session.user.id);
+//     user.answers_rocket_right.push(req.body.answer);
+//     req.session.user = user;
+//     res.status(200).json({message: 'Сохранено'});
+// })
 
-router.put('/test_theory_undone', async (req, res, next) => {
-    const user = await knex('users').first().where('id', req.session.user.id);
-    user.answers_theory_false.push(req.body.answer);
-    req.session.user = user;
-    res.status(200).json({message: 'Сохранено'});
-})
+// router.put('/test_theory_undone', async (req, res, next) => {
+//     const user = await knex('users').first().where('id', req.session.user.id);
+//     user.answers_theory_false.push(req.body.answer);
+//     req.session.user = user;
+//     res.status(200).json({message: 'Сохранено'});
+// })
 
-router.put('/test_rocket_undone', async (req, res, next) => {
-    const user = await knex('users').first().where('id', req.session.user.id);
-    user.answers_rocket_false.push(req.body.answer);
-    req.session.user = user;
-    res.status(200).json({message: 'Сохранено'});
-})
+// router.put('/test_rocket_undone', async (req, res, next) => {
+//     const user = await knex('users').first().where('id', req.session.user.id);
+//     user.answers_rocket_false.push(req.body.answer);
+//     req.session.user = user;
+//     res.status(200).json({message: 'Сохранено'});
+// })
 
 module.exports = router;
