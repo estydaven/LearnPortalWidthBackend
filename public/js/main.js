@@ -84,9 +84,8 @@ function setUser(user) {
             const btn = $(this);
             const id = $(this).attr('data-buttonid');
             if (completed_courses[i] == id) {
-                btn.addClass('video__button_completed');
+                setCompletedStyleBtn(btn);
                 btn.text('Скрин отправлен!');
-                btn.prop('disabled', true);
             }
         });
     }
@@ -136,13 +135,15 @@ function setUser(user) {
         $('.js-btn-next').prop('disabled', false);
     }
 
-    if (user.task_comments.length > 1) {
-        $('.task-screen').prop('disabled', true);
-        $('.task-screen').css('cursor', 'not-allowed');
+    if (user.task_comments.length) {
+        const btn = $('.task-screen');
+        setCompletedStyleBtn(btn);
+        btn.text('Отправлено!');
     }
-    if (user.task_links.length > 1) {
-        $('.button-blue_form').prop('disabled', true);
-        $('.button-blue_form').css('cursor', 'not-allowed');
+    if (user.task_links.length) {
+        const btn = $('.button-blue_form');
+        setCompletedStyleBtn(btn);
+        btn.text('Отправлено!');
     }
 }
 
@@ -563,6 +564,13 @@ function previewFiles() {
     }
 }
 
+// Set styles to completed courses and tasks buttons
+function setCompletedStyleBtn(btn) {
+    btn.addClass('button-completed');
+    btn.prop('disabled', true);
+}
+
+
 // Send Tasks Results To Server
 function onSubmitTask(formTask) {
     const formData = new FormData(formTask);
@@ -570,6 +578,8 @@ function onSubmitTask(formTask) {
     const taskLink = formData.get('link');
     const taskComment = formData.get('comment');
     const taskId = $(formTask).attr('data-formId');
+    const btnFirstTask = $('.task-screen');
+    const btnSecondTask = $('.button-blue_form');
 
     $.ajax({
         url: `/api/tasks/${taskId}/results`,
@@ -585,6 +595,15 @@ function onSubmitTask(formTask) {
             setShowedForTask();
             setShowedForNextTask();
             setTasksProgress(taskId);
+
+            if (taskId == 1) {
+                setCompletedStyleBtn(btnFirstTask);
+                btnFirstTask.text('Отправлено!');
+            }
+            if (taskId == 2) {
+                setCompletedStyleBtn(btnSecondTask);
+                btnSecondTask.text('Отправлено!');
+            }
         }
     });
 }
@@ -616,7 +635,7 @@ $('.popup__close_confirm').click(function () {
     closeConfirmPopup();
 });
 
-// Send Video Id And Screenshots To SErver
+// Send Video Id And Screenshots To Server
 const body = document.body;
 
 $('.video__button').each(function () {
@@ -632,25 +651,15 @@ $('.video__button').each(function () {
             const btnSendData = $(this).attr('data-sendData');
             const videoScreens = convertVideosImagesResults;
 
-            //   $.ajax({
-            //     url: `/api/screens/${btnSendData}/video_screens`,
-            //     type: 'PUT',
-            //     dataType: 'json',
-            //     contentType: 'application/json',
-            //     data: JSON.stringify({ videoScreens: videoScreens })
-            //   });
-
             $.ajax({
                 url: `/api/users/completed_courses`,
                 type: 'PUT',
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify({ videoScreens: videoScreens, btnSendData: btnSendData }),
-                //data: { btnSendData },
                 success: function () {
-                    btn.addClass('video__button_completed');
+                    setCompletedStyleBtn(btn);
                     btn.text('Скрин отправлен!');
-                    btn.prop('disabled', true);
                 }
             });
         });
@@ -954,8 +963,6 @@ function restartTheoryQuiz() {
         quizButtonTheory.classList.add('hide');
         quizResultFailTheory.classList.remove('hide');
         setTimer();
-
-        //setTheoryAnswersFail();
     }
 }
 
@@ -974,37 +981,8 @@ function restartRocketQuiz() {
         quizResultFailRocket.classList.remove('hide');
         setTimer();
         trying = 0;
-
-        //setRocketAnswersFail();
     }
 }
-
-// function setTheoryAnswersFail() {
-//   const answer = document.querySelector('.quiz-text_correct-theory').innerHTML;
-//   console.log(answer);
-
-//   $.ajax({
-//     url: `/api/users/test_theory_undone`,
-//     type: 'PUT',
-//     data: { answer },
-//     success: function () {
-//       $('.js-btn-next').prop('disabled', true);
-//     }
-//   });
-// }
-
-// function setRocketAnswersFail() {
-//   const answer = document.querySelector('.quiz-text_correct-rocket').innerHTML;
-
-//   $.ajax({
-//     url: `/api/users/test_rocket_undone`,
-//     type: 'PUT',
-//     data: { answer },
-//     success: function () {
-//       $('.js-btn-next').prop('disabled', true);
-//     }
-//   });
-// }
 
 quizButtonStart.forEach(el => el.addEventListener('click', function () {
     startQuiz();

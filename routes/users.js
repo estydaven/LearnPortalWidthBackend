@@ -116,32 +116,4 @@ router.delete('/session', async (req, res, next) => {
     res.status(200).json({message: 'Пользователь разлогинен'});
 })
 
-// router.put('/test_theory_done', async (req, res, next) => {
-//     const user = await knex('users').first().where('id', req.session.user.id);
-//     user.answers_theory_right.push(req.body.answer);
-//     req.session.user = user;
-//     res.status(200).json({message: 'Сохранено'});
-// })
-
-// router.put('/test_rocket_done', async (req, res, next) => {
-//     const user = await knex('users').first().where('id', req.session.user.id);
-//     user.answers_rocket_right.push(req.body.answer);
-//     req.session.user = user;
-//     res.status(200).json({message: 'Сохранено'});
-// })
-
-// router.put('/test_theory_undone', async (req, res, next) => {
-//     const user = await knex('users').first().where('id', req.session.user.id);
-//     user.answers_theory_false.push(req.body.answer);
-//     req.session.user = user;
-//     res.status(200).json({message: 'Сохранено'});
-// })
-
-// router.put('/test_rocket_undone', async (req, res, next) => {
-//     const user = await knex('users').first().where('id', req.session.user.id);
-//     user.answers_rocket_false.push(req.body.answer);
-//     req.session.user = user;
-//     res.status(200).json({message: 'Сохранено'});
-// })
-
 module.exports = router;
