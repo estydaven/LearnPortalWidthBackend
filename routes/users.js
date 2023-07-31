@@ -53,6 +53,8 @@ router.post('/login', async (req, res, next) => {
             user.completed_tasks = await knex('user_task_results').pluck('task_id').where('user_id', user.id);
             user.answers_theory_false = await knex('user_test_answers').pluck('is_correct').where('test_id', 1).where('is_correct', false).where('user_id', user.id);
             user.answers_rocket_false = await knex('user_test_answers').pluck('is_correct').where('test_id', 2).where('is_correct', false).where('user_id', user.id);
+            user.task_comments = await knex('user_task_results').pluck('comment').where('user_id', user.id).where('task_id', 1);
+            user.task_links = await knex('user_task_results').pluck('link').where('user_id', user.id).where('task_id', 2);
             req.session.user = user;
             res.status(200).json({user});
         } else {
