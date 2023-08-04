@@ -1,22 +1,6 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const knex = require('../db');
-// const users = [
-//     {
-//         id: 1,
-//         email: 'ex@gmail.com',
-//         password_hash: '$2b$10$LlwUiAW/XkT1ALBg.komhOujXlXjEKDsrB0S7WnJx0NAZppfRzaO.',
-//         name: 'Igor',
-//         avatar: '',
-//         available_pages: ['1.1'],
-//         available_tasks: ['1'],
-//         completed_courses: [],
-//         answers_theory_right: [],
-//         answers_rocket_right: [],
-//         answers_theory_false: [],
-//         answers_rocket_false: [],
-//     }
-// ];
 
 router.post('/signup', async (req, res, next) => {
     const users = await knex('users').insert({
@@ -50,11 +34,10 @@ router.post('/login', async (req, res, next) => {
             user.available_pages = await knex('available_pages').pluck('page_id').where('user_id', user.id);
             user.available_tasks = await knex('available_tasks').pluck('task_id').where('user_id', user.id);
             user.completed_courses = await knex('completed_courses').pluck('course_id').where('user_id', user.id);
-            user.completed_tasks = await knex('user_task_results').pluck('task_id').where('user_id', user.id);
+            user.completed_tasks = (await knex('user_task_results').first(knex.raw('count(*)::int'))).count;
             user.answers_theory_false = await knex('user_test_answers').pluck('is_correct').where('test_id', 1).where('is_correct', false).where('user_id', user.id);
             user.answers_rocket_false = await knex('user_test_answers').pluck('is_correct').where('test_id', 2).where('is_correct', false).where('user_id', user.id);
-            user.task_comments = await knex('user_task_results').pluck('comment').where('user_id', user.id).where('task_id', 1);
-            user.task_links = await knex('user_task_results').pluck('link').where('user_id', user.id).where('task_id', 2);
+            user.tasks_count = (await knex('tasks').first(knex.raw('count(*)::int'))).count;
             req.session.user = user;
             res.status(200).json({user});
         } else {
@@ -69,15 +52,15 @@ router.put('/avatar', async (req, res, next) => {
         .update('avatar', req.body.urlAvatar);
 
     req.session.user.avatar = req.body.urlAvatar;
+
     res.status(200).json({message: 'Сохранено'});
 })
 
 router.get('/session', async (req, res, next) => {
-    //req.session.user = users[0]; // TODO удалить перед продом
     res.status(200).json({user: req.session.user || null});
 })
 
-router.put('/', async (req, res, next) => {
+router.post('/available_pages', async (req, res, next) => {
     await knex('available_pages').insert({
         page_id: req.body.nextTab, 
         user_id: req.session.user.id
@@ -85,16 +68,20 @@ router.put('/', async (req, res, next) => {
     .onConflict(['page_id', 'user_id'])
     .ignore();
 
+    req.session.user.available_pages.push(req.body.nextTab);
+
     res.status(200).json({message: 'Сохранено'});
 })
 
-router.put('/available_tasks', async (req, res, next) => {
+router.post('/available_tasks', async (req, res, next) => {
     await knex('available_tasks').insert({
         task_id: req.body.task, 
         user_id: req.session.user.id
     })
     .onConflict(['task_id', 'user_id'])
     .ignore();
+
+    req.session.user.available_tasks.push(Number(req.body.task));
 
     res.status(200).json({message: 'Сохранено'});
 })
@@ -107,6 +94,8 @@ router.put('/completed_courses', async (req, res, next) => {
     })
     .onConflict(['course_id', 'user_id'])
     .merge('screens');
+
+    req.session.user.completed_courses.push(req.body.btnSendData);
     
     res.status(200).json({message: 'Сохранено'});
 })

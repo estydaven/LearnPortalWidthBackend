@@ -77,7 +77,7 @@ function setUser(user) {
     }
 
     const completed_courses = user.completed_courses;
-    //galleryBtns = completed_courses;
+    galleryBtns = completed_courses;
     for (let i = 0; i < completed_courses.length; i++) {
         const videoBtns = $('.video__button');
         videoBtns.each(function () {
@@ -98,18 +98,17 @@ function setUser(user) {
         setShowedForTask(task);
     }
 
-    const completed_tasks = Array.from(new Set(user.completed_tasks)).length;
-    setTasksProgress(completed_tasks);
-
+    //setTasksProgress(user.completed_tasks.length, user.tasks_count);
+    
     if (user.answers_theory_false.length > 3) {
         $('.quiz-preview__start-theory').addClass('hide');
         $('.quiz-preview__finished_undone-theory').removeClass('hide');
-        $('.js-btn-next').prop('disabled', true);
+        //$('.js-btn-next').prop('disabled', true);
     }
     if (user.answers_theory_false.length <= 3) {
         $('.quiz-preview__start-theory').addClass('hide');
         $('.quiz-preview__finished_done-theory').removeClass('hide');
-        $('.js-btn-next').prop('disabled', false);
+        //$('.js-btn-next').prop('disabled', false);
     }
     if (!user.answers_theory_false.length) {
         $('.quiz-preview__start-theory').removeClass('hide');
@@ -121,29 +120,32 @@ function setUser(user) {
     if (user.answers_rocket_false.length > 3) {
         $('.quiz-preview__start-rocket').addClass('hide');
         $('.quiz-preview__finished_undone-rocket').removeClass('hide');
-        $('.js-btn-next').prop('disabled', true);
+        //$('.js-btn-next').prop('disabled', true);
     }
     if (user.answers_rocket_false.length <= 3) {
         $('.quiz-preview__start-rocket').addClass('hide');
         $('.quiz-preview__finished_done-rocket').removeClass('hide');
-        $('.js-btn-next').prop('disabled', false);
+        //$('.js-btn-next').prop('disabled', false);
     }
-    if (!user.answers_rocket_false.length) {
-        $('.quiz-preview__start-rocket').removeClass('hide');
-        $('.quiz-preview__finished_done-rocket').addClass('hide');
-        $('.quiz-preview__finished_undone-rocket').addClass('hide');
-        $('.js-btn-next').prop('disabled', false);
-    }
+    // if (!user.answers_rocket_false.length) {
+    //     $('.quiz-preview__start-rocket').removeClass('hide');
+    //     $('.quiz-preview__finished_done-rocket').addClass('hide');
+    //     $('.quiz-preview__finished_undone-rocket').addClass('hide');
+    //     $('.js-btn-next').prop('disabled', false);
+    // }
 
-    if (user.task_comments.length) {
-        const btn = $('.task-screen');
-        setCompletedStyleBtn(btn);
-        btn.text('Отправлено!');
+    const btnFirstTask = $('.task-screen');
+    const btnSecondTask = $('.button-blue_form');
+
+    if (user.completed_tasks == 1) {
+        setCompletedStyleBtn(btnFirstTask);
+        btnFirstTask.text('Отправлено!');
     }
-    if (user.task_links.length) {
-        const btn = $('.button-blue_form');
-        setCompletedStyleBtn(btn);
-        btn.text('Отправлено!');
+    if (user.completed_tasks == 2) {
+        setCompletedStyleBtn(btnFirstTask);
+        setCompletedStyleBtn(btnSecondTask);
+        btnFirstTask.text('Отправлено!');
+        btnSecondTask.text('Отправлено!');
     }
 }
 
@@ -153,7 +155,7 @@ function logout() {
         url: '/api/users/session',
         type: 'DELETE',
         success: function () {
-            showLoginWrapper();
+            location.reload();
         },
     });
 }
@@ -390,8 +392,8 @@ function setShowedForTab(tab) {
 // Add Availible Tasks And Pages
 function addAvailablePage(nextTab) {
     $.ajax({
-        url: 'api/users',
-        type: 'PUT',
+        url: 'api/users/available_pages',
+        type: 'POST',
         data: { nextTab },
     });
 }
@@ -399,7 +401,7 @@ function addAvailablePage(nextTab) {
 function addAvailableTask(task) {
     $.ajax({
         url: 'api/users/available_tasks',
-        type: 'PUT',
+        type: 'POST',
         data: { task }
     });
 }
@@ -524,7 +526,7 @@ const fileElemVideos = document.querySelector("#fileElem");
 fileElemTask.addEventListener('change', previewFiles);
 fileElemVideos.addEventListener('change', previewFiles);
 const convertTasksImagesResults = [];
-const convertVideosImagesResults = [];
+let convertVideosImagesResults = [];
 function previewFiles() {
     const filesTask = document.querySelector("#fileElem2").files;
     const filesVideos = document.querySelector("#fileElem").files;
@@ -552,10 +554,10 @@ function previewFiles() {
                 false
             );
 
-            reader.readAsDataURL(file)
+            reader.readAsDataURL(file);
         }
     }
-
+    
     if (filesTask) {
         Array.prototype.forEach.call(filesTask, readAndPreview);
     }
@@ -574,12 +576,16 @@ function setCompletedStyleBtn(btn) {
 // Send Tasks Results To Server
 function onSubmitTask(formTask) {
     const formData = new FormData(formTask);
-    const taskScreens = convertTasksImagesResults;
+    let taskScreens = convertTasksImagesResults;
     const taskLink = formData.get('link');
     const taskComment = formData.get('comment');
     const taskId = $(formTask).attr('data-formId');
     const btnFirstTask = $('.task-screen');
     const btnSecondTask = $('.button-blue_form');
+
+    if (taskId == 2) {
+        taskScreens = [];
+    }
 
     $.ajax({
         url: `/api/tasks/${taskId}/results`,
@@ -587,14 +593,16 @@ function onSubmitTask(formTask) {
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify({ taskId: taskId, taskLink: taskLink, taskComment: taskComment, taskScreens: taskScreens}),
-        success: function () {
+        success: function (res) {
+            console.log(res);
             formTask.reset();
             showConfirmPopup();
             resetPopupShot();
             closepopupShot();
             setShowedForTask();
             setShowedForNextTask();
-            setTasksProgress(taskId);
+            // TODO - поменять формат, добавить атрибут
+            //setTasksProgress(taskId);
 
             if (taskId == 1) {
                 setCompletedStyleBtn(btnFirstTask);
@@ -609,13 +617,13 @@ function onSubmitTask(formTask) {
 }
 
 // Save Tasks Progress
-function setTasksProgress(taskId) {
+function setTasksProgress(completed_count, count) {
     if (taskId == 1) {
         $('.percent_four').html('50');
         $('.stat-block__percent_four').css('color', '#0EC1FF');
         $('.stat-line_four').css('width', '50%');
     } else if (taskId == 2) {
-        $('.themes-count').text('4');
+        //$('.themes-count').text('4');
         $('.percent_four').html('100');
         $('.stat-block__percent_four').css('color', '#E04AA8');
         $('.stat-line_four').css('width', '100%');
@@ -640,6 +648,7 @@ const body = document.body;
 
 $('.video__button').each(function () {
     $(this).click(function () {
+        convertVideosImagesResults = [];
         showPopupShot();
         $('.file-form_video').css('display', 'flex');
         $('.file-form_task').css('display', 'none');
@@ -1055,7 +1064,6 @@ $('.answer__input').each(function () {
 function sendAnswersTheory(idTest) {
     questionsTheoryQuantity.forEach(el => el.innerText = questionsTheory.length);
     const testId = $(idTest).parent().attr('data-test');
-    console.log(answerCheckedFirst);
 
     $.ajax({
         url: `/api/tests/${testId}/result`,
@@ -1064,22 +1072,21 @@ function sendAnswersTheory(idTest) {
         contentType: 'application/json',
         data: JSON.stringify({ answers: answerCheckedFirst }),
         success: function (response) {
-            const trueAnswers = response.trueAnswers.length;
             quizResultCorrectTheory.classList.remove('hide');
             quizButtonTheory.classList.add('hide');
-            quizTextCorrectTheory.innerText = trueAnswers;
+            quizTextCorrectTheory.innerText = response.correctCount;
             time = 1800;
             clearInterval(intr);
             timerTime.innerText = '30:00';
         },
         error: function (response) {
-            if (response.responseJSON.falseAnswers) {
+            if (response.responseJSON.incorrectCount) {
                 quizResultInorrectTheory.classList.remove('hide');
                 quizButtonTheory.classList.add('hide');
                 time = 1800;
                 clearInterval(intr);
                 timerTime.innerText = '30:00';
-                const answer = questionsTheory.length - response.responseJSON.falseAnswers.length;
+                const answer = questionsTheory.length - response.responseJSON.incorrectCount;
                 quizTextFailTheory.innerText = answer;
             } else {
                 showTestErrorPopup();
@@ -1100,22 +1107,21 @@ function sendAnswersRocket(idTest) {
         contentType: 'application/json',
         data: JSON.stringify({ answers: answerCheckedSecond }),
         success: function (response) {
-            const trueAnswers = response.trueAnswers.length;
             quizResultCorrectRocket.classList.remove('hide');
             quizButtonRocket.classList.add('hide');
-            quizTextCorrectRocket.innerText = trueAnswers;
+            quizTextCorrectRocket.innerText = response.correctCount;
             time = 1800;
             clearInterval(intr);
             timerTime.innerText = '30:00';
         },
         error: function (response) {
-            if (response.responseJSON.falseAnswers) {
+            if (response.responseJSON.incorrectCount) {
                 quizResultInorrectRocket.classList.remove('hide');
                 quizButtonRocket.classList.add('hide');
                 time = 1800;
                 clearInterval(intr);
                 timerTime.innerText = '30:00';
-                const answer = questionsRocket.length - response.responseJSON.falseAnswers.length;
+                const answer = questionsRocket.length - response.responseJSON.incorrectCount;
                 quizTextFailRocket.innerText = answer;
             } else {
                 showTestErrorPopup();

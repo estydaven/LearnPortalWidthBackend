@@ -1,32 +1,55 @@
 exports.up = async function(knex) {
     await knex('pages').insert([
         { id: '1.1' },
-        { id: '1.2.1' },
-        { id: '1.2.2' },
-        { id: '1.2.3' },
+        { id: '1.2' },
         { id: '1.3' },
         { id: '1.4' },
-        { id: '1.5' },
+        { id: '1.5.1' },
+        { id: '1.5.2' },
         { id: '1.6' },
         { id: '1.7' },
-        { id: '1.8' },
+        { id: '1.8.1' },
+        { id: '1.8.2' },
+        { id: '1.8.3' },
+        { id: '1.8.4' },
+        { id: '1.8.5' },
+        { id: '1.8.6' },
+        { id: '1.8.7' },
+        { id: '1.8.8' },
+        { id: '1.8.9' },
+        { id: '1.8.10' },
+        { id: '1.8.11' },
+        { id: '1.8.12' },
+        { id: '1.8.13' },
+        { id: '1.8.14' },
         { id: '1.9' },
-        { id: '1.10' },
+        { id: '1.10.1' },
+        { id: '1.10.2' },
+        { id: '1.10.3' },
+        { id: '1.10.4' },
+        { id: '1.10.5' },
+        { id: '1.10.6' },
+        { id: '1.10.7' },
         { id: '1.11' },
         { id: '1.12' },
         { id: '1.13' },
         { id: '1.14' },
         { id: '1.15' },
-        { id: '1.16.1' },
-        { id: '1.16.2' },
-        { id: '1.17.1' },
-        { id: '1.17.2' },
-        { id: '1.18' },
+        { id: '1.16' },
+        { id: '1.17' },
+        { id: '1.18.1' },
+        { id: '1.18.2' },
+        { id: '1.18.3' },
+        { id: '1.18.4' },
+        { id: '1.18.5' },
+        { id: '1.18.6' },
+        { id: '1.18.7' },
+        { id: '1.18.8' },
+        { id: '1.18.9' },
         { id: '1.19' },
-        { id: '2.1.1' },
-        { id: '2.1.2' },
-        { id: '2.1.3' },
-        { id: '2.1.4' },
+        { id: '1.20' },
+        { id: '1.21' },
+        { id: '2.1' },
         { id: '2.2' },
         { id: '2.3' },
         { id: '2.4' },
@@ -50,14 +73,12 @@ exports.up = async function(knex) {
         { id: '2.22' },
         { id: '2.23' },
         { id: '2.24' },
-        { id: '2.25.1' },
+        { id: '2.25' },
         { id: '2.26' },
         { id: '2.27' },
         { id: '2.28' },
         { id: '2.29' },
         { id: '2.30' },
-        { id: '2.31' },
-        { id: '2.32' },
         { id: '3' },
         { id: '4' }
     ]);
@@ -120,117 +141,97 @@ exports.up = async function(knex) {
         {
             id: 9,
             test_id: 1,
-            answers: [33]
+            answers: [34]
         },
         {
             id: 10,
             test_id: 1,
-            answers: [36]
+            answers: [37]
         },
         {
             id: 11,
             test_id: 1,
-            answers: [41]
+            answers: [43]
         },
         {
             id: 12,
             test_id: 1,
-            answers: [44]
+            answers: [46]
         },
         {
             id: 13,
             test_id: 1,
-            answers: [49]
+            answers: [52]
         },
         {
             id: 14,
             test_id: 1,
-            answers: [50]
+            answers: [53]
         },
         {
             id: 15,
             test_id: 1,
-            answers: [56]
+            answers: [59]
         },
         {
             id: 16,
             test_id: 1,
-            answers: [57]
+            answers: [60]
         },
         {
             id: 17,
             test_id: 1,
-            answers: [63]
+            answers: [65]
         },
         {
             id: 18,
             test_id: 1,
-            answers: [66]
+            answers: [67]
         },
         {
             id: 19,
             test_id: 1,
-            answers: [68]
+            answers: [71]
         },
         {
             id: 20,
             test_id: 1,
-            answers: [70]
+            answers: [76]
         },
         {
             id: 21,
             test_id: 1,
-            answers: [74]
+            answers: [80]
         },
         {
             id: 22,
             test_id: 1,
-            answers: [76]
+            answers: [86]
         },
         {
             id: 23,
             test_id: 1,
-            answers: [80]
+            answers: [88]
         },
         {
             id: 24,
             test_id: 1,
-            answers: [83]
+            answers: [93]
         },
         {
             id: 25,
             test_id: 1,
-            answers: [88]
+            answers: [97]
         },
         {
             id: 26,
             test_id: 1,
-            answers: [90]
+            answers: [103]
         },
         {
             id: 27,
             test_id: 1,
-            answers: [92, 93]
-        },
-        {
-            id: 28,
-            test_id: 1,
-            answers: [98]
-        },
-        {
-            id: 29,
-            test_id: 1,
-            answers: [103]
-        },
-        {
-            id: 30,
-            test_id: 1,
             answers: [105]
-        },
-        {
-            id: 31,
-            test_id: 1,
-            answers: [108]
         },
         {
             id: 1,
@@ -260,37 +261,72 @@ exports.up = async function(knex) {
         {
             id: 6,
             test_id: 2,
-            answers: [131]
+            answers: [133]
         },
         {
             id: 7,
             test_id: 2,
-            answers: [133]
+            answers: [136]
         },
         {
             id: 8,
             test_id: 2,
-            answers: [136]
+            answers: [140]
         },
         {
             id: 9,
             test_id: 2,
-            answers: [138]
+            answers: [142]
         },
         {
             id: 10,
             test_id: 2,
-            answers: [143]
+            answers: [146]
         },
         {
             id: 11,
             test_id: 2,
-            answers: [145]
+            answers: [148]
         },
         {
             id: 12,
             test_id: 2,
-            answers: [150]
+            answers: [152]
+        },
+        {
+            id: 13,
+            test_id: 2,
+            answers: [156, 157, 158, 159]
+        },
+        {
+            id: 14,
+            test_id: 2,
+            answers: [160]
+        },
+        {
+            id: 15,
+            test_id: 2,
+            answers: [166]
+        },
+        {
+            id: 16,
+            test_id: 2,
+            answers: [168]
+        },
+        {
+            id: 17,
+            test_id: 2,
+            answers: [173]
+        },
+        {
+            id: 18,
+            test_id: 2,
+            answers: [177]
+        },
+        {
+            id: 19,
+            test_id: 2,
+            answers: [182]
         },
     ]);
 };

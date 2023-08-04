@@ -740,7 +740,7 @@ input::-webkit-search-results-decoration { display: none; }
   line-height: 23px;
   margin-bottom: 20px;
 }
-.article p b {
+.article b {
   color: #23395e;
 }
 .article p:last-child {
