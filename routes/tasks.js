@@ -10,7 +10,7 @@ router.put('/:id/results', async (req, res, next) => {
         screens: req.body.taskScreens,
     })
 
-    req.session.user.completed_tasks = req.body.taskId;
+    req.session.user.completed_tasks.push(Number(req.body.taskId));
 
     res.status(200).json({message: 'Сохранено'}); 
 });

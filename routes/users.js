@@ -34,7 +34,10 @@ router.post('/login', async (req, res, next) => {
             user.available_pages = await knex('available_pages').pluck('page_id').where('user_id', user.id);
             user.available_tasks = await knex('available_tasks').pluck('task_id').where('user_id', user.id);
             user.completed_courses = await knex('completed_courses').pluck('course_id').where('user_id', user.id);
-            user.completed_tasks = (await knex('user_task_results').first(knex.raw('count(*)::int'))).count;
+            //user.completed_tasks = (await knex('user_task_results').first(knex.raw('count(*)::int'))).count;
+            user.completed_tasks = await knex('user_task_results').pluck('task_id').where('user_id', user.id);
+            user.answers_theory_true = await knex('user_test_answers').pluck('is_correct').where('test_id', 1).where('is_correct', true).where('user_id', user.id);
+            user.answers_rocket_true = await knex('user_test_answers').pluck('is_correct').where('test_id', 2).where('is_correct', true).where('user_id', user.id);
             user.answers_theory_false = await knex('user_test_answers').pluck('is_correct').where('test_id', 1).where('is_correct', false).where('user_id', user.id);
             user.answers_rocket_false = await knex('user_test_answers').pluck('is_correct').where('test_id', 2).where('is_correct', false).where('user_id', user.id);
             user.tasks_count = (await knex('tasks').first(knex.raw('count(*)::int'))).count;
@@ -57,6 +60,7 @@ router.put('/avatar', async (req, res, next) => {
 })
 
 router.get('/session', async (req, res, next) => {
+    console.log(req.session.user);
     res.status(200).json({user: req.session.user || null});
 })
 

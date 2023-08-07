@@ -8,6 +8,10 @@ router.post('/:id/result', async (req, res, next) => {
     const keys = Object.keys(userAnswers);
 
     // @TODO сделать выбор через for of и искать по айдти через find
+    req.session.user.answers_theory_false = [];
+    req.session.user.answers_theory_true = [];
+    req.session.user.answers_rocket_false = [];
+    req.session.user.answers_rocket_true = [];
     
     for (let i = 0; i < keys.length; i++) {
         if (Array.isArray(questions[i].answers) && Array.isArray(userAnswers[i])) {
@@ -25,6 +29,20 @@ router.post('/:id/result', async (req, res, next) => {
             })
             .onConflict(['question_id', 'user_id', 'test_id'])
             .merge('answers');
+
+            if (isEqual && req.params.id == 1) {
+                req.session.user.answers_theory_true.push(isEqual);
+            } 
+            if (!isEqual && req.params.id == 1) {
+                req.session.user.answers_theory_false.push(isEqual);
+            }
+            
+            if (isEqual && req.params.id == 2) {
+                req.session.user.answers_rocket_true.push(isEqual);
+            } 
+            if (!isEqual && req.params.id == 2) {
+                req.session.user.answers_rocket_false.push(isEqual);
+            }
         }
     }
     
