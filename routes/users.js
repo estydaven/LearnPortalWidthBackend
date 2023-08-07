@@ -60,7 +60,6 @@ router.put('/avatar', async (req, res, next) => {
 })
 
 router.get('/session', async (req, res, next) => {
-    console.log(req.session.user);
     res.status(200).json({user: req.session.user || null});
 })
 
