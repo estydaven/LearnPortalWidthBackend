@@ -14,7 +14,16 @@ passLink.addEventListener('click', (event) => {
 })
 
 // Scroll to top
-
+$(document).ready(function(){
+    $(function() {
+    $(".tab-button_next").click(function() {
+      $("body,html").animate({
+        scrollTop:0
+      }, 800);
+      return false;
+    });
+  });
+});
 
 // Login User
 let loginWrap = document.querySelector('.wrapper_login');
