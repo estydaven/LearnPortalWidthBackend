@@ -14,16 +14,16 @@ passLink.addEventListener('click', (event) => {
 })
 
 // Scroll to top
-// $(document).ready(function(){
-//     $(function() {
-//     $(".tab-button_next").click(function() {
-//       $("body,html").animate({
-//         scrollTop:0
-//       }, 800);
-//       return false;
-//     });
-//   });
-// });
+$(document).ready(function(){
+    $(function() {
+        $(".tab-button_next, .quiz-button_incorrect-theory, .quiz-button_incorrect-rocket").click(function() {
+        $("body,html").animate({
+            scrollTop:0
+        }, 800);
+        return false;
+        });
+    });
+});
 
 // Login User
 let loginWrap = document.querySelector('.wrapper_login');
@@ -114,6 +114,8 @@ function setUser(user) {
 
     const answers_theory_attempt = Array.from(new Set(user.answers_theory_attempt))[0];
     const answers_rocket_attempt = Array.from(new Set(user.answers_rocket_attempt))[0];
+
+    console.log(answers_rocket_attempt);
 
     if (user.answers_theory_false.length > 3 && answers_theory_attempt == 3) {
         $('.quiz-preview__start-theory').addClass('hide');
@@ -917,6 +919,7 @@ function previewFile(file) {
         }
         galleryBlocks.forEach(el => el.addEventListener('click', function () {
             this.remove();
+            this.firstChild.src = '';
             $('.file-form__content_task').removeClass('hide');
             $('.file-form__content_video').removeClass('hide');
         }));
@@ -992,14 +995,6 @@ function restartTheoryQuiz() {
     quizButtonTheory.classList.remove('hide');
     quizResultInorrectTheory.classList.add('hide');
     quizResultCorrectTheory.classList.add('hide');
-    //attempt++;
-
-    // if (attempt === 3) {
-    //     attempt = 0;
-    //     quizButtonTheory.classList.add('hide');
-    //     quizResultFailTheory.classList.remove('hide');
-    //     setTimer();
-    // }
 }
 
 function restartRocketQuiz() {
@@ -1011,14 +1006,6 @@ function restartRocketQuiz() {
     quizButtonRocket.classList.remove('hide');
     quizResultInorrectRocket.classList.add('hide');
     quizResultCorrectRocket.classList.add('hide');
-    //attempt++;
-
-    // if (attempt === 3) {
-    //     attempt = 0;
-    //     quizButtonRocket.classList.add('hide');
-    //     quizResultFailRocket.classList.remove('hide');
-    //     setTimer();
-    // }
 }
 
 quizButtonStart.forEach(el => el.addEventListener('click', function () {
@@ -1093,7 +1080,6 @@ function sendAnswersTheory(idTest) {
     questionsTheoryQuantity.forEach(el => el.innerText = questionsTheory.length);
     const testId = $(idTest).parent().attr('data-test');
     attempt++;
-    console.log(attempt);
 
     $.ajax({
         url: `/api/tests/${testId}/result`,
@@ -1140,6 +1126,7 @@ function sendAnswersRocket(idTest) {
     questionsRocketQuantity.forEach(el => el.innerText = questionsRocket.length);
     const testId = $(idTest).parent().attr('data-test');
     attempt++;
+    console.log(attempt);
 
     $.ajax({
         url: `/api/tests/${testId}/result`,
@@ -1164,6 +1151,7 @@ function sendAnswersRocket(idTest) {
                 timerTime.innerText = '30:00';
                 quizTextFailRocket.innerText = questionsRocket.length - response.responseJSON.incorrectCount;
                 attempt = Array.from(new Set(response.responseJSON.attemptRocket))[0];
+                console.log(attempt);
                 
                 if (attempt === 3) {
                     attempt = 0;

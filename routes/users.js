@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const knex = require('../db');
+const sess = require('../session');
 
 router.post('/signup', async (req, res, next) => {
     const users = await knex('users').insert({
@@ -33,7 +34,7 @@ router.post('/login', async (req, res, next) => {
             delete user.password_hash;
             user.available_pages = await knex('available_pages').pluck('page_id').where('user_id', user.id);
             user.available_tasks = await knex('available_tasks').pluck('task_id').where('user_id', user.id);
-            user.completed_courses = await knex('completed_courses').pluck('course_id').where('user_id', user.id);            
+            user.completed_courses = await knex('completed_courses').pluck('course_id').where('user_id', user.id);
             user.answers_theory_true = await knex('user_test_answers').pluck('is_correct').where('test_id', 1).where('is_correct', true).where('user_id', user.id);
             user.answers_rocket_true = await knex('user_test_answers').pluck('is_correct').where('test_id', 2).where('is_correct', true).where('user_id', user.id);
             user.answers_theory_false = await knex('user_test_answers').pluck('is_correct').where('test_id', 1).where('is_correct', false).where('user_id', user.id);
@@ -42,7 +43,8 @@ router.post('/login', async (req, res, next) => {
             user.answers_rocket_attempt = await knex('user_test_answers').pluck('attempt').where('test_id', 2).where('user_id', user.id);
             user.completed_tasks = await knex('user_task_results').pluck('task_id').where('user_id', user.id);
             user.tasks_count = (await knex('tasks').first(knex.raw('count(*)::int'))).count;
-            req.session.user = user;
+            //req.session.user = user;
+            req.session = sess.getSessionData(user.id);
             res.status(200).json({user});
         } else {
             res.status(400).json({message: 'Введите правильный пароль!'});

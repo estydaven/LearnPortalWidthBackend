@@ -21,14 +21,14 @@ router.post('/:id/result', async (req, res, next) => {
             const arrquestion = questions[i].answers.sort(( a, b ) =>  a - b);
             const isEqual = JSON.stringify(arrquestion) === JSON.stringify(arrAnswerUser);
             const key = +keys[i] + 1;
-
+            
             await knex('user_test_answers').insert({
                 question_id: key,
                 user_id: req.session.user.id,
                 test_id: req.params.id,
                 is_correct: isEqual,
                 answers: userAnswers[i],
-                attempt: req.body.attempt,
+                attempt: 0,
             })
             .onConflict(['question_id', 'user_id', 'test_id'])
             .merge('answers');
@@ -56,7 +56,7 @@ router.post('/:id/result', async (req, res, next) => {
     const { count: incorrectCount } = await knex('user_test_answers').first(knex.raw('count(*)::int')).where('test_id', req.params.id).where('is_correct', false).where('user_id', req.session.user.id);
     const { count: correctCount } = await knex('user_test_answers').first(knex.raw('count(*)::int')).where('test_id', req.params.id).where('is_correct', true).where('user_id', req.session.user.id);
 
-    // const { count: answers_theory_true } = await knex('user_test_answers').select(knex.raw('count(*)::int')).where('test_id', 1).where('is_correct', true).where('user_id', req.session.user.id);
+    // const { count: answers_theory_true } = await knex('user_test_answers').select('test').(knex.raw('count(*)::int')).where('test_id', 1).where('is_correct', true).where('user_id', req.session.user.id);
     // const { count: answers_theory_false } = await knex('user_test_answers').select(knex.raw('count(*)::int')).where('test_id', 1).where('is_correct', false).where('user_id', req.session.user.id);
     // const { count: answers_rocket_true } = await knex('user_test_answers').select(knex.raw('count(*)::int')).where('test_id', 2).where('is_correct', true).where('user_id', req.session.user.id);
     // const { count: answers_rocket_false } = await knex('user_test_answers').select(knex.raw('count(*)::int')).where('test_id', 2).where('is_correct', false).where('user_id', req.session.user.id);
@@ -65,7 +65,7 @@ router.post('/:id/result', async (req, res, next) => {
     req.session.user.answers_theory_false = await knex('user_test_answers').pluck('answers').where('test_id', 1).where('is_correct', false).where('user_id', req.session.user.id);
     req.session.user.answers_rocket_true = await knex('user_test_answers').pluck('answers').where('test_id', 2).where('is_correct', true).where('user_id', req.session.user.id);
     req.session.user.answers_rocket_false = await knex('user_test_answers').pluck('answers').where('test_id', 2).where('is_correct', false).where('user_id', req.session.user.id);
-    
+
     const attemptTheory = await knex('user_test_answers').pluck('attempt').where('test_id', 1).where('user_id', req.session.user.id);
     const attemptRocket = await knex('user_test_answers').pluck('attempt').where('test_id', 2).where('user_id', req.session.user.id);
 
