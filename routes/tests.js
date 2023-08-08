@@ -65,12 +65,15 @@ router.post('/:id/result', async (req, res, next) => {
     req.session.user.answers_theory_false = await knex('user_test_answers').pluck('answers').where('test_id', 1).where('is_correct', false).where('user_id', req.session.user.id);
     req.session.user.answers_rocket_true = await knex('user_test_answers').pluck('answers').where('test_id', 2).where('is_correct', true).where('user_id', req.session.user.id);
     req.session.user.answers_rocket_false = await knex('user_test_answers').pluck('answers').where('test_id', 2).where('is_correct', false).where('user_id', req.session.user.id);
+    
+    const attemptTheory = await knex('user_test_answers').pluck('attempt').where('test_id', 1).where('user_id', req.session.user.id);
+    const attemptRocket = await knex('user_test_answers').pluck('attempt').where('test_id', 2).where('user_id', req.session.user.id);
 
-    req.session.user.answers_theory_attempt = await knex('user_test_answers').pluck('attempt').where('test_id', 1).where('user_id', req.session.user.id);
-    req.session.user.answers_rocket_attempt = await knex('user_test_answers').pluck('attempt').where('test_id', 2).where('user_id', req.session.user.id);
+    req.session.user.answers_theory_attempt = attemptTheory;
+    req.session.user.answers_rocket_attempt = attemptRocket;
 
     if (incorrectCount > 3) {
-        return res.status(400).json({incorrectCount});
+        return res.status(400).json({incorrectCount, attemptTheory, attemptRocket});
     } else {
         return res.status(200).json({correctCount});
     }
