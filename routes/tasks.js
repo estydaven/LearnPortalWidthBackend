@@ -12,7 +12,10 @@ router.put('/:id/results', async (req, res, next) => {
 
     req.session.user.completed_tasks.push(Number(req.body.taskId));
 
-    res.status(200).json({message: 'Сохранено'}); 
+    const { count: completed_count } = await knex('user_task_results').first(knex.raw('count(*)::int')).where('user_id', req.session.user.id);
+    const { count: count } = await knex('tasks').first(knex.raw('count(*)::int'));
+
+    res.status(200).json({ completed_count, count }); 
 });
 
 module.exports = router;

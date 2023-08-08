@@ -13,6 +13,9 @@ passLink.addEventListener('click', (event) => {
     return false;
 })
 
+// Scroll to top
+
+
 // Login User
 let loginWrap = document.querySelector('.wrapper_login');
 let mainWrap = document.querySelector('.wrapper_main');
@@ -98,38 +101,53 @@ function setUser(user) {
         setShowedForTask(task);
     }
 
-    //setTasksProgress(user.completed_tasks.length, user.tasks_count);
-    
-    if (user.answers_theory_false.length > 3) {
+    setTasksProgress(user.completed_tasks.length, user.tasks_count);
+
+    const answers_theory_attempt = Array.from(new Set(user.answers_theory_attempt))[0];
+    const answers_rocket_attempt = Array.from(new Set(user.answers_rocket_attempt))[0];
+
+    if (user.answers_theory_false.length > 3 && answers_theory_attempt == 3) {
         $('.quiz-preview__start-theory').addClass('hide');
         $('.quiz-preview__finished_undone-theory').removeClass('hide');
-        $('.js-btn-next').prop('disabled', true);
+        //$('.js-btn-next').prop('disabled', true);
+    } else if (user.answers_theory_false.length > 3 && answers_theory_attempt < 3) {
+        $('.quiz-result_incorrect-theory').removeClass('hide');
+        $('.quiz-preview').addClass('hide');
+        $('.quiz-submit-theory').addClass('hide');
+        $('.article__wrap').css('display', 'flex');
+        //$('.js-btn-next').prop('disabled', true);
     } else {
         $('.quiz-preview__start-theory').addClass('hide');
         $('.quiz-preview__finished_done-theory').removeClass('hide');
-        $('.js-btn-next').prop('disabled', false);
+        //$('.js-btn-next').prop('disabled', false);
     }
     if (!user.answers_theory_true.length) {
         $('.quiz-preview__start-theory').removeClass('hide');
         $('.quiz-preview__finished_done-theory').addClass('hide');
         $('.quiz-preview__finished_undone-theory').addClass('hide');
-        $('.js-btn-next').prop('disabled', false);
+        //$('.js-btn-next').prop('disabled', false);
     }
 
-    if (user.answers_rocket_false.length > 3) {
+    if (user.answers_rocket_false.length > 3 && answers_rocket_attempt == 3) {
         $('.quiz-preview__start-rocket').addClass('hide');
         $('.quiz-preview__finished_undone-rocket').removeClass('hide');
-        $('.js-btn-next').prop('disabled', true);
+        //$('.js-btn-next').prop('disabled', true);
+    } else if (user.answers_rocket_false.length > 3 && answers_rocket_attempt < 3) {
+        $('.quiz-result_incorrect-rocket').removeClass('hide');
+        $('.quiz-preview').addClass('hide');
+        $('.quiz-submit-rocket').addClass('hide');
+        $('.article__wrap').css('display', 'flex');
+        //$('.js-btn-next').prop('disabled', true);
     } else {
         $('.quiz-preview__start-rocket').addClass('hide');
         $('.quiz-preview__finished_done-rocket').removeClass('hide');
-        $('.js-btn-next').prop('disabled', false);
+        //$('.js-btn-next').prop('disabled', false);
     }
     if (!user.answers_rocket_true.length) {
         $('.quiz-preview__start-rocket').removeClass('hide');
         $('.quiz-preview__finished_done-rocket').addClass('hide');
         $('.quiz-preview__finished_undone-rocket').addClass('hide');
-        $('.js-btn-next').prop('disabled', false);
+        //$('.js-btn-next').prop('disabled', false);
     }
 
     const btnFirstTask = $('.task-screen');
@@ -599,8 +617,7 @@ function onSubmitTask(formTask) {
             closepopupShot();
             setShowedForTask();
             setShowedForNextTask();
-            // TODO - поменять формат, добавить атрибут
-            //setTasksProgress(taskId);
+            setTasksProgress(res.completed_count, res.count);
 
             if (taskId == 1) {
                 setCompletedStyleBtn(btnFirstTask);
@@ -616,12 +633,16 @@ function onSubmitTask(formTask) {
 
 // Save Tasks Progress
 function setTasksProgress(completed_count, count) {
-    if (taskId == 1) {
+
+    const taskProgress = (count / completed_count) + 1;
+    console.log(taskProgress);
+
+    if (taskProgress == 1) {
         $('.percent_four').html('50');
         $('.stat-block__percent_four').css('color', '#0EC1FF');
         $('.stat-line_four').css('width', '50%');
-    } else if (taskId == 2) {
-        //$('.themes-count').text('4');
+    } else if (taskProgress == 2) {
+        $('.themes-count').text('4');
         $('.percent_four').html('100');
         $('.stat-block__percent_four').css('color', '#E04AA8');
         $('.stat-line_four').css('width', '100%');
@@ -941,7 +962,7 @@ const questionsRocket = document.querySelectorAll('.quiz-block-rocket');
 const erorMessage = document.querySelector('.popup__title_test');
 const answers = document.querySelectorAll('.answer__input');
 const popupTimer = document.querySelector('.popup_time');
-let trying = 0;
+let attempt = 0;
 
 function startQuiz() {
     start_timer();
@@ -964,10 +985,10 @@ function restartTheoryQuiz() {
     quizButtonTheory.classList.remove('hide');
     quizResultInorrectTheory.classList.add('hide');
     quizResultCorrectTheory.classList.add('hide');
-    trying++;
+    //attempt++;
 
-    if (trying === 3) {
-        trying = 0;
+    if (attempt === 3) {
+        attempt = 0;
         quizButtonTheory.classList.add('hide');
         quizResultFailTheory.classList.remove('hide');
         setTimer();
@@ -983,14 +1004,14 @@ function restartRocketQuiz() {
     quizButtonRocket.classList.remove('hide');
     quizResultInorrectRocket.classList.add('hide');
     quizResultCorrectRocket.classList.add('hide');
-    trying++;
+    //attempt++;
 
-    if (trying === 3) {
-        quizButtonRocket.classList.add('hide');
-        quizResultFailRocket.classList.remove('hide');
-        setTimer();
-        trying = 0;
-    }
+    // if (attempt === 3) {
+    //     attempt = 0;
+    //     quizButtonRocket.classList.add('hide');
+    //     quizResultFailRocket.classList.remove('hide');
+    //     setTimer();
+    // }
 }
 
 quizButtonStart.forEach(el => el.addEventListener('click', function () {
@@ -1064,13 +1085,14 @@ $('.answer__input').each(function () {
 function sendAnswersTheory(idTest) {
     questionsTheoryQuantity.forEach(el => el.innerText = questionsTheory.length);
     const testId = $(idTest).parent().attr('data-test');
+    attempt++;
 
     $.ajax({
         url: `/api/tests/${testId}/result`,
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json',
-        data: JSON.stringify({ answers: answerCheckedFirst }),
+        data: JSON.stringify({ answers: answerCheckedFirst, attempt: attempt }),
         success: function (response) {
             quizResultCorrectTheory.classList.remove('hide');
             quizButtonTheory.classList.add('hide');
@@ -1088,6 +1110,15 @@ function sendAnswersTheory(idTest) {
                 timerTime.innerText = '30:00';
                 const answer = questionsTheory.length - response.responseJSON.incorrectCount;
                 quizTextFailTheory.innerText = answer;
+                
+                if (attempt === 3) {
+                    attempt = 0;
+                    quizButtonRocket.classList.add('hide');
+                    quizResultFailRocket.classList.remove('hide');
+                    quizResultInorrectTheory.classList.add('hide');
+                    setTimer();
+                }
+    
             } else {
                 showTestErrorPopup();
                 erorMessage.innerText = response.responseJSON.message;
@@ -1099,13 +1130,14 @@ function sendAnswersTheory(idTest) {
 function sendAnswersRocket(idTest) {
     questionsRocketQuantity.forEach(el => el.innerText = questionsRocket.length);
     const testId = $(idTest).parent().attr('data-test');
+    attempt++;
 
     $.ajax({
         url: `/api/tests/${testId}/result`,
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json',
-        data: JSON.stringify({ answers: answerCheckedSecond }),
+        data: JSON.stringify({ answers: answerCheckedSecond, attempt: attempt  }),
         success: function (response) {
             quizResultCorrectRocket.classList.remove('hide');
             quizButtonRocket.classList.add('hide');
@@ -1123,6 +1155,15 @@ function sendAnswersRocket(idTest) {
                 timerTime.innerText = '30:00';
                 const answer = questionsRocket.length - response.responseJSON.incorrectCount;
                 quizTextFailRocket.innerText = answer;
+                
+                if (attempt === 3) {
+                    attempt = 0;
+                    quizButtonRocket.classList.add('hide');
+                    quizResultFailRocket.classList.remove('hide');
+                    quizResultInorrectRocket.classList.add('hide');
+                    setTimer();
+                }
+    
             } else {
                 showTestErrorPopup();
                 erorMessage.innerText = response.responseJSON.message;
@@ -1133,9 +1174,9 @@ function sendAnswersRocket(idTest) {
 
 // Save Quiz Results
 $('.quiz-button_correct-theory').click(function () {
-    trying = 0;
+    attempt = 0;
 });
 
 $('.quiz-button_correct-rocket').click(function () {
-    trying = 0;
+    attempt = 0;
 });
