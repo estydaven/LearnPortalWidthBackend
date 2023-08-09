@@ -1,21 +1,25 @@
 const router = require('express').Router();
+
 const knex = require('../db');
 
 router.put('/:id/results', async (req, res, next) => {
-    await knex('user_task_results').insert({
-        task_id: req.body.taskId,
-        user_id: req.session.user.id,
-        link: req.body.taskLink,
-        comment: req.body.taskComment,
-        screens: req.body.taskScreens,
-    })
+  await knex('user_task_results')
+    .insert({
+      user_id: req.session.user.id,
+      task_id: req.body.taskId,
+      link: req.body.link,
+      comment: req.body.comment,
+      screens: req.body.screens,
+    });
 
-    req.session.user.completed_tasks.push(Number(req.body.taskId));
+  req.session.tasks = req.session.tasks.map((task) => {
+    return task.id !== req.body.taskId ? task : { ...task, completed: true };
+  });
 
-    const { count: completed_count } = await knex('user_task_results').first(knex.raw('count(*)::int')).where('user_id', req.session.user.id);
-    const { count: count } = await knex('tasks').first(knex.raw('count(*)::int'));
-
-    res.status(200).json({ completed_count, count }); 
+  res.status(200).json({
+    completedCount: req.session.tasks.filter((task) => task.completed).length,
+    count: req.session.tasks.length,
+  });
 });
 
 module.exports = router;
