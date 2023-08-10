@@ -1038,7 +1038,7 @@ const answerCheckedSecond = {};
 $('.answer__input').each(function () {
   $(this).click(function () {
     const test = +$(this).parent().parent().parent().attr('data-test');
-    const key = +$(this).parent().parent().attr('data-question');
+    const key = +$(this).parent().parent().attr('data-question') + 1;
     const value = +$(this).val();
     if ($(this).prop('checked')) {
       if (test === 1) {

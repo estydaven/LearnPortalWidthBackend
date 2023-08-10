@@ -16,7 +16,7 @@ router.post('/:id/result', async (req, res, next) => {
   }
 
   for (const questionId in answers) {
-    const question = questions.find((question) => question.id === questionId);
+    const question = questions.find((question) => question.id === Number(questionId));
     const answer = answers[questionId].sort();
 
     const isCorrect = JSON.stringify(answer) === JSON.stringify(question.answers.sort());
