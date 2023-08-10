@@ -17,16 +17,16 @@ passLink.addEventListener('click', (event) => {
 });
 
 // Scroll to top
-$(document).ready(function () {
-  $(function () {
-    $('.tab-button_next, .quiz-button_incorrect-theory, .quiz-button_incorrect-rocket').click(function () {
-      $('body,html').animate({
-        scrollTop: 0,
-      }, 800);
-      return false;
-    });
-  });
-});
+// $(document).ready(function () {
+//   $(function () {
+//     $('.tab-button_next, .quiz-button_incorrect-theory, .quiz-button_incorrect-rocket').click(function () {
+//       $('body,html').animate({
+//         scrollTop: 0,
+//       }, 800);
+//       return false;
+//     });
+//   });
+// });
 
 // Login User
 const loginWrap = document.querySelector('.wrapper_login');
@@ -48,11 +48,11 @@ function onSubmit(form) {
   const messageForm = document.querySelector('.login-form__message');
 
   $.post('/api/users/login', { email, password })
-    .done(function ({ user }) {
+    .done(function (response) {
       showMainWrapper();
       form.reset();
       messageForm.classList.add('hide');
-      setUser(user);
+      initApp(response);
     })
     .fail(function (response) {
       messageForm.classList.remove('hide');
@@ -62,12 +62,12 @@ function onSubmit(form) {
 
 $(function () {
   $.get('/api/users/session')
-    .done(function ({ user }) {
+    .done(function (response) {
       $('.preloader__inner, .preloader').fadeOut();
 
-      if (user) {
+      if (response.user) {
         mainWrap.classList.remove('hide');
-        setUser(user);
+        initApp(response);
       } else {
         loginWrap.classList.remove('hide');
       }
@@ -75,108 +75,116 @@ $(function () {
 });
 
 // Save User
-function setUser(user) {
-  $('.user__name').text(user.name);
-  $('.cabinet-menu__name').text(user.name);
-  $('.cabinet-menu__span').text(user.email);
+function initApp(response) {
+  console.log(response);
+  $('.user__name').text(response.user.name);
+  $('.cabinet-menu__name').text(response.user.name);
+  $('.cabinet-menu__span').text(response.user.email);
 
-  if (user.avatar) {
-    $('.cabinet-menu__avatar').css('backgroundImage', `url('${user.avatar}')`);
+  if (response.user.avatar) {
+    $('.cabinet-menu__avatar').css('backgroundImage', `url('${response.user.avatar}')`);
     $('.cabinet-menu__avatar').css('backgroundSize', 'cover');
   }
 
-  const tabs = user.available_pages;
+  const tabs = response.pages;
   for (let i = 0; i < tabs.length; i++) {
-    setShowedForTab(tabs[i]);
-    setThemesProgress(tabs[i]);
+    if (tabs[i].available === true) {
+      setShowedForTab(tabs[i].id);
+      setThemesProgress(tabs[i].id);
+    }
   }
 
-  const completedCourses = user.completed_courses;
+  const completedCourses = response.courses;
   galleryBtns = completedCourses;
   for (let i = 0; i < completedCourses.length; i++) {
-    const videoBtns = $('.video__button');
-    videoBtns.each(function () {
-      const btn = $(this);
-      const id = $(this).attr('data-buttonid');
-      if (completedCourses[i] === id) {
-        setCompletedStyleBtn(btn);
-        btn.text('Скрин отправлен!');
-      }
-    });
+    if (completedCourses[i].completed === true) {
+      const videoBtns = $('.video__button');
+      videoBtns.each(function () {
+        const btn = $(this);
+        const id = parseFloat($(this).attr('data-buttonid'));
+        if (completedCourses[i].id === id) {
+          setCompletedStyleBtn(btn);
+          btn.text('Скрин отправлен!');
+        }
+      });
+    }
   }
 
   const percentVideo = (100 / videoBtns.length) * completedCourses.length;
   setVideosProgress(percentVideo);
 
-  const tasks = user.available_tasks;
+  const tasks = response.tasks;
+  let completedTasks = 0;
   for (const task of tasks) {
-    setShowedForTask(task);
-  }
-
-  setTasksProgress(user.completed_tasks.length, user.tasks_count);
-
-  const answersTheoryAttempt = Array.from(new Set(user.answers_theory_attempt))[0];
-  const answersRocketAttempt = Array.from(new Set(user.answers_rocket_attempt))[0];
-
-  console.log(answers_rocket_attempt);
-
-  if (user.answers_theory_false.length > 3 && answersTheoryAttempt === 3) {
-    $('.quiz-preview__start-theory').addClass('hide');
-    $('.quiz-preview__finished_undone-theory').removeClass('hide');
-    $('.js-btn-next').prop('disabled', true);
-  } else if (user.answers_theory_false.length > 3 && answersTheoryAttempt < 3) {
-    $('.quiz-result_incorrect-theory').removeClass('hide');
-    $('.quiz-preview').addClass('hide');
-    $('.quiz-submit-theory').addClass('hide');
-    $('.article__wrap').css('display', 'flex');
-    $('.js-btn-next').prop('disabled', true);
-  } else {
-    $('.quiz-preview__start-theory').addClass('hide');
-    $('.quiz-preview__finished_done-theory').removeClass('hide');
-    $('.js-btn-next').prop('disabled', false);
-  }
-  if (!user.answers_theory_true.length) {
-    $('.quiz-preview__start-theory').removeClass('hide');
-    $('.quiz-preview__finished_done-theory').addClass('hide');
-    $('.quiz-preview__finished_undone-theory').addClass('hide');
-    $('.js-btn-next').prop('disabled', false);
-  }
-
-  if (user.answers_rocket_false.length > 3 && answersRocketAttempt === 3) {
-    $('.quiz-preview__start-rocket').addClass('hide');
-    $('.quiz-preview__finished_undone-rocket').removeClass('hide');
-    $('.js-btn-next').prop('disabled', true);
-  } else if (user.answers_rocket_false.length > 3 && answersRocketAttempt < 3) {
-    $('.quiz-result_incorrect-rocket').removeClass('hide');
-    $('.quiz-preview').addClass('hide');
-    $('.quiz-submit-rocket').addClass('hide');
-    $('.article__wrap').css('display', 'flex');
-    $('.js-btn-next').prop('disabled', true);
-  } else {
-    $('.quiz-preview__start-rocket').addClass('hide');
-    $('.quiz-preview__finished_done-rocket').removeClass('hide');
-    $('.js-btn-next').prop('disabled', false);
-  }
-  if (!user.answers_rocket_true.length) {
-    $('.quiz-preview__start-rocket').removeClass('hide');
-    $('.quiz-preview__finished_done-rocket').addClass('hide');
-    $('.quiz-preview__finished_undone-rocket').addClass('hide');
-    $('.js-btn-next').prop('disabled', false);
+    if (task.available === true) {
+      setShowedForTask(task.id);
+    }
+    if (task.completed === true) {
+      completedTasks++;
+    }
+    setTasksProgress(completedTasks, response.tasks.length);
   }
 
   const btnFirstTask = $('.task-screen');
   const btnSecondTask = $('.button-blue_form');
 
-  if (user.completed_tasks.length === 1) {
+  if (completedTasks === 1) {
     setCompletedStyleBtn(btnFirstTask);
     btnFirstTask.text('Отправлено!');
   }
-  if (user.completed_tasks.length === 2) {
+  if (completedTasks === 2) {
     setCompletedStyleBtn(btnFirstTask);
     setCompletedStyleBtn(btnSecondTask);
     btnFirstTask.text('Отправлено!');
     btnSecondTask.text('Отправлено!');
   }
+
+  // const answersTheoryAttempt = Array.from(new Set(response.answers_theory_attempt))[0];
+  // const answersRocketAttempt = Array.from(new Set(response.answers_rocket_attempt))[0];
+
+  // if (response.answers_theory_false.length > 3 && answersTheoryAttempt === 3) {
+  //   $('.quiz-preview__start-theory').addClass('hide');
+  //   $('.quiz-preview__finished_undone-theory').removeClass('hide');
+  //   $('.js-btn-next').prop('disabled', true);
+  // } else if (response.answers_theory_false.length > 3 && answersTheoryAttempt < 3) {
+  //   $('.quiz-result_incorrect-theory').removeClass('hide');
+  //   $('.quiz-preview').addClass('hide');
+  //   $('.quiz-submit-theory').addClass('hide');
+  //   $('.article__wrap').css('display', 'flex');
+  //   $('.js-btn-next').prop('disabled', true);
+  // } else {
+  //   $('.quiz-preview__start-theory').addClass('hide');
+  //   $('.quiz-preview__finished_done-theory').removeClass('hide');
+  //   $('.js-btn-next').prop('disabled', false);
+  // }
+  // if (!response.answers_theory_true.length) {
+  //   $('.quiz-preview__start-theory').removeClass('hide');
+  //   $('.quiz-preview__finished_done-theory').addClass('hide');
+  //   $('.quiz-preview__finished_undone-theory').addClass('hide');
+  //   $('.js-btn-next').prop('disabled', false);
+  // }
+
+  // if (response.answers_rocket_false.length > 3 && answersRocketAttempt === 3) {
+  //   $('.quiz-preview__start-rocket').addClass('hide');
+  //   $('.quiz-preview__finished_undone-rocket').removeClass('hide');
+  //   $('.js-btn-next').prop('disabled', true);
+  // } else if (response.answers_rocket_false.length > 3 && answersRocketAttempt < 3) {
+  //   $('.quiz-result_incorrect-rocket').removeClass('hide');
+  //   $('.quiz-preview').addClass('hide');
+  //   $('.quiz-submit-rocket').addClass('hide');
+  //   $('.article__wrap').css('display', 'flex');
+  //   $('.js-btn-next').prop('disabled', true);
+  // } else {
+  //   $('.quiz-preview__start-rocket').addClass('hide');
+  //   $('.quiz-preview__finished_done-rocket').removeClass('hide');
+  //   $('.js-btn-next').prop('disabled', false);
+  // }
+  // if (!response.answers_rocket_true.length) {
+  //   $('.quiz-preview__start-rocket').removeClass('hide');
+  //   $('.quiz-preview__finished_done-rocket').addClass('hide');
+  //   $('.quiz-preview__finished_undone-rocket').addClass('hide');
+  //   $('.js-btn-next').prop('disabled', false);
+  // }
 }
 
 // Logout user
@@ -560,7 +568,7 @@ let convertVideosImagesResults = [];
 function previewFiles() {
   const filesTask = document.querySelector('#fileElem2').files;
   const filesVideos = document.querySelector('#fileElem').files;
-  const fileId = this.dataset.screen;
+  const fileId = Number(this.dataset.screen);
 
   function readAndPreview(file) {
     if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
@@ -1029,7 +1037,7 @@ const answerCheckedFirst = {};
 const answerCheckedSecond = {};
 $('.answer__input').each(function () {
   $(this).click(function () {
-    const test = $(this).parent().parent().parent().attr('data-test');
+    const test = +$(this).parent().parent().parent().attr('data-test');
     const key = +$(this).parent().parent().attr('data-question');
     const value = +$(this).val();
     if ($(this).prop('checked')) {
@@ -1095,6 +1103,7 @@ function sendAnswersTheory(idTest) {
       timerTime.innerText = '30:00';
     },
     error: function (response) {
+      console.log(response);
       if (response.responseJSON.incorrectCount) {
         quizResultInorrectTheory.classList.remove('hide');
         quizButtonTheory.classList.add('hide');
