@@ -24,7 +24,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   name: 'sessionId',
   cookie: {
-    domain: process.env.SESSION_SECRET,
+    domain: process.env.SESSION_DOMAIN,
   },
 }));
 

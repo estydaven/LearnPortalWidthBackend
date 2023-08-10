@@ -1,4 +1,5 @@
 /* eslint no-undef: "off" */
+/* eslint no-unused-vars: "off" */
 
 // Hide/Show Password
 const input = document.getElementById('password-input');
@@ -90,21 +91,21 @@ function setUser(user) {
     setThemesProgress(tabs[i]);
   }
 
-  const completed_courses = user.completed_courses;
-  galleryBtns = completed_courses;
-  for (let i = 0; i < completed_courses.length; i++) {
+  const completedCourses = user.completed_courses;
+  galleryBtns = completedCourses;
+  for (let i = 0; i < completedCourses.length; i++) {
     const videoBtns = $('.video__button');
     videoBtns.each(function () {
       const btn = $(this);
       const id = $(this).attr('data-buttonid');
-      if (completed_courses[i] == id) {
+      if (completedCourses[i] === id) {
         setCompletedStyleBtn(btn);
         btn.text('Скрин отправлен!');
       }
     });
   }
 
-  const percentVideo = (100 / videoBtns.length) * completed_courses.length;
+  const percentVideo = (100 / videoBtns.length) * completedCourses.length;
   setVideosProgress(percentVideo);
 
   const tasks = user.available_tasks;
@@ -114,16 +115,16 @@ function setUser(user) {
 
   setTasksProgress(user.completed_tasks.length, user.tasks_count);
 
-  const answers_theory_attempt = Array.from(new Set(user.answers_theory_attempt))[0];
-  const answers_rocket_attempt = Array.from(new Set(user.answers_rocket_attempt))[0];
+  const answersTheoryAttempt = Array.from(new Set(user.answers_theory_attempt))[0];
+  const answersRocketAttempt = Array.from(new Set(user.answers_rocket_attempt))[0];
 
   console.log(answers_rocket_attempt);
 
-  if (user.answers_theory_false.length > 3 && answers_theory_attempt == 3) {
+  if (user.answers_theory_false.length > 3 && answersTheoryAttempt === 3) {
     $('.quiz-preview__start-theory').addClass('hide');
     $('.quiz-preview__finished_undone-theory').removeClass('hide');
     $('.js-btn-next').prop('disabled', true);
-  } else if (user.answers_theory_false.length > 3 && answers_theory_attempt < 3) {
+  } else if (user.answers_theory_false.length > 3 && answersTheoryAttempt < 3) {
     $('.quiz-result_incorrect-theory').removeClass('hide');
     $('.quiz-preview').addClass('hide');
     $('.quiz-submit-theory').addClass('hide');
@@ -141,11 +142,11 @@ function setUser(user) {
     $('.js-btn-next').prop('disabled', false);
   }
 
-  if (user.answers_rocket_false.length > 3 && answers_rocket_attempt == 3) {
+  if (user.answers_rocket_false.length > 3 && answersRocketAttempt === 3) {
     $('.quiz-preview__start-rocket').addClass('hide');
     $('.quiz-preview__finished_undone-rocket').removeClass('hide');
     $('.js-btn-next').prop('disabled', true);
-  } else if (user.answers_rocket_false.length > 3 && answers_rocket_attempt < 3) {
+  } else if (user.answers_rocket_false.length > 3 && answersRocketAttempt < 3) {
     $('.quiz-result_incorrect-rocket').removeClass('hide');
     $('.quiz-preview').addClass('hide');
     $('.quiz-submit-rocket').addClass('hide');
@@ -166,11 +167,11 @@ function setUser(user) {
   const btnFirstTask = $('.task-screen');
   const btnSecondTask = $('.button-blue_form');
 
-  if (user.completed_tasks.length == 1) {
+  if (user.completed_tasks.length === 1) {
     setCompletedStyleBtn(btnFirstTask);
     btnFirstTask.text('Отправлено!');
   }
-  if (user.completed_tasks.length == 2) {
+  if (user.completed_tasks.length === 2) {
     setCompletedStyleBtn(btnFirstTask);
     setCompletedStyleBtn(btnSecondTask);
     btnFirstTask.text('Отправлено!');
@@ -359,10 +360,10 @@ function setThemesProgress(activeTab) {
     $('.stat-block__percent_two').css('color', '#E04AA8');
   }
 
-  if (percentFistTheme == 100) {
+  if (percentFistTheme === 100) {
     $('.themes-count').html('1');
   }
-  if (percentSecondTheme == 100) {
+  if (percentSecondTheme === 100) {
     $('.themes-count').html('2');
   }
 }
@@ -572,10 +573,10 @@ function previewFiles() {
           image.height = 100;
           image.title = file.name;
           image.src = reader.result;
-          if (fileId == 2) {
+          if (fileId === 2) {
             convertTasksImagesResults.push(reader.result);
           }
-          if (fileId == 1) {
+          if (fileId === 1) {
             convertVideosImagesResults.push(reader.result);
           }
         },
@@ -610,7 +611,7 @@ function onSubmitTask(formTask) {
   const btnFirstTask = $('.task-screen');
   const btnSecondTask = $('.button-blue_form');
 
-  if (taskId == 2) {
+  if (taskId === 2) {
     taskScreens = [];
   }
 
@@ -629,11 +630,11 @@ function onSubmitTask(formTask) {
       setShowedForNextTask();
       setTasksProgress(res.completed_count, res.count);
 
-      if (taskId == 1) {
+      if (taskId === 1) {
         setCompletedStyleBtn(btnFirstTask);
         btnFirstTask.text('Отправлено!');
       }
-      if (taskId == 2) {
+      if (taskId === 2) {
         setCompletedStyleBtn(btnSecondTask);
         btnSecondTask.text('Отправлено!');
       }
@@ -642,14 +643,14 @@ function onSubmitTask(formTask) {
 }
 
 // Save Tasks Progress
-function setTasksProgress(completed_count, count) {
-  const taskProgress = ((count / 100) * completed_count);
+function setTasksProgress(completedCount, count) {
+  const taskProgress = ((count / 100) * completedCount);
 
-  if (taskProgress == 0.02) {
+  if (taskProgress === 0.02) {
     $('.percent_four').html('50');
     $('.stat-block__percent_four').css('color', '#0EC1FF');
     $('.stat-line_four').css('width', '50%');
-  } else if (taskProgress == 0.04) {
+  } else if (taskProgress === 0.04) {
     $('.themes-count').html('4');
     $('.percent_four').html('100');
     $('.stat-block__percent_four').css('color', '#E04AA8');
@@ -816,7 +817,7 @@ function setVideosProgress(percentVideo) {
   if (percentVideo > 70) {
     $('.stat-block__percent_three').css('color', '#E04AA8');
   }
-  if (percentVideo == 100) {
+  if (percentVideo === 100) {
     $('.themes-count').html('3');
   }
 }
@@ -928,7 +929,7 @@ function previewFile(file) {
 let time = 1800;
 let intr;
 
-function start_timer() {
+function startTimer() {
   intr = setInterval(tick, 1000);
 }
 
@@ -936,7 +937,7 @@ function tick() {
   time = time - 1;
   const mins = Math.floor(time / 60);
   let secs = time - mins * 60;
-  if (mins == 0 && secs == 0) {
+  if (mins === 0 && secs === 0) {
     $('.popup_time').css('display', 'flex');
     clearInterval(intr);
   }
@@ -973,8 +974,8 @@ const popupTimer = document.querySelector('.popup_time');
 let attempt = 0;
 
 function startQuiz() {
-  start_timer();
-  articleWrapper.forEach((el) => el.style.display = 'flex');
+  startTimer();
+  articleWrapper.forEach((el) => { el.style.display = 'flex'; });
   qiuzPreviewWrapper.forEach((el) => el.classList.add('hide'));
 }
 
@@ -987,9 +988,9 @@ function setTimer() {
 function restartTheoryQuiz() {
   $('.tab-button_next').prop('disabled', true);
   popupTimer.classList.add('hide');
-  answers.forEach((el) => el.checked = false);
+  answers.forEach((el) => { el.checked = false; });
   setTimer();
-  start_timer();
+  startTimer();
   quizButtonTheory.classList.remove('hide');
   quizResultInorrectTheory.classList.add('hide');
   quizResultCorrectTheory.classList.add('hide');
@@ -998,9 +999,9 @@ function restartTheoryQuiz() {
 function restartRocketQuiz() {
   $('.tab-button_next').prop('disabled', true);
   popupTimer.classList.add('hide');
-  answers.forEach((el) => el.checked = false);
+  answers.forEach((el) => { el.checked = false; });
   setTimer();
-  start_timer();
+  startTimer();
   quizButtonRocket.classList.remove('hide');
   quizResultInorrectRocket.classList.add('hide');
   quizResultCorrectRocket.classList.add('hide');
@@ -1032,7 +1033,7 @@ $('.answer__input').each(function () {
     const key = +$(this).parent().parent().attr('data-question');
     const value = +$(this).val();
     if ($(this).prop('checked')) {
-      if (test == 1) {
+      if (test === 1) {
         if (!answerCheckedFirst[key]) { // тут мы смотрим, нет ли значения ключа
           answerCheckedFirst[key] = [value]; // если значения нет, то добавляем его в объект (пару ключ значение)
         } else { // в случае если у юзера уже отмечен ответ, и он решил его поменять
@@ -1046,7 +1047,7 @@ $('.answer__input').each(function () {
             answerCheckedFirst[key].push(value); // добавляем значение
           }
         }
-      } if (test == 2) {
+      } if (test === 2) {
         if (!answerCheckedSecond[key]) {
           answerCheckedSecond[key] = [value];
         } else {
@@ -1063,10 +1064,10 @@ $('.answer__input').each(function () {
       }
     }
     if (!($(this).prop('checked'))) {
-      if (test == 1) {
+      if (test === 1) {
         answerCheckedFirst[key] = answerCheckedFirst[key].filter((n) => n !== value);
       }
-      if (test == 2) {
+      if (test === 2) {
         answerCheckedSecond[key] = answerCheckedSecond[key].filter((n) => n !== value);
       }
     }
@@ -1075,7 +1076,7 @@ $('.answer__input').each(function () {
 
 // Send Quiz Results
 function sendAnswersTheory(idTest) {
-  questionsTheoryQuantity.forEach((el) => el.innerText = questionsTheory.length);
+  questionsTheoryQuantity.forEach((el) => { el.innerText = questionsTheory.length; });
   const testId = $(idTest).parent().attr('data-test');
   attempt++;
 
@@ -1120,7 +1121,7 @@ function sendAnswersTheory(idTest) {
 }
 
 function sendAnswersRocket(idTest) {
-  questionsRocketQuantity.forEach((el) => el.innerText = questionsRocket.length);
+  questionsRocketQuantity.forEach((el) => { el.innerText = questionsRocket.length; });
   const testId = $(idTest).parent().attr('data-test');
 
   $.ajax({
