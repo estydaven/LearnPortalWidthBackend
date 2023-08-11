@@ -259,6 +259,7 @@ input::-webkit-search-results-decoration { display: none; }
   width: 306px;
   height: 48px;
   border-radius: 200px;
+  margin-bottom: 15px;
   background-color: rgba(255, 255, 255, 0.1);
   border: none;
   padding: 10px 15px;
@@ -294,9 +295,6 @@ input::-webkit-search-results-decoration { display: none; }
   color: #ffffff;
   font-size: 15px;
   font-family: "suisse_intlregular";
-}
-.form__field_first {
-  margin-bottom: 15px;
 }
 .form__check {
   display: flex;

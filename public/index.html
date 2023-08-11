@@ -28,16 +28,12 @@
                     <form class="login-form" onsubmit="onSubmit(this);return false;">
                         <p class="form__header">Войти</p>
                         <div class="form__inner">
-                            <input class="form__field form__field_first" id="name" type="email" name="email"
+                            <input class="form__field" id="name" type="email" name="email"
                                 placeholder="E-mail">
                             <div class="password">
                                 <input class="form__field" id="password-input" id="pass" type="password" name="password"
                                     placeholder="Пароль">
                                 <a href="#" class="password__control"></a>
-                            </div>
-                            <div class="form__check">
-                                <input type="radio" class="form__checkbox" id="checkbox" name="checkbox" value="1">
-                                <label for="checkbox">Запомнить меня</label>
                             </div>
                             <div class="login-form__message hide"></div>
                             <button class="form__button" type="submit">Войти</button>
@@ -1339,7 +1335,7 @@
                                     <div class="article__wrap">
                                         <div class="article__quiz" data-test="1">
                                             <h3 class="subtitle-quiz">Название теста</h3>
-                                            <div class="quiz-block-theory" data-question="0">
+                                            <div class="quiz-block-theory" data-question="1">
                                                 <h3 class="quiz__title">1.	Что такое трафик? </h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb" id="rb1" value="1">
@@ -1359,7 +1355,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="1">
+                                            <div class="quiz-block-theory" data-question="2">
                                                 <h3 class="quiz__title">2. CPM - это: </h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb1" id="rb5" value="5">
@@ -1378,7 +1374,7 @@
                                                     <label for="rb8" class="answer__label">Оплата за клики</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="2">
+                                            <div class="quiz-block-theory" data-question="3">
                                                 <h3 class="quiz__title">3. Как переводится CPA?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb2" id="rb9" value="9">
@@ -1397,7 +1393,7 @@
                                                     <label for="rb12" class="answer__label">Процентное соотношение апрува</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="3">
+                                            <div class="quiz-block-theory" data-question="4">
                                                 <h3 class="quiz__title">4. CPC - это:</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb3" id="rb13" value="13">
@@ -1416,7 +1412,7 @@
                                                     <label for="rb16" class="answer__label">Оплата за действие</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="4">
+                                            <div class="quiz-block-theory" data-question="5">
                                                 <h3 class="quiz__title">5. ROI - это:</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb4" id="rb17" value="17">
@@ -1435,7 +1431,7 @@
                                                     <label for="rb20" class="answer__label">Целевое действие пользователя, за которое вебмастер получает выплату</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="5">
+                                            <div class="quiz-block-theory" data-question="6">
                                                 <h3 class="quiz__title">6. Дейтинг - это:</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb5" id="rb21" value="21">
@@ -1454,7 +1450,7 @@
                                                     <label for="rb24" class="answer__label">Уникальные пользователи, которые кликнули по объявлению</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="6">
+                                            <div class="quiz-block-theory" data-question="7">
                                                 <h3 class="quiz__title">7.	А\б тест - это: </h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb6" id="rb25" value="25">
@@ -1473,7 +1469,7 @@
                                                     <label for="rb28" class="answer__label">Абсолютное\большое тестирование для поиска лучшей партнёрки</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="7">
+                                            <div class="quiz-block-theory" data-question="8">
                                                 <h3 class="quiz__title">8. Контекстная реклама - это: </h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb7" id="rb29" value="29">
@@ -1492,7 +1488,7 @@
                                                     <label for="rb32" class="answer__label">Вид рекламы в интернете, которая привлекает внимание пользователей интригующим контентом</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="8">
+                                            <div class="quiz-block-theory" data-question="9">
                                                 <h3 class="quiz__title">9.	Клоакинг - это:</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb8" id="rb33" value="33">
@@ -1511,7 +1507,7 @@
                                                     <label for="rb36" class="answer__label">Это реклама товаров для детей</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="9">
+                                            <div class="quiz-block-theory" data-question="10">
                                                 <h3 class="quiz__title">10.	Лендинг - это:</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb9" id="rb37" value="37">
@@ -1531,7 +1527,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="10">
+                                            <div class="quiz-block-theory" data-question="11">
                                                 <h3 class="quiz__title">11.	Инсталлы - это: </h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb10" id="rb41" value="41">
@@ -1550,7 +1546,7 @@
                                                     <label for="rb44" class="answer__label">Розыгрыши, викторины, конкурсы</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="11">
+                                            <div class="quiz-block-theory" data-question="12">
                                                 <h3 class="quiz__title">12.	Что такое push-уведомления? </h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb11" id="rb45" value="45">
@@ -1569,7 +1565,7 @@
                                                     <label for="rb48" class="answer__label">Элемент интерфейса, который отображается поверх веб-страницы в браузере</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="12">
+                                            <div class="quiz-block-theory" data-question="13">
                                                 <h3 class="quiz__title">13.	Что в этом списке не является платным источников трафика в стандартном понимании?  </h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb12" id="rb49" value="49">
@@ -1588,7 +1584,7 @@
                                                     <label for="rb52" class="answer__label">SEO</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="13">
+                                            <div class="quiz-block-theory" data-question="14">
                                                 <h3 class="quiz__title">14.	Где тизерная сеть берет трафик?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb13" id="rb53" value="53">
@@ -1607,7 +1603,7 @@
                                                     <label for="rb56" class="answer__label">Сама генерирует трафик</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="14">
+                                            <div class="quiz-block-theory" data-question="15">
                                                 <h3 class="quiz__title">15.	Как посчитать % аппрува?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb14" id="rb57" value="57">
@@ -1622,7 +1618,7 @@
                                                     <label for="rb59" class="answer__label">Разделить число подтвержденных лидов на общее число лидов и умножить на 100%</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="15">
+                                            <div class="quiz-block-theory" data-question="16">
                                                 <h3 class="quiz__title">16.	Ретаргетинг представляет собой: </h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb15" id="rb60" value="60">
@@ -1637,7 +1633,7 @@
                                                     <label for="rb62" class="answer__label">Повторное сегментирование рынка, на котором работает компания и перенацеливание на целевую аудиторию с другими классифицирующими параметрами</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="16">
+                                            <div class="quiz-block-theory" data-question="17">
                                                 <h3 class="quiz__title">17.	Что такое витрина?  </h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb16" id="rb63" value="63">
@@ -1656,7 +1652,7 @@
                                                     <label for="rb66" class="answer__label">Промежуточная страница между объявлением и лендингом</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="17">
+                                            <div class="quiz-block-theory" data-question="18">
                                                 <h3 class="quiz__title">18.	Что такое фулфилмент? </h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb17" id="rb67" value="67">
@@ -1675,7 +1671,7 @@
                                                     <label for="rb70" class="answer__label">Точка конверсии, по которой деньги начисляются за прохождение онлайн-опросов или тестов</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="18">
+                                            <div class="quiz-block-theory" data-question="19">
                                                 <h3 class="quiz__title">19.	Что такое CTR?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb18" id="rb71" value="71">
@@ -1694,7 +1690,7 @@
                                                     <label for="rb74" class="answer__label">Метрика, используемая в распространенной схеме оплаты рекламных кампаний</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="19">
+                                            <div class="quiz-block-theory" data-question="20">
                                                 <h3 class="quiz__title">20.	Белый оффер - это:  </h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb19" id="rb75" value="75">
@@ -1713,7 +1709,7 @@
                                                     <label for="rb78" class="answer__label">Товары-панацеи, волшебные крема, таблетки</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="20">
+                                            <div class="quiz-block-theory" data-question="21">
                                                 <h3 class="quiz__title">21.	Что такое таргетинг?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb20" id="rb79" value="79">
@@ -1732,7 +1728,7 @@
                                                     <label for="rb82" class="answer__label">Интернет-ресурс, который позволяет просматривать чужие рекламные объявления без непосредственного контакта с ним</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="21">
+                                            <div class="quiz-block-theory" data-question="22">
                                                 <h3 class="quiz__title">22.	Как расшифровывается ЦА?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb21" id="rb83" value="83">
@@ -1751,7 +1747,7 @@
                                                     <label for="rb86" class="answer__label">Целевая аудитория</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="22">
+                                            <div class="quiz-block-theory" data-question="23">
                                                 <h3 class="quiz__title">23.	Что такое CR?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb22" id="rb87" value="87">
@@ -1770,7 +1766,7 @@
                                                     <label for="rb90" class="answer__label">”Call right now” срочное сообщения для колл-центра, чтобы операторы обработали и прозвонили лид от веба</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="23">
+                                            <div class="quiz-block-theory" data-question="24">
                                                 <h3 class="quiz__title">24.	Что включает в себя понятие БУРЖ?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb23" id="rb91" value="91">
@@ -1793,7 +1789,7 @@
                                                     <label for="rb95" class="answer__label">СНГ + ЕС + Азия</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="24">
+                                            <div class="quiz-block-theory" data-question="25">
                                                 <h3 class="quiz__title">25.	Какой модели оплаты рекламы в интернете не существует?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb24" id="rb96" value="96">
@@ -1812,7 +1808,7 @@
                                                     <label for="rb99" class="answer__label">Cost per lead</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="25">
+                                            <div class="quiz-block-theory" data-question="26">
                                                 <h3 class="quiz__title">26.	Размещение рекламы в Гугле при 2200 показах принесло 110 переходов. Какой CTR?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb25" id="rb100" value="100">
@@ -1835,7 +1831,7 @@
                                                     <label for="rb104" class="answer__label">Нельзя посчитать, потому что модель оплаты - за показы, а не клики</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-theory" data-question="26">
+                                            <div class="quiz-block-theory" data-question="27">
                                                 <h3 class="quiz__title">27.	Что такое охват?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb26" id="rb105" value="105">
@@ -2577,7 +2573,7 @@
                                     <div class="article__wrap">
                                         <div class="article__quiz" data-test="2">
                                             <h3 class="subtitle-quiz">Название теста</h3>
-                                            <div class="quiz-block-rocket" data-question="0">
+                                            <div class="quiz-block-rocket" data-question="1">
                                                 <h3 class="quiz__title">1.	Кто первый связывается с новорегом, когда у него стал подтвержденный аккаунт?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb" id="rb113" value="113">
@@ -2596,7 +2592,7 @@
                                                     <label for="rb116" class="answer__label">Отдел маркетинга</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="1">
+                                            <div class="quiz-block-rocket" data-question="2">
                                                 <h3 class="quiz__title">2. В RocketProfit есть офферы в следующих ГЕО: </h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb1" id="rb117" value="117">
@@ -2611,7 +2607,7 @@
                                                     <label for="rb119" class="answer__label">Индия, Латинская америка, Европа, СНГ , Азия</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="2">
+                                            <div class="quiz-block-rocket" data-question="3">
                                                 <h3 class="quiz__title">3. Конкуренты RocketProfit это:</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb2" id="rb120" value="120">
@@ -2626,7 +2622,7 @@
                                                     <label for="rb122" class="answer__label">Terraleads, Alfaleads, Pin UP, Lucky online</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="3">
+                                            <div class="quiz-block-rocket" data-question="4">
                                                 <h3 class="quiz__title">4. Какие есть возрастные ограничения на ниши?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb3" id="rb123" value="123">
@@ -2641,7 +2637,7 @@
                                                     <label for="rb125" class="answer__label">В RocketProfit отсутствуют возрастные ограничения при запуске оффера</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="4">
+                                            <div class="quiz-block-rocket" data-question="5">
                                                 <h3 class="quiz__title">5. Ниша “Вальгусная деформация” - это:</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb4" id="rb126" value="126">
@@ -2656,7 +2652,7 @@
                                                     <label for="rb128" class="answer__label">Это средство при болезнях суставов</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="5">
+                                            <div class="quiz-block-rocket" data-question="6">
                                                 <h3 class="quiz__title">6.	Какие источники трафика принимает RocketProfit? </h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb5" id="rb132" value="132">
@@ -2671,7 +2667,7 @@
                                                     <label for="rb134" class="answer__label">Спам, фейсбук, e-mail рассылки</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="6">
+                                            <div class="quiz-block-rocket" data-question="7">
                                                 <h3 class="quiz__title">7.	Что такое ресейл оффера? </h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb6" id="rb135" value="135">
@@ -2690,7 +2686,7 @@
                                                     <label for="rb151" class="answer__label">Это замена или скрытие страниц сайта, чтобы оффер прошёл модерацию, и реклама была запущена</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="7">
+                                            <div class="quiz-block-rocket" data-question="8">
                                                 <h3 class="quiz__title">8.	Принцип работы нашего колл-центра:</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb7" id="rb138" value="138">
@@ -2705,7 +2701,7 @@
                                                     <label for="rb140" class="answer__label">Проработка возражений, кроссейл, консультирование, апсейл</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="8">
+                                            <div class="quiz-block-rocket" data-question="9">
                                                 <h3 class="quiz__title">9.	Принимает ли RocketProfit мотивированный трафик?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb8" id="rb141" value="141">
@@ -2720,7 +2716,7 @@
                                                     <label for="rb143" class="answer__label">По согласованию с менеджером</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="9">
+                                            <div class="quiz-block-rocket" data-question="10">
                                                 <h3 class="quiz__title">10.	Какая информация необходима для обработки лида?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb9" id="rb144" value="144">
@@ -2735,7 +2731,7 @@
                                                     <label for="rb146" class="answer__label">Номер телефона и имя</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="10">
+                                            <div class="quiz-block-rocket" data-question="11">
                                                 <h3 class="quiz__title">11.	За что вебмастер получает вознаграждение в RocketProfit?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb10" id="rb147" value="147">
@@ -2754,7 +2750,7 @@
                                                     <label for="rb150" class="answer__label">За заполненную клиентом заявку</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="11">
+                                            <div class="quiz-block-rocket" data-question="12">
                                                 <h3 class="quiz__title">12.	Постбек - это:</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb11" id="rb152" value="152">
@@ -2773,7 +2769,7 @@
                                                     <label for="rb155" class="answer__label">Инструмент мониторинга, который позволяет отслеживать объявления других вебмастеров</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="12">
+                                            <div class="quiz-block-rocket" data-question="13">
                                                 <h3 class="quiz__title">13.	От каких показателей зависит ставка веба? (Выберите несколько вариантов)</h3>
                                                 <div class="answer">
                                                     <input type="checkbox" class="answer__input answer__input_checkbox" name="rb12" id="rb156" value="156">
@@ -2792,7 +2788,7 @@
                                                     <label for="rb159" class="answer__label">От объемов трафика</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="13">
+                                            <div class="quiz-block-rocket" data-question="14">
                                                 <h3 class="quiz__title">14.	Какие показатели не влияют на маржинальность?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb13" id="rb160" value="160">
@@ -2811,7 +2807,7 @@
                                                     <label for="rb163" class="answer__label">Ставка веб-мастера</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="14">
+                                            <div class="quiz-block-rocket" data-question="15">
                                                 <h3 class="quiz__title">15.	Невалидные лиды - это:</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb14" id="rb164" value="164">
@@ -2826,7 +2822,7 @@
                                                     <label for="rb166" class="answer__label">Лиды, которые не прошли валидацию со стороны КЦ</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="15">
+                                            <div class="quiz-block-rocket" data-question="16">
                                                 <h3 class="quiz__title">16.	Какие ценовые предложения у офферов есть в RocketProfit?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb15" id="rb167" value="167">
@@ -2845,7 +2841,7 @@
                                                     <label for="rb170" class="answer__label">Бесплат и рублёвые</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="16">
+                                            <div class="quiz-block-rocket" data-question="17">
                                                 <h3 class="quiz__title">17.	Что такое запрещённые регионы?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb16" id="rb171" value="171">
@@ -2864,7 +2860,7 @@
                                                     <label for="rb174" class="answer__label">Регионы, в которых нет рекламы и транспортных компаний для логистики</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="17">
+                                            <div class="quiz-block-rocket" data-question="18">
                                                 <h3 class="quiz__title">18.	Что такое форм-фактор?</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb17" id="rb175" value="175">
@@ -2883,7 +2879,7 @@
                                                     <label for="rb178" class="answer__label">Стоимость оффера</label>
                                                 </div>
                                             </div>
-                                            <div class="quiz-block-rocket" data-question="18">
+                                            <div class="quiz-block-rocket" data-question="19">
                                                 <h3 class="quiz__title">19.	Капа - это:</h3>
                                                 <div class="answer">
                                                     <input type="radio" class="answer__input answer__input_radio" name="rb18" id="rb179" value="179">
@@ -3268,7 +3264,7 @@
                         <img src="images/shot.png" class="popup__image popup__image_shot" alt="">
                         <p class="popup__title popup__title_shot">Вставь скрин о просмотре видео и получении сертификата</p>
                         <p class="popup__subtitle">Вставить можно при помощи Drag’n’Drop в это окно или с помощью кнопки ниже</p>
-                        <label class="drop-area__button" for="fileElem">Выбрать скриншот</label>
+                        <label class="drop-area__button drop-area__button_course" for="fileElem">Выбрать скриншот</label>
                         <input type="file" id="fileElem" class="drop-area__file" name="files" multiple accept="image/*" onchange="handleFiles(this.files)" data-screen="1">
                     </div>
                     <div class="gallery-files gallery-files_video"></div>
