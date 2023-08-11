@@ -12,6 +12,7 @@ exports.up = function (knex) {
     })
     .createTable('tasks', function (table) {
       table.increments('id');
+      table.integer('next_task_id').references('tasks.id').onDelete('cascade');
     })
     .createTable('courses', function (table) {
       table.increments('id');

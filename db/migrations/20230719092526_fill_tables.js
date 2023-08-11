@@ -83,7 +83,7 @@ exports.up = async function (knex) {
     { id: '4' },
   ]);
   await knex('tasks').insert([
-    { id: 1 },
+    { id: 1, next_task_id: 2 },
     { id: 2 },
   ]);
   await knex('courses').insert([
