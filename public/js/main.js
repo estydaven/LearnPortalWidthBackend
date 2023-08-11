@@ -17,16 +17,16 @@ passLink.addEventListener('click', (event) => {
 });
 
 // Scroll to top
-// $(document).ready(function () {
-//   $(function () {
-//     $('.tab-button_next, .quiz-button_incorrect-theory, .quiz-button_incorrect-rocket').click(function () {
-//       $('body,html').animate({
-//         scrollTop: 0,
-//       }, 800);
-//       return false;
-//     });
-//   });
-// });
+$(document).ready(function () {
+  $(function () {
+    $('.tab-button_next, .quiz-button_incorrect-theory, .quiz-button_incorrect-rocket').click(function () {
+      $('body, html').animate({
+        scrollTop: 0,
+      }, 800);
+      return false;
+    });
+  });
+});
 
 // Login User
 const loginWrap = document.querySelector('.wrapper_login');
@@ -76,7 +76,6 @@ $(function () {
 
 // Save User
 function initApp(response) {
-  console.log(response);
   $('.user__name').text(response.user.name);
   $('.cabinet-menu__name').text(response.user.name);
   $('.cabinet-menu__span').text(response.user.email);
@@ -95,9 +94,9 @@ function initApp(response) {
   }
 
   const courses = response.courses;
-  galleryBtns = courses;
   for (let i = 0; i < courses.length; i++) {
     if (courses[i].completed === true) {
+      galleryBtns.push(courses[i].id);
       const videoBtns = $('.video__button');
       videoBtns.each(function () {
         const btn = $(this);
@@ -581,8 +580,6 @@ function setShowedForNextTask() {
 // Get Screenshots Of Tasks And Videos
 const fileElemTask = document.querySelector('#fileElem2');
 const fileElemVideos = document.querySelector('#fileElem');
-// const btnCourse = document.querySelector('.drop-area__button_course');
-// btnCourse.addEventListener('change', previewFiles);
 fileElemTask.addEventListener('change', previewFiles);
 fileElemVideos.addEventListener('change', previewFiles);
 const convertTasksImagesResults = [];
@@ -702,8 +699,6 @@ $('.popup__close_confirm').click(function () {
 });
 
 // Send Video Id And Screenshots To Server
-const body = document.body;
-
 $('.video__button').each(function () {
   $(this).click(function () {
     convertVideosImagesResults = [];
@@ -825,7 +820,7 @@ $('.gallery-files__button_task').click(function () {
 });
 
 // Set Video Progress In Cabinet
-let galleryBtns = [];
+const galleryBtns = [];
 const videoBtns = $('.video__button');
 
 $('.gallery-files__button_video').click(function () {
@@ -956,7 +951,7 @@ function previewFile(file) {
 }
 
 // Timer
-let time = 1800;
+let time = 10;
 let intr;
 
 function startTimer() {
@@ -974,6 +969,10 @@ function tick() {
   secs = secs >= 10 ? secs : '0' + secs;
   $('.timer__time').html(mins + ':' + secs);
 }
+
+$('.popup__close_time').click(function () {
+  $('.popup_time').css('display', 'none');
+});
 
 // Quiz
 const quizButtonTheory = document.querySelector('.quiz-submit-theory');
@@ -1001,7 +1000,6 @@ const questionsRocket = document.querySelectorAll('.quiz-block-rocket');
 const erorMessage = document.querySelector('.popup__title_test');
 const answers = document.querySelectorAll('.answer__input');
 const popupTimer = document.querySelector('.popup_time');
-// let attempt = 0;
 
 function startQuiz() {
   startTimer();
@@ -1010,7 +1008,7 @@ function startQuiz() {
 }
 
 function setTimer() {
-  time = 1800;
+  time = 10;
   clearInterval(intr);
   timerTime.innerText = '30:00';
 }
@@ -1108,7 +1106,6 @@ $('.answer__input').each(function () {
 function sendAnswersTheory(idTest) {
   questionsTheoryQuantity.forEach((el) => { el.innerText = questionsTheory.length; });
   const testId = $(idTest).parent().attr('data-test');
-  // attempt++;
 
   $.ajax({
     url: `/api/tests/${testId}/result`,
@@ -1117,7 +1114,6 @@ function sendAnswersTheory(idTest) {
     contentType: 'application/json',
     data: JSON.stringify({ answers: answerCheckedFirst }),
     success: function (response) {
-      console.log(response);
       if (response.test.incorrect_count > 3) {
         quizResultInorrectTheory.classList.remove('hide');
         quizButtonTheory.classList.add('hide');
@@ -1129,7 +1125,7 @@ function sendAnswersTheory(idTest) {
         quizTextCorrectTheory.innerText = response.test.correct_count;
       }
 
-      time = 1800;
+      time = 10;
       clearInterval(intr);
       timerTime.innerText = '30:00';
     },
@@ -1151,7 +1147,6 @@ function sendAnswersRocket(idTest) {
     contentType: 'application/json',
     data: JSON.stringify({ answers: answerCheckedSecond }),
     success: function (response) {
-      console.log(response);
       if (response.test.incorrect_count > 3) {
         quizResultInorrectRocket.classList.remove('hide');
         quizButtonRocket.classList.add('hide');
@@ -1163,7 +1158,7 @@ function sendAnswersRocket(idTest) {
         quizTextCorrectRocket.innerText = response.test.correct_count;
       }
 
-      time = 1800;
+      time = 10;
       clearInterval(intr);
       timerTime.innerText = '30:00';
     },
@@ -1173,12 +1168,3 @@ function sendAnswersRocket(idTest) {
     },
   });
 }
-
-// Save Quiz Results
-// $('.quiz-button_correct-theory').click(function () {
-//   attempt = 0;
-// });
-
-// $('.quiz-button_correct-rocket').click(function () {
-//   attempt = 0;
-// });

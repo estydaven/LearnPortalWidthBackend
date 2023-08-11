@@ -18,11 +18,13 @@ router.put('/:id/results', async (req, res, next) => {
       screens: req.body.screens,
     });
 
-  await knex('available_tasks')
-    .insert({
-      user_id: req.session.user.id,
-      task_id: task.next_task_id,
-    });
+  if (task.next_task_id) {
+    await knex('available_tasks')
+      .insert({
+        user_id: req.session.user.id,
+        task_id: task.next_task_id,
+      });
+  }
 
   req.session.tasks = req.session.tasks.map((t) => {
     if (t.id === task.id) {
