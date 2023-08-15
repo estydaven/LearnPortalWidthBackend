@@ -76,6 +76,12 @@ $(function () {
 
 // Save User
 function initApp(response) {
+  saveUserEmail(response.user.email);
+  const userStorageEmail = localStorage.getItem('user-email');
+  if (userStorageEmail !== response.user.email) {
+    saveActiveTab(1.1);
+  }
+
   $('.user__name').text(response.user.name);
   $('.cabinet-menu__name').text(response.user.name);
   $('.cabinet-menu__span').text(response.user.email);
@@ -296,6 +302,10 @@ function saveActiveTab(tabId) {
   window.localStorage.setItem('active-tab', tabId);
 }
 
+function saveUserEmail(email) {
+  window.localStorage.setItem('user-email', email);
+}
+
 function loadActiveTab() {
   const activeTab = localStorage.getItem('active-tab') || '1.1';
   openTab(activeTab);
@@ -324,9 +334,12 @@ function openTab(tabId) {
 }
 
 $('ul.menu li[data-tab]').each(function () {
-  $(this).click(function () {
-    saveActiveTab($(this).attr('data-tab'));
-  });
+  if ($(this).hasClass('showed')) {
+    $(this).click(function () {
+      console.log($(this));
+      saveActiveTab($(this).attr('data-tab'));
+    });
+  }
 });
 
 $(document).ready(() => {
@@ -526,21 +539,25 @@ $('.user').on('click', function () {
   $('.private-cabinet').removeClass('hide');
   $('.cabinet-menu').removeClass('hide');
   li.removeClass('active');
+
+  if (li.hasClass('active') && !($('.private-cabinet').hasClass('hide'))) {
+    console.log('1');
+  }
 });
 
 function hidePrivatCabinet() {
-  const activeTab = localStorage.getItem('active-tab') || '1.1';
-  const li = $(`ul.tab-content li[data-tab="${activeTab}"]`);
+  // const activeTab = localStorage.getItem('active-tab') || '1.1';
+  // const li = $(`ul.tab-content li[data-tab="${activeTab}"]`);
 
   $('.private-cabinet').addClass('hide');
   $('.cabinet-menu').addClass('hide');
   $('.private-cabinet').addClass('hide');
   $('.cabinet-menu').addClass('hide');
-  if (!li.hasClass('active')) {
-    li.addClass('active');
-  } else {
-    li.removeClass('active');
-  }
+  // if (!li.hasClass('active')) {
+  //   li.addClass('active');
+  // } else {
+  //   li.removeClass('active');
+  // }
 }
 
 // Switching Tasks
