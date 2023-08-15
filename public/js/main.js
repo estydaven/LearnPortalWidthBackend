@@ -256,15 +256,13 @@ function setUserAvatar(avatar) {
 // Tabs Menu
 $('ul.menu button').each(function () {
   $(this).click(function (e) {
-    if ($(this).parent().hasClass('showed')) {
-      hidePrivatCabinet();
-    }
     hideTaskContent();
     const li = $(this).parent();
 
     if (!(li.hasClass('showed'))) {
       $('.popup_access').css('display', 'flex');
     } else {
+      hidePrivatCabinet();
       e.stopPropagation();
       const tab = li.attr('data-tab');
 
@@ -538,7 +536,11 @@ function hidePrivatCabinet() {
   $('.cabinet-menu').addClass('hide');
   $('.private-cabinet').addClass('hide');
   $('.cabinet-menu').addClass('hide');
-  li.addClass('active');
+  if (!li.hasClass('active')) {
+    li.addClass('active');
+  } else {
+    li.removeClass('active');
+  }
 }
 
 // Switching Tasks
