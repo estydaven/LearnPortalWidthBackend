@@ -19,7 +19,7 @@ passLink.addEventListener('click', (event) => {
 // Scroll to top
 $(document).ready(function () {
   $(function () {
-    $('.tab-button_next, .quiz-button_incorrect-theory, .quiz-button_incorrect-rocket').click(function () {
+    $('.tab-button_next, .tab-button_prev, .quiz-button_incorrect-theory, .quiz-button_incorrect-rocket').click(function () {
       $('body, html').animate({
         scrollTop: 0,
       }, 800);
@@ -256,7 +256,9 @@ function setUserAvatar(avatar) {
 // Tabs Menu
 $('ul.menu button').each(function () {
   $(this).click(function (e) {
-    hidePrivatCabinet();
+    if ($(this).parent().hasClass('showed')) {
+      hidePrivatCabinet();
+    }
     hideTaskContent();
     const li = $(this).parent();
 
@@ -671,13 +673,13 @@ function onSubmitTask(formTask) {
 
 // Save Tasks Progress
 function setTasksProgress(completedCount, count) {
-  const taskProgress = ((count / 100) * completedCount);
+  const taskProgress = ((completedCount / count) * 100);
 
-  if (taskProgress === 0.02) {
+  if (taskProgress === 50) {
     $('.percent_four').html('50');
     $('.stat-block__percent_four').css('color', '#0EC1FF');
     $('.stat-line_four').css('width', '50%');
-  } else if (taskProgress === 0.04) {
+  } else if (taskProgress === 100) {
     $('.themes-count').html('4');
     $('.percent_four').html('100');
     $('.stat-block__percent_four').css('color', '#E04AA8');
