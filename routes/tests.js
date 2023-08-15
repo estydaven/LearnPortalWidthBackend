@@ -3,9 +3,20 @@ const router = require('express').Router();
 const sess = require('../utils/session');
 const knex = require('../db');
 
+const MAX_ATTEMPTS = 3;
+
 router.post('/:id/result', async (req, res, next) => {
   const testId = Number(req.params.id);
   const userId = req.session.user.id;
+
+  const test = await knex('completed_tests')
+    .first('attempts')
+    .where('user_id', userId)
+    .where('test_id', testId);
+
+  if (test && test.attempts + 1 > MAX_ATTEMPTS) {
+    return res.status(400).json({ message: `Максимальное число попыток: ${MAX_ATTEMPTS}!` });
+  }
 
   const questions = await knex('questions').select('id', 'answers').where('test_id', testId);
 
