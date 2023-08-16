@@ -17,9 +17,21 @@ passLink.addEventListener('click', (event) => {
 });
 
 // Scroll to top
+const upButton = document.querySelector('.up');
+
+function scrollUp() {
+  if (window.pageYOffset > 50) {
+    upButton.style.display = 'flex';
+  } else {
+    upButton.style.display = 'none';
+  }
+}
+
+window.addEventListener('scroll', scrollUp);
+
 $(document).ready(function () {
   $(function () {
-    $('.tab-button_next, .tab-button_prev, .quiz-button_incorrect-theory, .quiz-button_incorrect-rocket').click(function () {
+    $('.tab-button_next, .tab-button_prev, .up, .quiz-button_incorrect-theory, .quiz-button_incorrect-rocket').click(function () {
       $('body, html').animate({
         scrollTop: 0,
       }, 800);

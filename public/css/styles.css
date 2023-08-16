@@ -1714,3 +1714,28 @@ input::-webkit-search-results-decoration { display: none; }
 .drop-area.open .gallery-files__btn_task {
   margin-top: 50px;
 }
+
+/* Up button styles */
+.up {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 20px;
+    right: 250px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #10bacf;
+    transition: all .3s linear;
+    cursor: pointer;
+}
+.up:hover {
+    transform: scale(.9);
+    opacity: .8;
+}
+.up__icon {
+    fill: #ffffff;
+    width: 30px;
+    height: 30px;
+}
