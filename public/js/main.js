@@ -53,6 +53,7 @@ function onSubmit(form) {
       form.reset();
       messageForm.classList.add('hide');
       initApp(response);
+      saveUserEmail(response.user.email);
     })
     .fail(function (response) {
       messageForm.classList.remove('hide');
@@ -73,14 +74,13 @@ $(function () {
       }
     });
 });
-
 // Save User
 function initApp(response) {
-  saveUserEmail(response.user.email);
   const userStorageEmail = localStorage.getItem('user-email');
   if (userStorageEmail !== response.user.email) {
     saveActiveTab(1.1);
   }
+  loadActiveTab();
 
   $('.user__name').text(response.user.name);
   $('.cabinet-menu__name').text(response.user.name);
@@ -98,6 +98,7 @@ function initApp(response) {
       setThemesProgress(tabs[i].id);
     }
   }
+  updateProgress('one', themesOneCount.length, themesOne.length);
 
   const courses = response.courses;
   for (let i = 0; i < courses.length; i++) {
@@ -166,6 +167,7 @@ function initApp(response) {
         $('.article__wrap').css('display', 'flex');
         $('.quiz-text_fail-theory').html(test.incorrect_count);
         $('.quiz-questions-theory').html(quantityTheoryTest);
+        answersLabel.forEach((el) => { el.classList.add('no-check'); });
         $('.js-btn-next').prop('disabled', true);
       } else {
         $('.quiz-preview__start-theory').addClass('hide');
@@ -194,6 +196,7 @@ function initApp(response) {
         $('.article__wrap').css('display', 'flex');
         $('.quiz-text_fail-rocket').html(test.incorrect_count);
         $('.quiz-questions-rocket').html(quantityRocketTest);
+        answersLabel.forEach((el) => { el.classList.add('no-check'); });
         $('.js-btn-next').prop('disabled', true);
       } else {
         $('.quiz-preview__start-rocket').addClass('hide');
@@ -336,14 +339,9 @@ function openTab(tabId) {
 $('ul.menu li[data-tab]').each(function () {
   if ($(this).hasClass('showed')) {
     $(this).click(function () {
-      console.log($(this));
       saveActiveTab($(this).attr('data-tab'));
     });
   }
-});
-
-$(document).ready(() => {
-  loadActiveTab();
 });
 
 // Save Themes Progress In Cabinet
@@ -369,43 +367,42 @@ function setThemesProgress(activeTab) {
   if (activeTab.includes('2.')) {
     themesTwoCount.push(activeTab);
   }
+}
 
-  const percentFistTheme = 100 / themesOne.length * themesOneCount.length;
-  const percentSecondTheme = 100 / themesTwo.length * themesTwoCount.length;
+function updateProgressLine(sourceLine, count, total) {
+  const percent = 100 * count / total;
+  const statblock = document.querySelector(`.stat-line_${sourceLine}`);
+  $(statblock).css('width', `${percent.toFixed()}%`);
+}
 
-  if (+percentFistTheme <= 100) {
-    $('.percent_one').html(`${percentFistTheme.toFixed()}`);
-  } else {
-    $('.percent_one').html('100');
+function updateProgressCount(sourcePercent, count, total) {
+  const percent = 100 * count / total;
+  const percentBlock = document.querySelector(`.percent_${sourcePercent}`);
+  $(percentBlock).html(`${percent.toFixed()}`);
+}
+
+function updateProgressColor(sourceColor, count, total) {
+  const percent = 100 * count / total;
+  const percentColor = document.querySelector(`.stat-block__percent_${sourceColor}`);
+  if (percent.toFixed() > 20 && percent.toFixed() < 70) {
+    $(percentColor).css('color', '#0EC1FF');
+  } else if (percent.toFixed() > 70) {
+    $(percentColor).css('color', '#E04AA8');
   }
+}
 
-  if (+percentSecondTheme <= 100) {
-    $('.percent_two').html(`${percentSecondTheme.toFixed()}`);
-  } else {
-    $('.percent_two').html('100');
-  }
+function updateProgress(target, count, total) {
+  updateProgressLine(target, count, total);
+  updateProgressCount(target, count, total);
+  updateProgressColor(target, count, total);
+  updateThemeCount();
+}
 
-  $('.stat-line_one').css('width', `${percentFistTheme.toFixed()}%`);
-  $('.stat-line_two').css('width', `${percentSecondTheme.toFixed()}%`);
-
-  if (percentFistTheme > 20 && percentFistTheme < 70) {
-    $('.stat-block__percent_one').css('color', '#0EC1FF');
-  } else if (percentFistTheme > 70) {
-    $('.stat-block__percent_one').css('color', '#E04AA8');
-  }
-
-  if (percentSecondTheme > 20 && percentSecondTheme < 70) {
-    $('.stat-block__percent_two').css('color', '#0EC1FF');
-  } else if (percentSecondTheme > 70) {
-    $('.stat-block__percent_two').css('color', '#E04AA8');
-  }
-
-  if (percentFistTheme === 100) {
-    $('.themes-count').html('1');
-  }
-  if (percentSecondTheme === 100) {
-    $('.themes-count').html('2');
-  }
+function updateThemeCount() {
+  const percents = document.querySelectorAll('.percent');
+  const themesCount = jQuery.map(percents, (el) => Number(el.innerHTML)).filter((value) => value === 100).length;
+  const themesText = document.querySelector('.themes-count');
+  themesText.innerHTML = themesCount;
 }
 
 // Prev/Next Buttons
@@ -426,6 +423,7 @@ $(document).ready(() => {
       loadActiveTab();
     }
     setThemesProgress(activeTab);
+    updateProgress('one', themesOneCount.length, themesOne.length);
 
     $('.tab-content__item_test.active').each(function () {
       $('.tab-buttons').css('display', 'none');
@@ -539,25 +537,13 @@ $('.user').on('click', function () {
   $('.private-cabinet').removeClass('hide');
   $('.cabinet-menu').removeClass('hide');
   li.removeClass('active');
-
-  if (li.hasClass('active') && !($('.private-cabinet').hasClass('hide'))) {
-    console.log('1');
-  }
 });
 
 function hidePrivatCabinet() {
-  // const activeTab = localStorage.getItem('active-tab') || '1.1';
-  // const li = $(`ul.tab-content li[data-tab="${activeTab}"]`);
-
   $('.private-cabinet').addClass('hide');
   $('.cabinet-menu').addClass('hide');
   $('.private-cabinet').addClass('hide');
   $('.cabinet-menu').addClass('hide');
-  // if (!li.hasClass('active')) {
-  //   li.addClass('active');
-  // } else {
-  //   li.removeClass('active');
-  // }
 }
 
 // Switching Tasks
@@ -676,7 +662,7 @@ function onSubmitTask(formTask) {
       closepopupShot();
       setShowedForTask();
       setShowedForNextTask();
-      setTasksProgress(res.completed_count, res.count);
+      setTasksProgress(res.completedCount, res.count);
 
       if (taskId === 1) {
         setCompletedStyleBtn(btnFirstTask);
@@ -692,18 +678,7 @@ function onSubmitTask(formTask) {
 
 // Save Tasks Progress
 function setTasksProgress(completedCount, count) {
-  const taskProgress = ((completedCount / count) * 100);
-
-  if (taskProgress === 50) {
-    $('.percent_four').html('50');
-    $('.stat-block__percent_four').css('color', '#0EC1FF');
-    $('.stat-line_four').css('width', '50%');
-  } else if (taskProgress === 100) {
-    $('.themes-count').html('4');
-    $('.percent_four').html('100');
-    $('.stat-block__percent_four').css('color', '#E04AA8');
-    $('.stat-line_four').css('width', '100%');
-  }
+  updateProgress('four', completedCount, count);
 }
 
 // Hide/Show Confirm Sending Popup
@@ -854,18 +829,7 @@ $('.gallery-files__button_video').click(function () {
 });
 
 function setVideosProgress(percentVideo) {
-  $('.percent_three').html(`${percentVideo.toFixed()}`);
-  $('.stat-line_three').css('width', `${percentVideo.toFixed()}%`);
-
-  if (percentVideo > 20 && percentVideo < 70) {
-    $('.stat-block__percent_three').css('color', '#0EC1FF');
-  }
-  if (percentVideo > 70) {
-    $('.stat-block__percent_three').css('color', '#E04AA8');
-  }
-  if (percentVideo === 100) {
-    $('.themes-count').html('3');
-  }
+  updateProgress('three', galleryBtns.length, videoBtns.length);
 }
 
 // ************************ Drag and drop ***************** //
@@ -972,7 +936,7 @@ function previewFile(file) {
 }
 
 // Timer
-let time = 10;
+let time = 1800;
 let intr;
 
 function startTimer() {
@@ -1020,6 +984,7 @@ const questionsTheory = document.querySelectorAll('.quiz-block-theory');
 const questionsRocket = document.querySelectorAll('.quiz-block-rocket');
 const erorMessage = document.querySelector('.popup__title_test');
 const answers = document.querySelectorAll('.answer__input');
+const answersLabel = document.querySelectorAll('.answer__label');
 const popupTimer = document.querySelector('.popup_time');
 
 function startQuiz() {
@@ -1029,7 +994,7 @@ function startQuiz() {
 }
 
 function setTimer() {
-  time = 10;
+  time = 1800;
   clearInterval(intr);
   timerTime.innerText = '30:00';
 }
@@ -1038,6 +1003,7 @@ function restartTheoryQuiz() {
   $('.tab-button_next').prop('disabled', true);
   popupTimer.classList.add('hide');
   answers.forEach((el) => { el.checked = false; });
+  answersLabel.forEach((el) => { el.classList.remove('no-check'); });
   setTimer();
   startTimer();
   quizButtonTheory.classList.remove('hide');
@@ -1049,6 +1015,7 @@ function restartRocketQuiz() {
   $('.tab-button_next').prop('disabled', true);
   popupTimer.classList.add('hide');
   answers.forEach((el) => { el.checked = false; });
+  answersLabel.forEach((el) => { el.classList.remove('no-check'); });
   setTimer();
   startTimer();
   quizButtonRocket.classList.remove('hide');
@@ -1068,14 +1035,15 @@ function showTestErrorPopup() {
 
 function closeTestErrorPopup() {
   $('.popup_test').css('display', 'none');
+  answersLabel.forEach((el) => { el.classList.remove('no-check'); });
 }
 
 $('.popup__close_test').click(function () {
   closeTestErrorPopup();
 });
 
-const answerCheckedFirst = {};
-const answerCheckedSecond = {};
+let answerCheckedFirst = {};
+let answerCheckedSecond = {};
 $('.answer__input').each(function () {
   $(this).click(function () {
     const test = +$(this).parent().parent().parent().attr('data-test');
@@ -1127,6 +1095,7 @@ $('.answer__input').each(function () {
 function sendAnswersTheory(idTest) {
   questionsTheoryQuantity.forEach((el) => { el.innerText = questionsTheory.length; });
   const testId = $(idTest).parent().attr('data-test');
+  answersLabel.forEach((el) => { el.classList.add('no-check'); });
 
   $.ajax({
     url: `/api/tests/${testId}/result`,
@@ -1135,6 +1104,7 @@ function sendAnswersTheory(idTest) {
     contentType: 'application/json',
     data: JSON.stringify({ answers: answerCheckedFirst }),
     success: function (response) {
+      answerCheckedFirst = {};
       if (response.test.incorrect_count > 3) {
         quizResultInorrectTheory.classList.remove('hide');
         quizButtonTheory.classList.add('hide');
@@ -1145,8 +1115,13 @@ function sendAnswersTheory(idTest) {
         quizButtonTheory.classList.add('hide');
         quizTextCorrectTheory.innerText = response.test.correct_count;
       }
+      if (response.test.attempts >= 3) {
+        quizResultFailTheory.classList.remove('hide');
+        quizButtonTheory.classList.add('hide');
+        quizResultInorrectTheory.classList.add('hide');
+      }
 
-      time = 10;
+      time = 1800;
       clearInterval(intr);
       timerTime.innerText = '30:00';
     },
@@ -1160,6 +1135,7 @@ function sendAnswersTheory(idTest) {
 function sendAnswersRocket(idTest) {
   questionsRocketQuantity.forEach((el) => { el.innerText = questionsRocket.length; });
   const testId = $(idTest).parent().attr('data-test');
+  answersLabel.forEach((el) => { el.classList.add('no-check'); });
 
   $.ajax({
     url: `/api/tests/${testId}/result`,
@@ -1168,6 +1144,7 @@ function sendAnswersRocket(idTest) {
     contentType: 'application/json',
     data: JSON.stringify({ answers: answerCheckedSecond }),
     success: function (response) {
+      answerCheckedSecond = {};
       if (response.test.incorrect_count > 3) {
         quizResultInorrectRocket.classList.remove('hide');
         quizButtonRocket.classList.add('hide');
@@ -1178,8 +1155,13 @@ function sendAnswersRocket(idTest) {
         quizButtonRocket.classList.add('hide');
         quizTextCorrectRocket.innerText = response.test.correct_count;
       }
+      if (response.test.attempts >= 3) {
+        quizResultFailRocket.classList.remove('hide');
+        quizButtonRocket.classList.add('hide');
+        quizResultInorrectRocket.classList.add('hide');
+      }
 
-      time = 10;
+      time = 1800;
       clearInterval(intr);
       timerTime.innerText = '30:00';
     },

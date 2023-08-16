@@ -1120,6 +1120,9 @@ input::-webkit-search-results-decoration { display: none; }
 .answer__input:checked + .answer__label:after {
     opacity: 1;
 }
+.answer__label.no-check {
+    pointer-events: none;
+}
 .timer {
   width: 270px;
   background-color: #EDF3FC;
