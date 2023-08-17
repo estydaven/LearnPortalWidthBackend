@@ -111,6 +111,7 @@ function initApp(response) {
     }
   }
   updateProgress('one', themesOneCount.length, themesOne.length);
+  updateProgress('two', themesTwoCount.length, themesTwo.length);
 
   const courses = response.courses;
   for (let i = 0; i < courses.length; i++) {
@@ -373,10 +374,10 @@ $('ul.menu li[data-tab]').each(function () {
 });
 
 function setThemesProgress(activeTab) {
-  if (activeTab.includes('1.')) {
+  if (activeTab.includes('1.') && themesOneCount.length < themesOne.length) {
     themesOneCount.push(activeTab);
   }
-  if (activeTab.includes('2.')) {
+  if (activeTab.includes('2.') && themesTwoCount.length < themesTwo.length) {
     themesTwoCount.push(activeTab);
   }
 }
@@ -436,6 +437,7 @@ $(document).ready(() => {
     }
     setThemesProgress(activeTab);
     updateProgress('one', themesOneCount.length, themesOne.length);
+    updateProgress('two', themesTwoCount.length, themesTwo.length);
 
     $('.tab-content__item_test.active').each(function () {
       $('.tab-buttons').css('display', 'none');
@@ -552,10 +554,14 @@ $('.user').on('click', function () {
 });
 
 function hidePrivatCabinet() {
+  const activeTab = localStorage.getItem('active-tab') || '1.1';
+  const li = $(`ul.tab-content li[data-tab="${activeTab}"]`);
+
   $('.private-cabinet').addClass('hide');
   $('.cabinet-menu').addClass('hide');
   $('.private-cabinet').addClass('hide');
   $('.cabinet-menu').addClass('hide');
+  li.addClass('active');
 }
 
 // Switching Tasks

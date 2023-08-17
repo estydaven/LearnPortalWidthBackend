@@ -755,6 +755,9 @@ input::-webkit-search-results-decoration { display: none; }
 .blue {
   color: #03A9F4;
 }
+.word-wrap {
+    word-break: break-all;
+}
 .article img {
   display: block;
   border-radius: 15px;
@@ -1722,7 +1725,7 @@ input::-webkit-search-results-decoration { display: none; }
     justify-content: center;
     position: fixed;
     bottom: 20px;
-    right: 250px;
+    right: 50px;
     width: 50px;
     height: 50px;
     border-radius: 50%;
