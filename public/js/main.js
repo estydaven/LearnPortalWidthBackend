@@ -435,7 +435,9 @@ $(document).ready(() => {
       saveActiveTab(nextTab);
       loadActiveTab();
     }
-    setThemesProgress(activeTab);
+    if (!$('ul.menu li.active').next().hasClass('showed')) {
+      setThemesProgress(nextTab);
+    }
     updateProgress('one', themesOneCount.length, themesOne.length);
     updateProgress('two', themesTwoCount.length, themesTwo.length);
 
