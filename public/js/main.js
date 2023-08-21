@@ -453,6 +453,10 @@ $(document).ready(() => {
     hidePrivatCabinet();
     hideTaskContent();
 
+    if (!$('ul.menu li.active').next().hasClass('showed')) {
+      setThemesProgress(nextTab);
+    }
+
     if (prevTab) {
       $('ul.menu li.active').removeClass('active');
       $('ul.menu li.open').removeClass('open');
