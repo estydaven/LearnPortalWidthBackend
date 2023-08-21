@@ -172,28 +172,28 @@ function initApp(response) {
       if (test.incorrect_count > 3 && test.attempts === 3) {
         $('.quiz-preview__start-theory').addClass('hide');
         $('.quiz-preview__finished_undone-theory').removeClass('hide');
-        $('.js-btn-next').prop('disabled', true);
+        $('.tab-button_next').prop('disabled', true);
       } else if (test.incorrect_count > 3 && test.attempts < 3) {
         $('.quiz-result_incorrect-theory').removeClass('hide');
         $('.quiz-preview').addClass('hide');
         $('.quiz-submit-theory').addClass('hide');
         $('.article__wrap').css('display', 'flex');
-        $('.quiz-text_fail-theory').html(test.incorrect_count);
+        $('.quiz-text_fail-theory').html(test.correct_count);
         $('.quiz-questions-theory').html(quantityTheoryTest);
         answersLabel.forEach((el) => { el.classList.add('no-check'); });
-        $('.js-btn-next').prop('disabled', true);
+        $('.tab-button_next').prop('disabled', true);
       } else {
         $('.quiz-preview__start-theory').addClass('hide');
         $('.quiz-preview__finished_done-theory').removeClass('hide');
         $('.quiz-text_correct-theory').html(test.correct_count);
         $('.quiz-questions-theory').html(quantityTheoryTest);
-        $('.js-btn-next').prop('disabled', false);
+        $('.tab-button_next').prop('disabled', false);
       }
       if (!test.correct_count) {
         $('.quiz-preview__start-theory').removeClass('hide');
         $('.quiz-preview__finished_done-theory').addClass('hide');
         $('.quiz-preview__finished_undone-theory').addClass('hide');
-        $('.js-btn-next').prop('disabled', false);
+        $('.tab-button_next').prop('disabled', false);
       }
     }
     if (test.id === 2) {
@@ -201,28 +201,28 @@ function initApp(response) {
       if (test.incorrect_count > 3 && test.attempts === 3) {
         $('.quiz-preview__start-rocket').addClass('hide');
         $('.quiz-preview__finished_undone-rocket').removeClass('hide');
-        $('.js-btn-next').prop('disabled', true);
+        $('.tab-button_next').prop('disabled', true);
       } else if (test.incorrect_count > 3 && test.attempts < 3) {
         $('.quiz-result_incorrect-rocket').removeClass('hide');
         $('.quiz-preview').addClass('hide');
         $('.quiz-submit-rocket').addClass('hide');
         $('.article__wrap').css('display', 'flex');
-        $('.quiz-text_fail-rocket').html(test.incorrect_count);
+        $('.quiz-text_fail-rocket').html(test.correct_count);
         $('.quiz-questions-rocket').html(quantityRocketTest);
         answersLabel.forEach((el) => { el.classList.add('no-check'); });
-        $('.js-btn-next').prop('disabled', true);
+        $('.tab-button_next').prop('disabled', true);
       } else {
         $('.quiz-preview__start-rocket').addClass('hide');
         $('.quiz-preview__finished_done-rocket').removeClass('hide');
         $('.quiz-text_correct-rocket').html(test.correct_count);
         $('.quiz-questions-rocket').html(quantityRocketTest);
-        $('.js-btn-next').prop('disabled', false);
+        $('.tab-button_next').prop('disabled', false);
       }
       if (!test.correct_count) {
         $('.quiz-preview__start-rocket').removeClass('hide');
         $('.quiz-preview__finished_done-rocket').addClass('hide');
         $('.quiz-preview__finished_undone-rocket').addClass('hide');
-        $('.js-btn-next').prop('disabled', false);
+        $('.tab-button_next').prop('disabled', false);
       }
     }
   }
@@ -358,8 +358,8 @@ $('ul.menu li[data-tab]').each(function () {
 });
 
 // Save Themes Progress In Cabinet
-const themesOneCount = [];
-const themesTwoCount = [];
+let themesOneCount = [];
+let themesTwoCount = [];
 const themesOne = [];
 const themesTwo = [];
 
@@ -376,9 +376,13 @@ $('ul.menu li[data-tab]').each(function () {
 function setThemesProgress(activeTab) {
   if (activeTab.includes('1.') && themesOneCount.length < themesOne.length) {
     themesOneCount.push(activeTab);
+    const uniquethemesOneCount = Array.from(new Set(themesOneCount));
+    themesOneCount = uniquethemesOneCount;
   }
   if (activeTab.includes('2.') && themesTwoCount.length < themesTwo.length) {
     themesTwoCount.push(activeTab);
+    const uniquethemesTwoCount = Array.from(new Set(themesTwoCount));
+    themesTwoCount = uniquethemesTwoCount;
   }
 }
 
@@ -435,9 +439,8 @@ $(document).ready(() => {
       saveActiveTab(nextTab);
       loadActiveTab();
     }
-    if (!$('ul.menu li.active').next().hasClass('showed')) {
-      setThemesProgress(nextTab);
-    }
+
+    setThemesProgress(nextTab);
     updateProgress('one', themesOneCount.length, themesOne.length);
     updateProgress('two', themesTwoCount.length, themesTwo.length);
 
@@ -452,10 +455,6 @@ $(document).ready(() => {
     const prevTab = getPrevTab(activeTab);
     hidePrivatCabinet();
     hideTaskContent();
-
-    if (!$('ul.menu li.active').next().hasClass('showed')) {
-      setThemesProgress(nextTab);
-    }
 
     if (prevTab) {
       $('ul.menu li.active').removeClass('active');
@@ -849,7 +848,9 @@ $('.gallery-files__button_video').click(function () {
 
   galleryBtns.push($('.gallery-files__button_video').attr('data-senddata'));
   const percentVideo = 100 / videoBtns.length * galleryBtns.length;
-  setVideosProgress(percentVideo);
+  if (percentVideo < 100) {
+    setVideosProgress(percentVideo);
+  }
 });
 
 function setVideosProgress(percentVideo) {
@@ -1010,6 +1011,8 @@ const erorMessage = document.querySelector('.popup__title_test');
 const answers = document.querySelectorAll('.answer__input');
 const answersLabel = document.querySelectorAll('.answer__label');
 const popupTimer = document.querySelector('.popup_time');
+const nextButtonTheory = document.querySelector('.quiz-button_correct-theory');
+const nextButtonRocket = document.querySelector('.quiz-button_correct-rocket');
 
 function startQuiz() {
   startTimer();
@@ -1139,10 +1142,16 @@ function sendAnswersTheory(idTest) {
         quizButtonTheory.classList.add('hide');
         quizTextCorrectTheory.innerText = response.test.correct_count;
       }
-      if (response.test.attempts >= 3) {
+      if (response.test.attempts >= 3 && response.test.incorrect_count > 3) {
         quizResultFailTheory.classList.remove('hide');
         quizButtonTheory.classList.add('hide');
         quizResultInorrectTheory.classList.add('hide');
+      }
+      if (response.test.attempts === 3 && response.test.incorrect_count <= 3) {
+        quizResultCorrectTheory.classList.remove('hide');
+        quizButtonTheory.classList.add('hide');
+        quizTextCorrectTheory.innerText = response.test.correct_count;
+        nextButtonTheory.disabled = false;
       }
 
       time = 1800;
@@ -1179,10 +1188,16 @@ function sendAnswersRocket(idTest) {
         quizButtonRocket.classList.add('hide');
         quizTextCorrectRocket.innerText = response.test.correct_count;
       }
-      if (response.test.attempts >= 3) {
+      if (response.test.attempts >= 3 && response.test.incorrect_count > 3) {
         quizResultFailRocket.classList.remove('hide');
         quizButtonRocket.classList.add('hide');
         quizResultInorrectRocket.classList.add('hide');
+      }
+      if (response.test.attempts === 3 && response.test.incorrect_count <= 3) {
+        quizResultCorrectRocket.classList.remove('hide');
+        quizButtonRocket.classList.add('hide');
+        quizTextCorrectRocket.innerText = response.test.correct_count;
+        nextButtonRocket.disabled = false;
       }
 
       time = 1800;
