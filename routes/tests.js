@@ -22,9 +22,10 @@ router.post('/:id/result', async (req, res, next) => {
 
   const answers = req.body.answers;
 
-  if (Object.keys(answers).length !== questions.length) {
-    return res.status(400).json({ message: 'Ответьте на все вопросы!' });
-  }
+  await knex('user_test_answers')
+    .where('user_id', userId)
+    .where('test_id', testId)
+    .del();
 
   for (const questionId in answers) {
     const question = questions.find((question) => question.id === Number(questionId));

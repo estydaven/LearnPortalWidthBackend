@@ -169,83 +169,136 @@ function initApp(response) {
   const tests = response.tests;
   for (const test of tests) {
     if (test.id === 1) {
-      const quantityTheoryTest = test.incorrect_count + test.correct_count;
+      const quantityTheoryTest = questionsTheory.length;
       if (test.incorrect_count > 3 && test.attempts === 3) {
         $('.quiz-preview__start-theory').addClass('hide');
         $('.quiz-preview__finished_undone-theory').removeClass('hide');
         $('.tab-content__item_theory.active').addClass('tab-content__item_test');
+        hideTabButtons();
+      } else if ((test.incorrect_count + test.correct_count) !== questionsTheory.length && test.attempts === 3) {
+        $('.quiz-preview__start-theory').addClass('hide');
+        $('.quiz-preview__finished_undone-theory').removeClass('hide');
+        $('.tab-content__item_theory.active').addClass('tab-content__item_test');
+        hideTabButtons();
       } else if (test.incorrect_count > 3 && test.attempts < 3) {
         $('.quiz-result_incorrect-theory').removeClass('hide');
-        $('.quiz-preview').addClass('hide');
+        $('.quiz-preview_theory').addClass('hide');
         $('.quiz-submit-theory').addClass('hide');
-        $('.article__wrap').css('display', 'flex');
+        $('.article__wrap_theory').css('display', 'flex');
         $('.quiz-text_fail-theory').html(test.correct_count);
         $('.quiz-questions-theory').html(quantityTheoryTest);
         answersLabel.forEach((el) => { el.classList.add('no-check'); });
         $('.tab-content__item_theory.active').addClass('tab-content__item_test');
-      } else {
+        hideTabButtons();
+      } else if (!test.incorrect_count && !test.correct_count && test.attempts > 0) {
+        $('.quiz-result_incorrect-theory').removeClass('hide');
+        $('.quiz-preview_theory').addClass('hide');
+        $('.quiz-submit-theory').addClass('hide');
+        $('.article__wrap_theory').css('display', 'flex');
+        $('.quiz-text_fail-theory').html(test.correct_count);
+        $('.quiz-questions-theory').html(quantityTheoryTest);
+        answersLabel.forEach((el) => { el.classList.add('no-check'); });
+        $('.tab-content__item_theory.active').addClass('tab-content__item_test');
+        hideTabButtons();
+      } else if ((test.incorrect_count + test.correct_count) !== questionsTheory.length && test.attempts > 0) {
+        $('.quiz-result_incorrect-theory').removeClass('hide');
+        $('.quiz-preview_theory').addClass('hide');
+        $('.quiz-submit-theory').addClass('hide');
+        $('.article__wrap_theory').css('display', 'flex');
+        $('.quiz-text_fail-theory').html(test.correct_count);
+        $('.quiz-questions-theory').html(quantityTheoryTest);
+        answersLabel.forEach((el) => { el.classList.add('no-check'); });
+        $('.tab-content__item_theory.active').addClass('tab-content__item_test');
+        hideTabButtons();
+      } else if (!test.correct_count && !test.attempts && ($('.submenu__button_theory').parent().hasClass('showed'))) {
+        $('.quiz-preview__start-theory').removeClass('hide');
+        $('.quiz-preview__finished_done-theory').addClass('hide');
+        $('.quiz-preview__finished_undone-theory').addClass('hide');
+        $('.submenu__button_theory').addClass('submenu__button_test');
+        $('.tab-content__item_theory.active').addClass('tab-content__item_test');
+        hideTabButtons();
+      } else if (test.incorrect_count < 3 && test.attempts > 0) {
         $('.quiz-preview__start-theory').addClass('hide');
         $('.quiz-preview__finished_done-theory').removeClass('hide');
         $('.quiz-text_correct-theory').html(test.correct_count);
         $('.quiz-questions-theory').html(quantityTheoryTest);
         $('.submenu__button_theory').removeClass('submenu__button_test');
         $('.tab-content__item_theory.active').removeClass('tab-content__item_test');
+        showTabButtons();
       }
-      if (!test.correct_count) {
-        $('.quiz-preview__start-theory').removeClass('hide');
-        $('.quiz-preview__finished_done-theory').addClass('hide');
-        $('.quiz-preview__finished_undone-theory').addClass('hide');
-        $('.submenu__button_theory').addClass('submenu__button_test');
-        $('.tab-content__item_theory.active').addClass('tab-content__item_test');
+      if (!($('.tab-content__item_theory').hasClass('tab-content__item_test')) && ($('.tab-content__item_rocket.active').hasClass('tab-content__item_test'))) {
+        hideTabButtons();
       }
     }
     if (test.id === 2) {
-      const quantityRocketTest = test.incorrect_count + test.correct_count;
+      const quantityRocketTest = questionsRocket.length;
       if (test.incorrect_count > 3 && test.attempts === 3) {
         $('.quiz-preview__start-rocket').addClass('hide');
         $('.quiz-preview__finished_undone-rocket').removeClass('hide');
         $('.tab-content__item_rocket.active').addClass('tab-content__item_test');
+        hideTabButtons();
+      } else if ((test.incorrect_count + test.correct_count) !== questionsRocket.length && test.attempts === 3) {
+        $('.quiz-preview__start-rocket').addClass('hide');
+        $('.quiz-preview__finished_undone-rocket').removeClass('hide');
+        $('.tab-content__item_rocket.active').addClass('tab-content__item_test');
+        hideTabButtons();
       } else if (test.incorrect_count > 3 && test.attempts < 3) {
         $('.quiz-result_incorrect-rocket').removeClass('hide');
-        $('.quiz-preview').addClass('hide');
+        $('.quiz-preview_rocket').addClass('hide');
         $('.quiz-submit-rocket').addClass('hide');
-        $('.article__wrap').css('display', 'flex');
+        $('.article__wrap_rocket').css('display', 'flex');
         $('.quiz-text_fail-rocket').html(test.correct_count);
         $('.quiz-questions-rocket').html(quantityRocketTest);
         answersLabel.forEach((el) => { el.classList.add('no-check'); });
         $('.tab-content__item_rocket.active').addClass('tab-content__item_test');
-      } else {
+        hideTabButtons();
+      } else if (!test.incorrect_count && !test.correct_count && test.attempts > 0) {
+        $('.quiz-result_incorrect-rocket').removeClass('hide');
+        $('.quiz-preview_rocket').addClass('hide');
+        $('.quiz-submit-rocket').addClass('hide');
+        $('.article__wrap_rocket').css('display', 'flex');
+        $('.quiz-text_fail-rocket').html(test.correct_count);
+        $('.quiz-questions-rocket').html(quantityRocketTest);
+        answersLabel.forEach((el) => { el.classList.add('no-check'); });
+        $('.tab-content__item_rocket.active').addClass('tab-content__item_test');
+        hideTabButtons();
+      } else if ((test.incorrect_count + test.correct_count) !== questionsRocket.length && test.attempts > 0) {
+        $('.quiz-result_incorrect-rocket').removeClass('hide');
+        $('.quiz-preview_rocket').addClass('hide');
+        $('.quiz-submit-rocket').addClass('hide');
+        $('.article__wrap_rocket').css('display', 'flex');
+        $('.quiz-text_fail-rocket').html(test.correct_count);
+        $('.quiz-questions-rocket').html(quantityRocketTest);
+        answersLabel.forEach((el) => { el.classList.add('no-check'); });
+        $('.tab-content__item_rocket.active').addClass('tab-content__item_test');
+        hideTabButtons();
+      } else if (!test.correct_count && !test.attempts && ($('.submenu__button_rocket').parent().hasClass('showed'))) {
+        $('.quiz-preview__start-rocket').removeClass('hide');
+        $('.quiz-preview__finished_done-rocket').addClass('hide');
+        $('.quiz-preview__finished_undone-rocket').addClass('hide');
+        $('.submenu__button_rocket').addClass('submenu__button_test');
+        $('.tab-content__item_rocket.active').addClass('tab-content__item_test');
+        hideTabButtons();
+      } else if (test.incorrect_count < 3 && test.attempts > 0) {
         $('.quiz-preview__start-rocket').addClass('hide');
         $('.quiz-preview__finished_done-rocket').removeClass('hide');
         $('.quiz-text_correct-rocket').html(test.correct_count);
         $('.quiz-questions-rocket').html(quantityRocketTest);
         $('.submenu__button_rocket').removeClass('submenu__button_test');
         $('.tab-content__item_rocket.active').removeClass('tab-content__item_test');
-      }
-      if (!test.correct_count) {
-        $('.quiz-preview__start-rocket').removeClass('hide');
-        $('.quiz-preview__finished_done-rocket').addClass('hide');
-        $('.quiz-preview__finished_undone-rocket').addClass('hide');
-        $('.submenu__button_rocket').addClass('submenu__button_test');
-        $('.tab-content__item_rocket.active').addClass('tab-content__item_test');
+        showTabButtons();
       }
     }
   }
+}
 
-  if ($('.tab-content__item_theory.active').hasClass('tab-content__item_test')) {
-    $('.tab-buttons').css('display', 'none');
-    $('.tab-content').css('height', '100%');
-  } else if (!($('.tab-content__item_theory.active').hasClass('tab-content__item_test'))) {
-    $('.tab-buttons').css('display', 'flex');
-    $('.tab-content').css('height', 'calc(100% - 87px)');
-  }
-  if ($('.tab-content__item_rocket').hasClass('tab-content__item_test')) {
-    $('.tab-buttons').css('display', 'none');
-    $('.tab-content').css('height', '100%');
-  } else if (!($('.tab-content__item_rocket').hasClass('tab-content__item_test'))) {
-    $('.tab-buttons').css('display', 'flex');
-    $('.tab-content').css('height', 'calc(100% - 87px)');
-  }
+function showTabButtons() {
+  $('.tab-buttons').css('display', 'flex');
+  $('.tab-content').css('height', 'calc(100% - 87px)');
+}
+function hideTabButtons() {
+  $('.tab-buttons').css('display', 'none');
+  $('.tab-content').css('height', '100%');
 }
 
 // Logout user
@@ -323,12 +376,27 @@ $('ul.menu button').each(function () {
       }
     }
 
-    if ($(this).hasClass('submenu__button_test')) {
-      $('.tab-buttons').css('display', 'none');
-      $('.tab-content').css('height', '100%');
+    if ($('.tab-content__item.active').next().hasClass('tab-content__item_theory') && $('.quiz-preview__finished_done-theory').hasClass('hide')) {
+      $('.tab-content__item.active').next().addClass('tab-content__item_test');
+    }
+    if ($('.tab-content__item.active').next().hasClass('tab-content__item_theory') && !($('.quiz-preview__finished_done-theory').hasClass('hide'))) {
+      $('.tab-content__item.active').next().remove('tab-content__item_test');
+    }
+
+    if ($('.tab-content__item.active').next().hasClass('tab-content__item_rocket') && $('.quiz-preview__finished_done-rocket').hasClass('hide')) {
+      $('.tab-content__item.active').next().addClass('tab-content__item_test');
+    }
+    if ($('.tab-content__item.active').next().hasClass('tab-content__item_rocket') && !($('.quiz-preview__finished_done-rocket').hasClass('hide'))) {
+      $('.tab-content__item.active').next().remove('tab-content__item_test');
+    }
+
+    if ($('.tab-content__item.active').hasClass('tab-content__item_test')) {
+      hideTabButtons();
     } else {
-      $('.tab-buttons').css('display', 'flex');
-      $('.tab-content').css('height', 'calc(100% - 87px)');
+      showTabButtons();
+    }
+    if ($(this).hasClass('submenu__button_test')) {
+      hideTabButtons();
     }
   });
 });
@@ -464,13 +532,15 @@ $(document).ready(() => {
     updateProgress('one', themesOneCount.length, themesOne.length);
     updateProgress('two', themesTwoCount.length, themesTwo.length);
 
+    if ($('.tab-content__item.active').next().hasClass('tab-content__item_theory') || $('.tab-content__item.active').next().hasClass('tab-content__item_rocket')) {
+      $('.tab-content__item.active').next().addClass('tab-content__item_test');
+    }
+
     $('.submenu .submenu__item').each(function () {
       if ($('.submenu__item.active .submenu__button').hasClass('submenu__button_test')) {
-        $('.tab-buttons').css('display', 'none');
-        $('.tab-content').css('height', '100%');
+        hideTabButtons();
       } else {
-        $('.tab-buttons').css('display', 'flex');
-        $('.tab-content').css('height', 'calc(100% - 87px)');
+        showTabButtons();
       }
     });
   });
@@ -890,6 +960,7 @@ const galleryButton = document.querySelector('.gallery-files__button_video');
 const buttonTaskSend = document.querySelector('.gallery-files__button_task');
 const fileContent = document.querySelectorAll('.file-form__content');
 const fileContentTask = document.querySelector('.file-form__content_task');
+const fileContentVideo = document.querySelector('.file-form__content_video');
 const buttonSend = document.querySelector('.gallery-files__btn_send');
 
 // Prevent default drag behaviors
@@ -972,37 +1043,66 @@ function previewFile(file) {
 
     for (let i = 0; i < galleryBlocks.length; i++) {
       if (galleryBlocks.length > 1) {
-        $('.file-form__content_task').addClass('hide');
-        $('.file-form__content_video').addClass('hide');
+        fileContentTask.classList.add('hide');
+        fileContentVideo.classList.add('hide');
       }
     }
     galleryBlocks.forEach((el) => el.addEventListener('click', function () {
       this.remove();
       this.firstChild.src = '';
-      $('.file-form__content_task').removeClass('hide');
-      $('.file-form__content_video').removeClass('hide');
+      fileContentTask.classList.remove('hide');
+      fileContentVideo.classList.remove('hide');
     }));
   };
 }
 
 // Timer
-let time = 1800;
-let intr;
+let timeOne = 1800;
+let timeTwo = 1800;
+let intrOne;
+let intrTwo;
 
-function startTimer() {
-  intr = setInterval(tick, 1000);
+function startTimerTheory() {
+  intrOne = setInterval(tickTheory, 1000);
+}
+function startTimerRocket() {
+  intrTwo = setInterval(tickRocket, 1000);
 }
 
-function tick() {
-  time = time - 1;
-  const mins = Math.floor(time / 60);
-  let secs = time - mins * 60;
+function tickTheory() {
+  timeOne = timeOne - 1;
+  const mins = Math.floor(timeOne / 60);
+  let secs = timeOne - mins * 60;
+  const idTestTheory = $('.quiz-submit-theory');
+
   if (mins === 0 && secs === 0) {
     $('.popup_time').css('display', 'flex');
-    clearInterval(intr);
+    if ($('.timer__time_theory').text() === '0:01') {
+      sendAnswersTheory(idTestTheory);
+    }
+    clearInterval(intrOne);
   }
+
   secs = secs >= 10 ? secs : '0' + secs;
-  $('.timer__time').html(mins + ':' + secs);
+  $('.timer__time_theory').html(mins + ':' + secs);
+}
+
+function tickRocket() {
+  timeTwo = timeTwo - 1;
+  const mins = Math.floor(timeTwo / 60);
+  let secs = timeTwo - mins * 60;
+  const idTestRocket = $('.quiz-submit-rocket');
+
+  if (mins === 0 && secs === 0) {
+    $('.popup_time').css('display', 'flex');
+    if ($('.timer__time_rocket').text() === '0:01') {
+      sendAnswersRocket(idTestRocket);
+    }
+    clearInterval(intrTwo);
+  }
+
+  secs = secs >= 10 ? secs : '0' + secs;
+  $('.timer__time_rocket').html(mins + ':' + secs);
 }
 
 $('.popup__close_time').click(function () {
@@ -1018,16 +1118,20 @@ const quizResultInorrectTheory = document.querySelector('.quiz-result_incorrect-
 const quizResultInorrectRocket = document.querySelector('.quiz-result_incorrect-rocket');
 const quizResultFailTheory = document.querySelector('.quiz-result_fail-theory');
 const quizResultFailRocket = document.querySelector('.quiz-result_fail-rocket');
-const timerTime = document.querySelector('.timer__time');
+const timerTimeTheory = document.querySelector('.timer__time_theory');
+const timerTimeRocket = document.querySelector('.timer__time_rocket');
 const quizButtonIncorrectTheory = document.querySelector('.quiz-button_incorrect-theory');
 const quizButtonIncorrectRocket = document.querySelector('.quiz-button_incorrect-rocket');
-const quizButtonStart = document.querySelectorAll('.quiz-preview__button');
-const articleWrapper = document.querySelectorAll('.article__wrap');
+const quizButtonStartTheory = document.querySelector('.quiz-preview__button_theory');
+const quizButtonStartRocket = document.querySelector('.quiz-preview__button_rocket');
+const articleWrapperTheory = document.querySelector('.article__wrap_theory');
+const articleWrapperRocket = document.querySelector('.article__wrap_rocket');
 const quizTextCorrectTheory = document.querySelector('.quiz-text_correct-theory');
 const quizTextCorrectRocket = document.querySelector('.quiz-text_correct-rocket');
 const quizTextFailTheory = document.querySelector('.quiz-text_fail-theory');
 const quizTextFailRocket = document.querySelector('.quiz-text_fail-rocket');
-const qiuzPreviewWrapper = document.querySelectorAll('.quiz-preview');
+const qiuzPreviewWrapperTheory = document.querySelector('.quiz-preview_theory');
+const qiuzPreviewWrapperRocket = document.querySelector('.quiz-preview_rocket');
 const questionsTheoryQuantity = document.querySelectorAll('.quiz-questions-theory');
 const questionsRocketQuantity = document.querySelectorAll('.quiz-questions-rocket');
 const questionsTheory = document.querySelectorAll('.quiz-block-theory');
@@ -1041,16 +1145,26 @@ const nextButtonRocket = document.querySelector('.quiz-button_correct-rocket');
 const tabContentTheory = document.querySelector('.tab-content__item_theory');
 const tabContentRocket = document.querySelector('.tab-content__item_rocket');
 
-function startQuiz() {
-  startTimer();
-  articleWrapper.forEach((el) => { el.style.display = 'flex'; });
-  qiuzPreviewWrapper.forEach((el) => el.classList.add('hide'));
+function startQuizTheory() {
+  startTimerTheory();
+  articleWrapperTheory.style.display = 'flex';
+  qiuzPreviewWrapperTheory.classList.add('hide');
+}
+function startQuizRocket() {
+  startTimerRocket();
+  articleWrapperRocket.style.display = 'flex';
+  qiuzPreviewWrapperRocket.classList.add('hide');
 }
 
-function setTimer() {
-  time = 1800;
-  clearInterval(intr);
-  timerTime.innerText = '30:00';
+function setTimerTheory() {
+  timeOne = 1800;
+  clearInterval(intrOne);
+  timerTimeTheory.innerText = '30:00';
+}
+function setTimerRocket() {
+  timeTwo = 1800;
+  clearInterval(intrTwo);
+  timerTimeRocket.innerText = '30:00';
 }
 
 function restartTheoryQuiz() {
@@ -1058,8 +1172,8 @@ function restartTheoryQuiz() {
   popupTimer.classList.add('hide');
   answers.forEach((el) => { el.checked = false; });
   answersLabel.forEach((el) => { el.classList.remove('no-check'); });
-  setTimer();
-  startTimer();
+  setTimerTheory();
+  startTimerTheory();
   quizButtonTheory.classList.remove('hide');
   quizResultInorrectTheory.classList.add('hide');
   quizResultCorrectTheory.classList.add('hide');
@@ -1070,16 +1184,14 @@ function restartRocketQuiz() {
   popupTimer.classList.add('hide');
   answers.forEach((el) => { el.checked = false; });
   answersLabel.forEach((el) => { el.classList.remove('no-check'); });
-  setTimer();
-  startTimer();
+  setTimerRocket();
+  startTimerRocket();
   quizButtonRocket.classList.remove('hide');
   quizResultInorrectRocket.classList.add('hide');
   quizResultCorrectRocket.classList.add('hide');
 }
-
-quizButtonStart.forEach((el) => el.addEventListener('click', function () {
-  startQuiz();
-}));
+quizButtonStartTheory.addEventListener('click', startQuizTheory);
+quizButtonStartRocket.addEventListener('click', startQuizRocket);
 quizButtonIncorrectTheory.addEventListener('click', restartTheoryQuiz);
 quizButtonIncorrectRocket.addEventListener('click', restartRocketQuiz);
 
@@ -1089,7 +1201,6 @@ function showTestErrorPopup() {
 
 function closeTestErrorPopup() {
   $('.popup_test').css('display', 'none');
-  answersLabel.forEach((el) => { el.classList.remove('no-check'); });
 }
 
 $('.popup__close_test').click(function () {
@@ -1149,99 +1260,143 @@ $('.answer__input').each(function () {
 function sendAnswersTheory(idTest) {
   questionsTheoryQuantity.forEach((el) => { el.innerText = questionsTheory.length; });
   const testId = $(idTest).parent().attr('data-test');
-  answersLabel.forEach((el) => { el.classList.add('no-check'); });
 
-  $.ajax({
-    url: `/api/tests/${testId}/result`,
-    type: 'POST',
-    dataType: 'json',
-    contentType: 'application/json',
-    data: JSON.stringify({ answers: answerCheckedFirst }),
-    success: function (response) {
-      answerCheckedFirst = {};
-      if (response.test.incorrect_count > 3) {
-        quizResultInorrectTheory.classList.remove('hide');
-        quizButtonTheory.classList.add('hide');
-        quizTextFailTheory.innerText = questionsTheory.length - response.test.incorrect_count;
-        tabContentTheory.classList.add('tab-content__item_test');
-      }
-      if (response.test.incorrect_count <= 3) {
-        quizResultCorrectTheory.classList.remove('hide');
-        quizButtonTheory.classList.add('hide');
-        quizTextCorrectTheory.innerText = response.test.correct_count;
-        tabContentTheory.classList.remove('tab-content__item_test');
-      }
-      if (response.test.attempts >= 3 && response.test.incorrect_count > 3) {
-        quizResultFailTheory.classList.remove('hide');
-        quizButtonTheory.classList.add('hide');
-        quizResultInorrectTheory.classList.add('hide');
-        tabContentTheory.classList.add('tab-content__item_test');
-      }
-      if (response.test.attempts === 3 && response.test.incorrect_count <= 3) {
-        quizResultCorrectTheory.classList.remove('hide');
-        quizButtonTheory.classList.add('hide');
-        quizTextCorrectTheory.innerText = response.test.correct_count;
-        nextButtonTheory.disabled = false;
-        tabContentTheory.classList.remove('tab-content__item_test');
-      }
+  if (Object.keys(answerCheckedFirst).length < questionsTheory.length && ($('.timer__time_theory').text() !== '0:01')) {
+    showTestErrorPopup();
+  } else {
+    answersLabel.forEach((el) => { el.classList.add('no-check'); });
 
-      time = 1800;
-      clearInterval(intr);
-      timerTime.innerText = '30:00';
-    },
-    error: function (response) {
-      showTestErrorPopup();
-      erorMessage.innerText = response.responseJSON.message;
-    },
-  });
+    $.ajax({
+      url: `/api/tests/${testId}/result`,
+      type: 'POST',
+      dataType: 'json',
+      contentType: 'application/json',
+      data: JSON.stringify({ answers: answerCheckedFirst }),
+      success: function (response) {
+        answerCheckedFirst = {};
+        if (response.test.incorrect_count > 3) {
+          quizResultInorrectTheory.classList.remove('hide');
+          quizButtonTheory.classList.add('hide');
+          quizTextFailTheory.innerText = response.test.correct_count;
+          tabContentTheory.classList.add('tab-content__item_test');
+        }
+        if (!response.test.incorrect_count && !response.test.correct_count && response.test.attempts === 0) {
+          quizButtonTheory.classList.add('hide');
+          quizTextCorrectTheory.innerText = response.test.correct_count;
+          quizResultInorrectTheory.classList.remove('hide');
+          tabContentTheory.classList.add('tab-content__item_test');
+        }
+        if ((response.test.incorrect_count + response.test.correct_count) !== questionsTheory.length && response.test.attempts >= 0) {
+          quizButtonTheory.classList.add('hide');
+          quizTextFailTheory.innerText = response.test.correct_count;
+          quizResultInorrectTheory.classList.remove('hide');
+          tabContentTheory.classList.add('tab-content__item_test');
+        }
+        if ((response.test.incorrect_count + response.test.correct_count) !== questionsTheory.length && response.test.attempts === 3) {
+          quizResultFailTheory.classList.remove('hide');
+          quizButtonTheory.classList.add('hide');
+          quizResultInorrectTheory.classList.add('hide');
+          tabContentTheory.classList.add('tab-content__item_test');
+        }
+        if ((response.test.incorrect_count + response.test.correct_count) === questionsTheory.length && response.test.incorrect_count <= 3 && response.test.correct_count !== 0) {
+          quizResultCorrectTheory.classList.remove('hide');
+          quizButtonTheory.classList.add('hide');
+          quizTextCorrectTheory.innerText = response.test.correct_count;
+          tabContentTheory.classList.remove('tab-content__item_test');
+        }
+        if (response.test.attempts >= 3 && response.test.incorrect_count > 3) {
+          quizResultFailTheory.classList.remove('hide');
+          quizButtonTheory.classList.add('hide');
+          quizResultInorrectTheory.classList.add('hide');
+          tabContentTheory.classList.add('tab-content__item_test');
+        }
+        if ((response.test.incorrect_count + response.test.correct_count) === questionsTheory.length && response.test.attempts === 3 && response.test.incorrect_count <= 3) {
+          quizResultCorrectTheory.classList.remove('hide');
+          quizButtonTheory.classList.add('hide');
+          quizTextCorrectTheory.innerText = response.test.correct_count;
+          nextButtonTheory.disabled = false;
+          tabContentTheory.classList.remove('tab-content__item_test');
+        }
+
+        setTimerTheory();
+      },
+      error: function (response) {
+        showTestErrorPopup();
+        erorMessage.innerText = response.responseJSON.message;
+      },
+    });
+  }
 }
 
 function sendAnswersRocket(idTest) {
   questionsRocketQuantity.forEach((el) => { el.innerText = questionsRocket.length; });
   const testId = $(idTest).parent().attr('data-test');
-  answersLabel.forEach((el) => { el.classList.add('no-check'); });
 
-  $.ajax({
-    url: `/api/tests/${testId}/result`,
-    type: 'POST',
-    dataType: 'json',
-    contentType: 'application/json',
-    data: JSON.stringify({ answers: answerCheckedSecond }),
-    success: function (response) {
-      answerCheckedSecond = {};
-      if (response.test.incorrect_count > 3) {
-        quizResultInorrectRocket.classList.remove('hide');
-        quizButtonRocket.classList.add('hide');
-        quizTextFailRocket.innerText = questionsRocket.length - response.test.incorrect_count;
-        tabContentRocket.classList.add('tab-content__item_test');
-      }
-      if (response.test.incorrect_count <= 3) {
-        quizResultCorrectRocket.classList.remove('hide');
-        quizButtonRocket.classList.add('hide');
-        quizTextCorrectRocket.innerText = response.test.correct_count;
-        tabContentRocket.classList.remove('tab-content__item_test');
-      }
-      if (response.test.attempts >= 3 && response.test.incorrect_count > 3) {
-        quizResultFailRocket.classList.remove('hide');
-        quizButtonRocket.classList.add('hide');
-        quizResultInorrectRocket.classList.add('hide');
-        tabContentRocket.classList.add('tab-content__item_test');
-      }
-      if (response.test.attempts === 3 && response.test.incorrect_count <= 3) {
-        quizResultCorrectRocket.classList.remove('hide');
-        quizButtonRocket.classList.add('hide');
-        quizTextCorrectRocket.innerText = response.test.correct_count;
-        nextButtonRocket.disabled = false;
-        tabContentRocket.classList.remove('tab-content__item_test');
-      }
+  if (Object.keys(answerCheckedSecond).length < questionsRocket.length && ($('.timer__time_rocket').text() !== '0:01')) {
+    showTestErrorPopup();
+  } else {
+    answersLabel.forEach((el) => { el.classList.add('no-check'); });
 
-      time = 1800;
-      clearInterval(intr);
-      timerTime.innerText = '30:00';
-    },
-    error: function (response) {
-      showTestErrorPopup();
-      erorMessage.innerText = response.responseJSON.message;
-    },
-  });
+    $.ajax({
+      url: `/api/tests/${testId}/result`,
+      type: 'POST',
+      dataType: 'json',
+      contentType: 'application/json',
+      data: JSON.stringify({ answers: answerCheckedSecond }),
+      success: function (response) {
+        answerCheckedSecond = {};
+        if (response.test.incorrect_count > 3) {
+          quizResultInorrectRocket.classList.remove('hide');
+          quizButtonRocket.classList.add('hide');
+          quizTextFailRocket.innerText = response.test.correct_count;
+          tabContentRocket.classList.add('tab-content__item_test');
+        }
+        if (!response.test.incorrect_count && !response.test.correct_count && response.test.attempts === 0) {
+          quizButtonRocket.classList.add('hide');
+          quizTextCorrectRocket.innerText = response.test.correct_count;
+          quizResultInorrectRocket.classList.remove('hide');
+          tabContentRocket.classList.add('tab-content__item_test');
+          quizResultCorrectRocket.classList.add('hide');
+        }
+        if (((response.test.incorrect_count + response.test.correct_count) !== questionsRocket.length) && response.test.attempts > 0) {
+          quizButtonRocket.classList.add('hide');
+          quizTextFailRocket.innerText = response.test.correct_count;
+          quizResultInorrectRocket.classList.remove('hide');
+          tabContentRocket.classList.add('tab-content__item_test');
+          quizResultCorrectRocket.classList.add('hide');
+        }
+        if ((response.test.incorrect_count + response.test.correct_count) !== questionsRocket.length && response.test.attempts === 3) {
+          quizResultFailRocket.classList.remove('hide');
+          quizButtonRocket.classList.add('hide');
+          quizResultInorrectRocket.classList.add('hide');
+          tabContentRocket.classList.add('tab-content__item_test');
+        }
+        if ((response.test.incorrect_count + response.test.correct_count) === questionsRocket.length && response.test.incorrect_count <= 3 && response.test.correct_count !== 0) {
+          quizResultCorrectRocket.classList.remove('hide');
+          quizButtonRocket.classList.add('hide');
+          quizTextCorrectRocket.innerText = response.test.correct_count;
+          tabContentRocket.classList.remove('tab-content__item_test');
+        }
+        if (response.test.attempts >= 3 && response.test.incorrect_count > 3) {
+          quizResultFailRocket.classList.remove('hide');
+          quizButtonRocket.classList.add('hide');
+          quizResultInorrectRocket.classList.add('hide');
+          tabContentRocket.classList.add('tab-content__item_test');
+        }
+        if ((response.test.incorrect_count + response.test.correct_count) === questionsRocket.length && response.test.attempts === 3 && response.test.incorrect_count <= 3) {
+          quizResultCorrectRocket.classList.remove('hide');
+          quizButtonRocket.classList.add('hide');
+          quizTextCorrectRocket.innerText = response.test.correct_count;
+          nextButtonRocket.disabled = false;
+          tabContentRocket.classList.remove('tab-content__item_test');
+        }
+
+        setTimerRocket();
+      },
+      error: function (response) {
+        showTestErrorPopup();
+        erorMessage.innerText = response.responseJSON.message;
+      },
+    });
+  }
 }
