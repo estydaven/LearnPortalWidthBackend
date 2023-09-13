@@ -704,8 +704,13 @@ input::-webkit-search-results-decoration { display: none; }
   top: 20px;
 }
 .article__wrap {
+  position: relative;
   display: none;
   justify-content: space-between;
+}
+.article__timer {
+    position: absolute;
+    right: 0;
 }
 .article__title {
   color: #23395E;
