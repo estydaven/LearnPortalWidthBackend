@@ -225,6 +225,13 @@ function initApp(response) {
         $('.submenu__button_theory').removeClass('submenu__button_test');
         $('.tab-content__item_theory.active').removeClass('tab-content__item_test');
         showTabButtons();
+      } else if (test.incorrect_count <= 3 && test.attempts === 3) {
+        $('.quiz-preview__start-theory').addClass('hide');
+        $('.quiz-preview__finished_done-theory').removeClass('hide');
+        $('.quiz-text_correct-theory').html(test.correct_count);
+        $('.quiz-questions-theory').html(quantityTheoryTest);
+        $('.submenu__button_theory').removeClass('submenu__button_test');
+        $('.tab-content__item_theory.active').removeClass('tab-content__item_test');
       }
       if (!($('.tab-content__item_theory').hasClass('tab-content__item_test')) && ($('.tab-content__item_rocket.active').hasClass('tab-content__item_test'))) {
         hideTabButtons();
@@ -280,6 +287,14 @@ function initApp(response) {
         $('.tab-content__item_rocket.active').addClass('tab-content__item_test');
         hideTabButtons();
       } else if (test.incorrect_count < 3 && test.attempts > 0) {
+        $('.quiz-preview__start-rocket').addClass('hide');
+        $('.quiz-preview__finished_done-rocket').removeClass('hide');
+        $('.quiz-text_correct-rocket').html(test.correct_count);
+        $('.quiz-questions-rocket').html(quantityRocketTest);
+        $('.submenu__button_rocket').removeClass('submenu__button_test');
+        $('.tab-content__item_rocket.active').removeClass('tab-content__item_test');
+        showTabButtons();
+      } else if (test.incorrect_count <= 3 && test.attempts === 3) {
         $('.quiz-preview__start-rocket').addClass('hide');
         $('.quiz-preview__finished_done-rocket').removeClass('hide');
         $('.quiz-text_correct-rocket').html(test.correct_count);
