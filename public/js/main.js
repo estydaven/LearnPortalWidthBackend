@@ -443,6 +443,11 @@ function loadActiveTab() {
 
 function openTab(tabId) {
   const nextTab = getNextTab(tabId);
+  if (!nextTab) {
+    $('.js-btn-next').css('display', 'none');
+  } else {
+    $('.js-btn-next').css('display', 'block');
+  }
   $('.js-btn-next').prop('disabled', !nextTab);
 
   const prevTab = getPrevTab(tabId);

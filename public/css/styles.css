@@ -666,6 +666,7 @@ input::-webkit-search-results-decoration { display: none; }
 .tab-button {
   position: relative;
   color: #ffffff;
+  max-width: 50%;
   font-size: 18px;
   line-height: 22px;
   text-align: center;
