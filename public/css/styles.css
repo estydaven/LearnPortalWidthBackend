@@ -709,6 +709,9 @@ input::-webkit-search-results-decoration { display: none; }
   display: none;
   justify-content: space-between;
 }
+.quiz-pdn {
+    max-width: 61%;
+}
 .article__timer {
     position: absolute;
     right: 0;

@@ -671,6 +671,7 @@ $('.user').on('click', function () {
   $('.private-cabinet').removeClass('hide');
   $('.cabinet-menu').removeClass('hide');
   li.removeClass('active');
+  $('.tab-buttons').css('display', 'none');
 });
 
 function hidePrivatCabinet() {
@@ -782,6 +783,12 @@ function onSubmitTask(formTask) {
   const taskId = +$(formTask).attr('data-formId');
   const btnFirstTask = $('.task-screen');
   const btnSecondTask = $('.button-blue_form');
+
+  //   if (/[-a-zA-Z0-9@:%_\+.~#?&\/=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&\/=]*)?/gi.test(taskLink) && taskId === 2) {
+  //     console.log(1);
+  //   } else {
+  //     console.log(2);
+  //   }
 
   if (taskId === 2) {
     taskScreens = [];
@@ -1280,6 +1287,18 @@ $('.answer__input').each(function () {
 function sendAnswersTheory(idTest) {
   questionsTheoryQuantity.forEach((el) => { el.innerText = questionsTheory.length; });
   const testId = $(idTest).parent().attr('data-test');
+
+  //   $('.quiz-block-theory').each(function () {
+  //     if (!($(this).children().children('.answer__input').is(':checked'))) {
+  //       const uncompletedAnswer = $(this).first().children().children('.answer__input');
+  //       $(function () {
+  //         $('body, html').animate({
+  //           scrollTop: 0,
+  //         }, 800);
+  //         return false;
+  //       });
+  //     }
+  //   });
 
   if (Object.keys(answerCheckedFirst).length < questionsTheory.length && ($('.timer__time_theory').text() !== '0:01')) {
     showTestErrorPopup();
