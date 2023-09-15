@@ -1283,22 +1283,29 @@ $('.answer__input').each(function () {
   });
 });
 
+function scrollToUncompletedAnswer(answerClass) {
+  const uncompletedAnswers = [];
+
+  $(answerClass).each(function () {
+    if (!($(this).children().children('.answer__input').is(':checked'))) {
+      const uncheck = $(this).first().children().children('.answer__input').parent().parent()[0];
+      uncompletedAnswers.push(uncheck);
+    }
+  });
+
+  const uncompletedAnswer = uncompletedAnswers[0];
+  uncompletedAnswer.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start',
+  });
+}
+
 // Send Quiz Results
 function sendAnswersTheory(idTest) {
   questionsTheoryQuantity.forEach((el) => { el.innerText = questionsTheory.length; });
   const testId = $(idTest).parent().attr('data-test');
 
-  //   $('.quiz-block-theory').each(function () {
-  //     if (!($(this).children().children('.answer__input').is(':checked'))) {
-  //       const uncompletedAnswer = $(this).first().children().children('.answer__input');
-  //       $(function () {
-  //         $('body, html').animate({
-  //           scrollTop: 0,
-  //         }, 800);
-  //         return false;
-  //       });
-  //     }
-  //   });
+  scrollToUncompletedAnswer('.quiz-block-theory');
 
   if (Object.keys(answerCheckedFirst).length < questionsTheory.length && ($('.timer__time_theory').text() !== '0:01')) {
     showTestErrorPopup();
@@ -1370,6 +1377,8 @@ function sendAnswersTheory(idTest) {
 function sendAnswersRocket(idTest) {
   questionsRocketQuantity.forEach((el) => { el.innerText = questionsRocket.length; });
   const testId = $(idTest).parent().attr('data-test');
+
+  scrollToUncompletedAnswer('.quiz-block-rocket');
 
   if (Object.keys(answerCheckedSecond).length < questionsRocket.length && ($('.timer__time_rocket').text() !== '0:01')) {
     showTestErrorPopup();
