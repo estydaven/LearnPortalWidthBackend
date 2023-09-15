@@ -1351,6 +1351,7 @@ function sendAnswersTheory(idTest) {
           quizButtonTheory.classList.add('hide');
           quizTextCorrectTheory.innerText = response.test.correct_count;
           tabContentTheory.classList.remove('tab-content__item_test');
+          answersLabel.forEach((el) => { el.classList.remove('no-check'); });
         }
         if (response.test.attempts >= 3 && response.test.incorrect_count > 3) {
           quizResultFailTheory.classList.remove('hide');
@@ -1364,6 +1365,7 @@ function sendAnswersTheory(idTest) {
           quizTextCorrectTheory.innerText = response.test.correct_count;
           nextButtonTheory.disabled = false;
           tabContentTheory.classList.remove('tab-content__item_test');
+          answersLabel.forEach((el) => { el.classList.remove('no-check'); });
         }
 
         setTimerTheory();
