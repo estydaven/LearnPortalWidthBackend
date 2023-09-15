@@ -1293,11 +1293,13 @@ function scrollToUncompletedAnswer(answerClass) {
     }
   });
 
-  const uncompletedAnswer = uncompletedAnswers[0];
-  uncompletedAnswer.scrollIntoView({
-    behavior: 'smooth',
-    block: 'start',
-  });
+  if (uncompletedAnswers.length !== 0) {
+    const uncompletedAnswer = uncompletedAnswers[0];
+    uncompletedAnswer.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }
 }
 
 // Send Quiz Results
