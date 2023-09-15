@@ -846,25 +846,25 @@ $('.video__button').each(function () {
     showPopupShot();
     $('.file-form_video').css('display', 'flex');
     $('.file-form_task').css('display', 'none');
-    const btn = $(this);
     const btnData = $(this).attr('data-buttonid');
-    $('.gallery-files__button').attr('data-sendData', btnData);
+    $('.gallery-files__button').attr('data-senddata', btnData);
+  });
+});
 
-    $('.gallery-files__button').click(function () {
-      const btnSendData = $(this).attr('data-sendData');
+$('.gallery-files__button').click(function () {
+  const btnSendData = $(this).attr('data-senddata');
+  const btn = $(`.video__button[data-buttonid="${btnSendData}"]`);
 
-      $.ajax({
-        url: `/api/users/completed_courses`,
-        type: 'PUT',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify({ screens: convertVideosImagesResults, courseId: Number(btnSendData) }),
-        success: function () {
-          setCompletedStyleBtn(btn);
-          btn.text('Скрин отправлен!');
-        },
-      });
-    });
+  $.ajax({
+    url: `/api/users/completed_courses`,
+    type: 'PUT',
+    dataType: 'json',
+    contentType: 'application/json',
+    data: JSON.stringify({ screens: convertVideosImagesResults, courseId: Number(btnSendData) }),
+    success: function () {
+      setCompletedStyleBtn(btn);
+      btn.text('Скрин отправлен!');
+    },
   });
 });
 
